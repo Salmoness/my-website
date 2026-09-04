@@ -1,0 +1,10 @@
+node_modules/
+dist/
+apps/site/dist/
+.astro/
+pnpm-lock.yaml
+.agents/
+docs/
+samples/
+scratch/
+.system_generated/

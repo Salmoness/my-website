@@ -1,0 +1,28 @@
+---
+import RootLayout from '../layouts/RootLayout.astro';
+import { SMOKE_SITE_METADATA } from '../types/site';
+---
+
+<RootLayout metadata={SMOKE_SITE_METADATA}>
+  <div class="max-w-xl text-center space-y-6">
+    <div
+      class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-400"
+    >
+      <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Platform Foundation Smoke Page
+    </div>
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl text-slate-50">Saymon Rivas</h1>
+    <p class="text-lg text-slate-400 leading-relaxed">
+      {SMOKE_SITE_METADATA.description}
+    </p>
+    <div class="pt-4">
+      <a
+        href="#main-content"
+        id="explore-link"
+        class="inline-block rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-slate-950 transition-colors hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-950"
+      >
+        Verified Static Smoke Target
+      </a>
+    </div>
+  </div>
+</RootLayout>
