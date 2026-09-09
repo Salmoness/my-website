@@ -1,0 +1,82 @@
+---
+import { safeLink } from '../../config/site';
+interface Props {
+  index?: number;
+  image?: string | undefined;
+  alt?: string | undefined;
+  label?: string | undefined;
+}
+const {
+  index = 0,
+  image,
+  alt,
+  label = 'Illustrative artwork · project image pending',
+} = Astro.props;
+const source = safeLink(image);
+const variant = index % 3;
+---
+
+<figure class:list={['project-artwork', `artwork-${variant}`]}>
+  {
+    source ? (
+      <img
+        src={source}
+        alt={alt ?? 'Project preview'}
+        loading="lazy"
+        decoding="async"
+        width="1200"
+        height="800"
+      />
+    ) : (
+      <div class="artwork-composition" aria-hidden="true">
+        <svg viewBox="0 0 720 480" fill="none" preserveAspectRatio="xMidYMid meet">
+          {variant === 0 ? (
+            <g>
+              <circle cx="360" cy="240" r="164" fill="currentColor" />
+              <path d="M164 118h184v244H164z" fill="var(--color-paper-inset)" />
+              <path d="M359 76v328M523 240H197" stroke="var(--color-canvas)" stroke-width="1" />
+              <circle cx="360" cy="240" r="74" fill="var(--color-ink-primary)" />
+              <path
+                d="M146 64h26m-13-13v26m416 339h-26m13-13v26"
+                stroke="var(--color-ink-primary)"
+              />
+              <path
+                d="M146 400h426M146 406v-12m426 12v-12"
+                stroke="var(--color-ink-primary)"
+                stroke-opacity=".4"
+              />
+            </g>
+          ) : variant === 1 ? (
+            <g stroke="currentColor" stroke-width="2">
+              {Array.from({ length: 22 }, (_, i) => (
+                <ellipse
+                  cx="360"
+                  cy="240"
+                  rx={84 + i * 5}
+                  ry={165 - i * 6}
+                  transform={`rotate(${i * 4} 360 240)`}
+                />
+              ))}
+              <path d="M100 240h520M360 38v404" stroke-opacity=".25" stroke-width="1" />
+            </g>
+          ) : (
+            <g>
+              {Array.from({ length: 13 }, (_, i) => (
+                <rect
+                  x={170 + i * 29}
+                  y={140 + Math.sin(i * 0.7) * 65}
+                  width="15"
+                  height="190"
+                  fill="currentColor"
+                />
+              ))}
+              <path d="M130 395h460M130 85h460" stroke="currentColor" stroke-opacity=".35" />
+              <circle cx="595" cy="85" r="6" fill="var(--color-signal-action)" />
+            </g>
+          )}
+        </svg>
+      </div>
+    )
+  }
+  {!source && <figcaption>{label}</figcaption>}
+</figure>

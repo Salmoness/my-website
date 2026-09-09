@@ -1,0 +1,63 @@
+---
+interface Props {
+  src?: string | undefined;
+  alt?: string | undefined;
+  aspectRatio?: 'video' | 'square' | 'wide' | 'tall' | undefined;
+  callout?: string | undefined;
+  placeholderText?: string | undefined;
+  class?: string | undefined;
+}
+
+const {
+  src,
+  alt = '',
+  aspectRatio = 'wide',
+  callout,
+  placeholderText = 'Placeholder asset required',
+  class: className = '',
+} = Astro.props;
+
+const aspectClasses = {
+  video: 'aspect-video',
+  square: 'aspect-square',
+  wide: 'h-[230px]',
+  tall: 'aspect-[3/4]',
+};
+---
+
+<div
+  class:list={[
+    'relative w-full bg-[#EDE6DA] border-b-2 border-[var(--color-ink-primary)] overflow-hidden flex items-center justify-center',
+    aspectClasses[aspectRatio],
+    className,
+  ]}
+>
+  <span class="crosshair-corner ch-tl" aria-hidden="true">+</span>
+  <span class="crosshair-corner ch-tr" aria-hidden="true">+</span>
+
+  {
+    src ? (
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        class="w-full h-full object-cover transition-transform duration-350 ease-[var(--ease-dossier)] group-hover:scale-105"
+      />
+    ) : (
+      <div class="font-mono text-center p-6 text-[var(--color-ink-primary)]">
+        <div class="text-sm sm:text-base font-extrabold uppercase">[ CONTENT REQUIRED ]</div>
+        <div class="text-xs text-[var(--color-signal-cobalt)] mt-1.5 font-bold">
+          {placeholderText}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    callout && (
+      <span class="media-callout absolute bottom-3 left-3 bg-[var(--color-ink-primary)] text-white font-mono text-[0.7rem] font-bold px-2.5 py-1 tracking-wider uppercase pointer-events-none">
+        {callout}
+      </span>
+    )
+  }
+</div>

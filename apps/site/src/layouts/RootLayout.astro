@@ -1,32 +1,71 @@
 ---
 import '../styles/global.css';
-import { type SiteMetadata, SMOKE_SITE_METADATA } from '../types/site';
+import { SITE_MODE } from 'astro:env/server';
+import SiteHeader from '../components/shell/SiteHeader.astro';
+import SiteFooter from '../components/shell/SiteFooter.astro';
+import type { PageMetadata, SiteMetadata, MainRoute } from '../types/site';
+import { DEFAULT_PAGE_METADATA, PORTFOLIO, getPageSharing } from '../config/site';
 
 interface Props {
-  metadata?: SiteMetadata;
+  metadata?: PageMetadata | SiteMetadata | undefined;
+  activeRoute?: MainRoute | undefined;
 }
 
-const { metadata = SMOKE_SITE_METADATA } = Astro.props;
+const { metadata = DEFAULT_PAGE_METADATA['/'], activeRoute } = Astro.props;
+
+const lang = metadata.lang ?? 'en';
+const charset = metadata.charset ?? 'UTF-8';
+const title = metadata.title;
+const description = metadata.description;
+const { canonicalUrl, imageUrl, imageAlt } = getPageSharing(
+  'canonicalPath' in metadata ? metadata : { ...metadata, canonicalPath: Astro.url.pathname },
+);
+
+const isStaging =
+  (SITE_MODE ?? 'staging') === 'staging' || ('noindex' in metadata && metadata.noindex);
 ---
 
 <!doctype html>
-<html lang={metadata.lang}>
+<html lang={lang} data-motion={PORTFOLIO.motionEnabled ? 'on' : 'off'}>
   <head>
-    <meta charset={metadata.charset} />
+    <meta charset={charset} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={metadata.description} />
-    <title>{metadata.title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    {isStaging && <meta name="robots" content="noindex, nofollow, noarchive" />}
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={PORTFOLIO.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+    <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <body class="portfolio-site">
+    <!-- Accessible Skip Link -->
     <a
       href="#main-content"
       id="skip-to-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-emerald-500 focus:px-4 focus:py-2 focus:text-slate-950 focus:font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-950"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-[var(--color-signal-action)] focus:text-white focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:outline-3 focus:outline-[var(--color-signal-cobalt)] focus:border-2 focus:border-[var(--color-ink-primary)] shadow-[4px_4px_0px_var(--color-ink-primary)]"
     >
       Skip to main content
     </a>
-    <main id="main-content" class="flex min-h-screen flex-col items-center justify-center p-6">
+
+    <!-- Primary Header -->
+    <SiteHeader activeRoute={activeRoute} />
+
+    <!-- Exactly one Main Landmark -->
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
+
+    <!-- Site Footer -->
+    <SiteFooter />
+
+    <!-- Progressive enhancement for hash-targeted disclosures -->
+    <script src="../scripts/disclosure-hash.ts"></script>
+    <script src="../scripts/portfolio-motion.ts"></script>
   </body>
 </html>

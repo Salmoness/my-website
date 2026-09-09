@@ -1,0 +1,59 @@
+---
+import type { ActionVariant } from '../../types/site';
+
+interface Props {
+  variant?: ActionVariant;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  id?: string;
+  isExternal?: boolean;
+  isPlaceholder?: boolean;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  class: className = '',
+  id,
+  isExternal = false,
+  isPlaceholder = false,
+} = Astro.props;
+
+const baseStyles =
+  'inline-flex items-center justify-center font-mono text-sm font-bold uppercase tracking-wider px-6 py-3.5 transition-all duration-150 cursor-pointer focus-visible:outline-3 focus-visible:outline-[var(--color-signal-cobalt)] focus-visible:outline-offset-2';
+
+const variantStyles: Record<ActionVariant, string> = {
+  primary:
+    'bg-[var(--color-signal-action)] text-white border-3 border-[var(--color-ink-primary)] shadow-[4px_4px_0px_var(--color-ink-primary)] hover:bg-[var(--color-signal-action-hover)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-ink-primary)] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_var(--color-ink-primary)]',
+  secondary:
+    'bg-[var(--color-sheet)] text-[var(--color-ink-primary)] border-3 border-[var(--color-ink-primary)] shadow-[4px_4px_0px_var(--color-ink-primary)] hover:bg-[var(--color-ink-primary)] hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--color-ink-primary)] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_var(--color-ink-primary)]',
+  quiet:
+    'bg-transparent text-[var(--color-ink-primary)] border-2 border-transparent hover:border-[var(--color-ink-primary)] hover:bg-[rgba(15,18,21,0.05)]',
+};
+---
+
+{
+  href ? (
+    <a
+      id={id}
+      href={href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+      class:list={[baseStyles, variantStyles[variant], className]}
+      data-placeholder={isPlaceholder ? 'true' : undefined}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      id={id}
+      type={type}
+      class:list={[baseStyles, variantStyles[variant], className]}
+      data-placeholder={isPlaceholder ? 'true' : undefined}
+    >
+      <slot />
+    </button>
+  )
+}

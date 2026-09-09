@@ -1,0 +1,40 @@
+---
+interface Props {
+  status: 'placeholder' | 'verified' | 'draft' | 'ready';
+  label?: string;
+  class?: string;
+}
+
+const { status, label, class: className = '' } = Astro.props;
+
+const dotColor: Record<string, string> = {
+  placeholder: 'text-[var(--color-signal-action-hover)]',
+  draft: 'text-amber-600',
+  ready: 'text-[var(--color-signal-cobalt)]',
+  verified: 'text-[var(--color-signal-verified)]',
+};
+
+const defaultText: Record<string, string> = {
+  placeholder: 'PLACEHOLDER',
+  draft: 'DRAFT',
+  ready: 'READY',
+  verified: 'VERIFIED',
+};
+
+const displayLabel = label ?? defaultText[status] ?? status.toUpperCase();
+---
+
+<div
+  class:list={[
+    'inline-flex items-center gap-1.5 font-mono text-xs font-bold tracking-wider uppercase',
+    className,
+  ]}
+>
+  <span
+    class:list={['text-xs leading-none', dotColor[status] ?? 'text-[var(--color-signal-action)]']}
+    aria-hidden="true"
+  >
+    ●
+  </span>
+  <span>{displayLabel}</span>
+</div>

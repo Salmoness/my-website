@@ -1,0 +1,24 @@
+---
+import { SITE_NAV } from '../../config/site';
+import type { MainRoute } from '../../types/site';
+interface Props {
+  activeRoute?: MainRoute | undefined;
+  class?: string | undefined;
+}
+const { activeRoute, class: className = '' } = Astro.props;
+const current = (activeRoute ?? Astro.url.pathname).replace(/\/$/, '') || '/';
+---
+
+<nav aria-label="Primary Navigation" class:list={['primary-nav', className]}>
+  {
+    SITE_NAV.map((item) => (
+      <a
+        href={item.href}
+        aria-current={current === item.href ? 'page' : undefined}
+        class:list={{ 'nav-active': current === item.href }}
+      >
+        {item.label}
+      </a>
+    ))
+  }
+</nav>

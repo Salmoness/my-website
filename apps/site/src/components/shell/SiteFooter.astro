@@ -1,0 +1,20 @@
+---
+import { SITE_MODE } from 'astro:env/server';
+import { SITE_NAV, PORTFOLIO } from '../../config/site';
+import ContactSection from '../portfolio/ContactSection.astro';
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<footer class:list={['site-footer', className]}>
+  <ContactSection />
+  <div class="site-wrap footer-bottom">
+    <span>&copy; {new Date().getFullYear()} {PORTFOLIO.name}</span>
+    <div class="footer-links">{SITE_NAV.map((item) => <a href={item.href}>{item.label}</a>)}</div>
+    <span
+      >{SITE_MODE === 'staging' ? 'Personal portfolio / Design preview' : 'Made with care.'}</span
+    >
+  </div>
+</footer>

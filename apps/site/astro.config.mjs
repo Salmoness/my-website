@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -8,5 +8,15 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
+  },
+  env: {
+    schema: {
+      SITE_MODE: envField.enum({
+        context: 'server',
+        access: 'public',
+        values: ['staging', 'production'],
+        default: 'staging',
+      }),
+    },
   },
 });

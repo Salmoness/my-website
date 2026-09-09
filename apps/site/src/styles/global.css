@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/ibm-plex-sans';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+@import '@workspace/ui/theme.css';
+@import '@workspace/ui/foundation.css';
+@import './portfolio.css';

@@ -1,0 +1,44 @@
+---
+import RootLayout from '../../layouts/RootLayout.astro';
+import Container from '../ui/Container.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import type { PageMetadata, MainRoute, ShellWidth } from '../../types/site';
+
+interface Props {
+  metadata: PageMetadata;
+  activeRoute?: MainRoute | undefined;
+  width?: ShellWidth | undefined;
+  kicker?: string | undefined;
+  title?: string | undefined;
+  subtitle?: string | undefined;
+  class?: string | undefined;
+}
+
+const {
+  metadata,
+  activeRoute,
+  width = 'standard',
+  kicker,
+  title,
+  subtitle,
+  class: className = '',
+} = Astro.props;
+---
+
+<RootLayout metadata={metadata} activeRoute={activeRoute}>
+  <div class:list={['w-full py-8 sm:py-12', className]}>
+    <Container width={width}>
+      {
+        (kicker || title || subtitle) && (
+          <SectionHeading
+            kicker={kicker}
+            title={title ?? metadata.title}
+            subtitle={subtitle ?? metadata.description}
+            level={1}
+          />
+        )
+      }
+      <slot />
+    </Container>
+  </div>
+</RootLayout>

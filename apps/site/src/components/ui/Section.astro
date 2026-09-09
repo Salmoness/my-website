@@ -1,0 +1,38 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  withRibbon?: boolean;
+  ribbonTitle?: string;
+  ribbonSubtitle?: string;
+  bordered?: boolean;
+}
+
+const {
+  id,
+  class: className = '',
+  withRibbon = false,
+  ribbonTitle,
+  ribbonSubtitle,
+  bordered = true,
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    'w-full relative',
+    bordered && 'border-b-3 border-[var(--color-ink-primary)]',
+    className,
+  ]}
+>
+  {
+    withRibbon && ribbonTitle && (
+      <div class="w-full bg-[var(--color-ink-primary)] text-white px-4 sm:px-8 py-3.5 font-mono text-sm font-bold uppercase tracking-wider flex justify-between items-center flex-wrap gap-4">
+        <div>{ribbonTitle}</div>
+        {ribbonSubtitle && <div class="text-xs text-slate-400 font-normal">{ribbonSubtitle}</div>}
+      </div>
+    )
+  }
+  <slot />
+</section>

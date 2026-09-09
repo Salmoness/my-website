@@ -1,0 +1,98 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { initDisclosureHash, openDisclosureForHash } from '../src/scripts/disclosure-hash';
+
+class ElementStub {
+  open = false;
+  parentElement: ElementStub | null = null;
+  closest = vi.fn<(selector: string) => ElementStub | null>().mockReturnValue(null);
+  querySelector = vi.fn<(selector: string) => ElementStub | null>().mockReturnValue(null);
+  scrollIntoView = vi.fn();
+  href = '/work#story';
+  target = '';
+  hasAttribute = vi.fn<(name: string) => boolean>().mockReturnValue(false);
+}
+
+function details() {
+  const element = new ElementStub();
+  element.closest.mockReturnValue(element);
+  return element;
+}
+
+function fixture(target = new ElementStub()) {
+  const media = { matches: false };
+  const browser = Object.assign(new EventTarget(), {
+    location: new URL('https://portfolio.example/work#story'),
+    matchMedia: vi.fn(() => media),
+  });
+  const documentStub = {
+    readyState: 'complete',
+    getElementById: vi.fn<(id: string) => ElementStub | null>().mockReturnValue(target),
+    addEventListener: vi.fn<(type: string, listener: (event: MouseEvent) => void) => void>(),
+    removeEventListener: vi.fn(),
+  };
+  vi.stubGlobal('window', browser);
+  vi.stubGlobal('document', documentStub);
+  vi.stubGlobal('Element', ElementStub);
+  return { target, media, browser, documentStub };
+}
+
+afterEach(() => vi.unstubAllGlobals());
+
+describe('disclosure hash enhancement', () => {
+  it('opens a directly linked disclosure and all enclosing disclosures', () => {
+    const target = new ElementStub();
+    const inner = details();
+    const outer = details();
+    target.closest.mockReturnValue(inner);
+    inner.parentElement = outer;
+    const { documentStub } = fixture(target);
+
+    expect(openDisclosureForHash('#r%C3%A9sum%C3%A9%20%5B2026%5D')).toBe(true);
+    expect(documentStub.getElementById).toHaveBeenCalledWith('résumé [2026]');
+    expect(inner.open).toBe(true);
+    expect(outer.open).toBe(true);
+    expect(target.scrollIntoView).toHaveBeenCalledOnce();
+  });
+
+  it('ignores malformed, missing, and ordinary section targets', () => {
+    const { target, documentStub } = fixture();
+    for (const hash of ['', '#', '#%E0%A4%A', '#%ZZ'])
+      expect(openDisclosureForHash(hash)).toBe(false);
+    expect(documentStub.getElementById).not.toHaveBeenCalled();
+    expect(openDisclosureForHash('#section')).toBe(false);
+    documentStub.getElementById.mockReturnValue(null);
+    expect(openDisclosureForHash('#missing')).toBe(false);
+    expect(target.scrollIntoView).not.toHaveBeenCalled();
+  });
+
+  it('honors the current reduced-motion preference', () => {
+    const { target, media } = fixture(details());
+    openDisclosureForHash('#story');
+    expect(target.scrollIntoView).toHaveBeenLastCalledWith({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+    media.matches = true;
+    openDisclosureForHash('#story');
+    expect(target.scrollIntoView).toHaveBeenLastCalledWith({
+      behavior: 'instant',
+      block: 'nearest',
+    });
+  });
+
+  it('handles initial and changed hashes and removes its listeners', () => {
+    const { target, browser, documentStub } = fixture(details());
+    const cleanup = initDisclosureHash();
+    expect(target.open).toBe(true);
+    target.open = false;
+    browser.location.hash = '#another-story';
+    browser.dispatchEvent(new Event('hashchange'));
+    expect(documentStub.getElementById).toHaveBeenLastCalledWith('another-story');
+    expect(target.open).toBe(true);
+    cleanup();
+    target.open = false;
+    browser.dispatchEvent(new Event('hashchange'));
+    expect(target.open).toBe(false);
+    expect(documentStub.removeEventListener).toHaveBeenCalledWith('click', expect.any(Function));
+  });
+});

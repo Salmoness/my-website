@@ -1,0 +1,16 @@
+{
+  "name": "@workspace/ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/contracts.ts",
+    "./contracts": "./src/contracts.ts",
+    "./theme.css": "./src/theme.css",
+    "./foundation.css": "./src/foundation.css"
+  },
+  "dependencies": {
+    "@fontsource-variable/ibm-plex-sans": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0"
+  }
+}

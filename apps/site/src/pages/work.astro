@@ -1,0 +1,226 @@
+---
+import { getCollection } from 'astro:content';
+import RootLayout from '../layouts/RootLayout.astro';
+import ProjectArtwork from '../components/portfolio/ProjectArtwork.astro';
+import Arrow from '../components/portfolio/Arrow.astro';
+import { DEFAULT_PAGE_METADATA, PORTFOLIO, safeLink } from '../config/site';
+import '../styles/portfolio-pages.css';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const experience = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
+const education = (await getCollection('education')).sort((a, b) => a.data.order - b.data.order);
+const resume = safeLink(PORTFOLIO.resumeUrl);
+---
+
+<RootLayout metadata={DEFAULT_PAGE_METADATA['/work']} activeRoute="/work">
+  <div class="site-wrap">
+    <section class="page-intro work-intro" aria-labelledby="work-title">
+      <div>
+        <h1 class="page-title" id="work-title">
+          A little thought.<br />A lot of <em>making.</em>
+        </h1>
+      </div>
+      <div class="page-intro-side">
+        <p>
+          Projects, experiments, and the decisions behind them. A growing collection of work, with
+          room for the next good idea.
+        </p><div class="intro-actions">
+          <a class="text-link" href="#resume">Background &amp; résumé <Arrow diagonal /></a>
+        </div>
+      </div>
+    </section>
+    <section class="work-list" aria-label="Projects">
+      <div class="collection-divider">
+        <span class="section-label">Selected projects</span><span class="section-label"
+          >{String(projects.length).padStart(2, '0')} / In the collection</span
+        >
+      </div>
+      <p class="content-note collection-note">
+        Project placeholders reserve space for real work. Illustrations are visual studies, not
+        screenshots of delivered projects.
+      </p>
+      {
+        projects.map((project, index) => {
+          const data = project.data;
+          const links = [
+            { label: 'Visit project', href: safeLink(data.links?.live) },
+            { label: 'View source', href: safeLink(data.links?.repo) },
+          ].filter((link) => link.href);
+          return (
+            <article id={project.id} class="work-entry">
+              <div class="work-entry-art">
+                <a
+                  class="featured-image-link"
+                  href={`#disclosure-${project.id}`}
+                  aria-label={`Read about ${data.title}`}
+                >
+                  <ProjectArtwork index={index} image={data.image} alt={data.imageAlt} />
+                </a>
+              </div>
+              <div class="work-entry-copy">
+                <h2>{data.title}</h2>
+                <div class="work-header-meta">
+                  <span>
+                    Project {index + 1} of {projects.length}
+                  </span>
+                  <span>{data.status === 'ready' ? 'Selected work' : 'Details coming later'}</span>
+                </div>
+                <p class="section-label">
+                  {data.category ??
+                    (data.kind === 'concept'
+                      ? 'Concept study'
+                      : data.kind === 'client'
+                        ? 'Client project'
+                        : 'Personal project')}
+                </p>
+                <p>{data.summary}</p>
+                <details id={`disclosure-${project.id}`} class="story-details specimen-drawer">
+                  <summary>
+                    <>
+                      <span>Inside the project</span>
+                      <span class="details-marker" aria-hidden="true" />
+                    </>
+                  </summary>
+                  <div class="story-body">
+                    <dl class="project-facts">
+                      <>
+                        <div>
+                          <>
+                            <dt>Role</dt>
+                            <dd>{data.role ?? 'To be added'}</dd>
+                          </>
+                        </div>
+                        <div>
+                          <>
+                            <dt>Timeline</dt>
+                            <dd>{data.timeframe ?? 'To be added'}</dd>
+                          </>
+                        </div>
+                        <div>
+                          <>
+                            <dt>Tools</dt>
+                            <dd>
+                              {data.technologies.length
+                                ? data.technologies.join(', ')
+                                : 'To be added'}
+                            </dd>
+                          </>
+                        </div>
+                      </>
+                    </dl>
+                    <>
+                      <h3>The starting point</h3>
+                      <p>
+                        {data.problem ??
+                          'The problem and context will be added with the project story.'}
+                      </p>
+                    </>
+                    <>
+                      <h3>The approach</h3>
+                      <p>
+                        {data.solution ??
+                          'The design and development decisions will be added here.'}
+                      </p>
+                    </>
+                    {data.outcomes?.length ? (
+                      <>
+                        <h3>What changed</h3>
+                        <ul>
+                          {data.outcomes.map((outcome) => (
+                            <li>{outcome}</li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <p class="content-note">Results will be shared once the story is ready.</p>
+                    )}
+                  </div>
+                </details>
+                <div class="work-entry-links">
+                  {links.length ? (
+                    links.map((link) => (
+                      <a
+                        class="text-link"
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label} <Arrow diagonal />
+                      </a>
+                    ))
+                  ) : (
+                    <span class="content-note">
+                      Project links will be added with the full story.
+                    </span>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })
+      }
+      {
+        !projects.length && (
+          <p class="content-note">New projects will appear here as they are added.</p>
+        )
+      }
+    </section>
+    <section id="resume" class="resume-section" aria-labelledby="resume-title">
+      <div>
+        <h2 id="resume-title">
+          The person<br />behind the work.
+        </h2><p class="resume-intro">{PORTFOLIO.about}</p>{
+          resume ? (
+            <a class="button-link" href={resume}>
+              View résumé PDF <Arrow diagonal />
+            </a>
+          ) : (
+            <p class="resume-unavailable">
+              <>
+                <strong>Résumé coming soon</strong>
+                <span>The latest PDF will be available here before launch.</span>
+              </>
+            </p>
+          )
+        }
+      </div>
+      <div class="credentials">
+        <h3>Education</h3>{
+          education.map((item) => (
+            <article id={item.id}>
+              <h4>{item.data.institution || item.data.title}</h4>
+              {item.data.field && <p>{item.data.field}</p>}
+              <p class="content-note">{item.data.credential}</p>
+              {item.data.dates && <p class="content-note">{item.data.dates}</p>}
+              {item.data.highlights?.length && (
+                <ul>
+                  {item.data.highlights.map((text) => (
+                    <li>{text}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))
+        }<h3>Experience</h3>{
+          experience.map((item) => (
+            <article id={item.id}>
+              <h4>{item.data.role || item.data.title}</h4>
+              {item.data.organization && <p>{item.data.organization}</p>}
+              {item.data.dates && <p class="content-note">{item.data.dates}</p>}
+              <p class="content-note">{item.data.summary}</p>
+              {item.data.achievements.length > 0 && (
+                <ul>
+                  {item.data.achievements.map((text) => (
+                    <li>{text}</li>
+                  ))}
+                </ul>
+              )}
+              {item.data.technologies?.length && (
+                <p class="content-note">{item.data.technologies.join(' / ')}</p>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</RootLayout>

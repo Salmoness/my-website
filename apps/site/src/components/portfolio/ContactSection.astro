@@ -1,0 +1,56 @@
+---
+import { PORTFOLIO, safeLink, emailLink } from '../../config/site';
+import Arrow from './Arrow.astro';
+const email = emailLink(PORTFOLIO.email);
+const profiles = [
+  { label: 'GitHub', href: safeLink(PORTFOLIO.github) },
+  { label: 'LinkedIn', href: safeLink(PORTFOLIO.linkedin) },
+];
+---
+
+<section id="contact" class="contact-section" aria-labelledby="contact-title">
+  <div class="site-wrap contact-layout">
+    <div>
+      <h2 id="contact-title">
+        Good things start<br />with a <em>conversation.</em>
+      </h2>
+      <p class="contact-prompt">{PORTFOLIO.contactHeading}</p>
+    </div>
+    <div class="contact-details">
+      <p>{PORTFOLIO.contactIntro}</p>
+      {
+        email ? (
+          <a class="contact-email" href={email}>
+            Say hello <Arrow diagonal />
+          </a>
+        ) : (
+          <div class="contact-unavailable">
+            <>
+              <strong>Contact details coming soon</strong>
+              <span>
+                This preview is taking shape. Direct contact will be available before launch.
+              </span>
+            </>
+          </div>
+        )
+      }
+      <div class="contact-profiles">
+        {
+          profiles.map((profile) =>
+            profile.href ? (
+              <a href={profile.href} target="_blank" rel="noopener noreferrer">
+                {profile.label}
+                <Arrow diagonal />
+              </a>
+            ) : (
+              <span>
+                {profile.label} <small>Coming soon</small>
+              </span>
+            ),
+          )
+        }
+        <a href="/work#resume">Résumé <Arrow diagonal /></a>
+      </div>
+    </div>
+  </div>
+</section>

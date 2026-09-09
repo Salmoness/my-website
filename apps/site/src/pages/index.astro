@@ -1,28 +1,161 @@
 ---
+import { getCollection } from 'astro:content';
 import RootLayout from '../layouts/RootLayout.astro';
-import { SMOKE_SITE_METADATA } from '../types/site';
+import ProjectArtwork from '../components/portfolio/ProjectArtwork.astro';
+import Arrow from '../components/portfolio/Arrow.astro';
+import { PORTFOLIO, DEFAULT_PAGE_METADATA, safeLink } from '../config/site';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured =
+  projects.find((project) => project.id === PORTFOLIO.featuredProjectId) ?? projects[0];
+const supporting = projects.filter((project) => project.id !== featured?.id);
+const headline = PORTFOLIO.headline.split('. ').map((part) => part.replace(/\.$/, ''));
+const headshot = safeLink(PORTFOLIO.headshotUrl);
 ---
 
-<RootLayout metadata={SMOKE_SITE_METADATA}>
-  <div class="max-w-xl text-center space-y-6">
-    <div
-      class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-sm font-medium text-emerald-400"
-    >
-      <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      Platform Foundation Smoke Page
+<RootLayout metadata={DEFAULT_PAGE_METADATA['/']} activeRoute="/">
+  <section class="home-hero site-wrap" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">
+          {
+            headline.map((part, i) => (
+              <span class:list={{ 'headline-accent': i > 0 }}>{part}.</span>
+            ))
+          }
+        </h1>
+        <p>{PORTFOLIO.introduction}</p>
+        <div class="hero-actions">
+          <a id="explore-link" class="button-link" href="/work">View selected work <Arrow /></a><a
+            class="text-link"
+            href="/work#resume">View résumé <Arrow diagonal /></a
+          >
+        </div>
+      </div>
+      <figure class="hero-art">
+        <div class="hero-art-window">
+          <div data-scroll-art data-motion-enabled={String(PORTFOLIO.motionEnabled)}>
+            <img
+              src={safeLink(PORTFOLIO.heroImageUrl)}
+              alt={PORTFOLIO.heroImageAlt}
+              width="1200"
+              height="900"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <figcaption>
+          <span>A study in form</span><span>Illustrative digital artwork</span>
+        </figcaption>
+      </figure>
     </div>
-    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl text-slate-50">Saymon Rivas</h1>
-    <p class="text-lg text-slate-400 leading-relaxed">
-      {SMOKE_SITE_METADATA.description}
-    </p>
-    <div class="pt-4">
-      <a
-        href="#main-content"
-        id="explore-link"
-        class="inline-block rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-slate-950 transition-colors hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-950"
+    <div class="hero-bottomline">
+      <span>Independent thinking. Considered execution.</span><a href="#selected-work"
+        >Explore below <Arrow /></a
       >
-        Verified Static Smoke Target
-      </a>
     </div>
-  </div>
+  </section>
+  <section id="selected-work" class="selected-section site-wrap" aria-labelledby="selected-title">
+    <div class="section-heading-row">
+      <div>
+        <h2 id="selected-title">Ideas, made tangible.</h2>
+      </div><a class="text-link" href="/work">All work <Arrow diagonal /></a>
+    </div>
+    <p class="content-note work-preview-note">
+      A first look at the portfolio. Project stories and final images are being added.
+    </p>
+    {
+      featured ? (
+        <article class="featured-project">
+          <a
+            class="featured-image-link"
+            href={`/work#disclosure-${featured.id}`}
+            aria-label={`Explore ${featured.data.title}`}
+          >
+            <ProjectArtwork index={0} image={featured.data.image} alt={featured.data.imageAlt} />
+          </a>
+          <div class="featured-caption">
+            <div>
+              <h3>
+                <a href={`/work#disclosure-${featured.id}`}>
+                  {featured.data.title} <Arrow diagonal />
+                </a>
+              </h3>
+              <p class="project-status">Featured placeholder · GitHub project coming later</p>
+            </div>
+            <p>{featured.data.summary}</p>
+          </div>
+        </article>
+      ) : (
+        <p class="content-note">New work will appear here as it is added.</p>
+      )
+    }
+    <div class="supporting-projects">
+      {
+        supporting.map((project, i) => (
+          <article>
+            <a
+              class="featured-image-link"
+              href={`/work#disclosure-${project.id}`}
+              aria-label={`Explore ${project.data.title}`}
+            >
+              <ProjectArtwork
+                index={i + 1}
+                image={project.data.image}
+                alt={project.data.imageAlt}
+              />
+            </a>
+            <div class="project-caption">
+              <>
+                <h3>
+                  <a href={`/work#disclosure-${project.id}`}>
+                    {project.data.title} <Arrow diagonal />
+                  </a>
+                </h3>
+                <span class="section-label">
+                  {project.data.category ?? 'Personal project'} /{' '}
+                  {project.data.status === 'ready' ? 'Selected work' : 'Preview'}
+                </span>
+                <p>{project.data.summary}</p>
+              </>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+  <section class="about-section" aria-labelledby="about-title">
+    <div class="site-wrap about-grid">
+      <div class="about-heading">
+        <h2 id="about-title">
+          Curious by nature.<br /><em>Thoughtful</em> by design.
+        </h2>{
+          headshot && (
+            <img
+              class="owner-headshot"
+              src={headshot}
+              alt={PORTFOLIO.name}
+              width="480"
+              height="560"
+              loading="lazy"
+            />
+          )
+        }
+      </div>
+      <div class="about-copy">
+        <p class="about-lead">{PORTFOLIO.about}</p><p>
+          I like bringing a clear idea to life, then making all the small decisions that help it
+          work well. This space is a collection of that thinking.
+        </p><div class="about-path">
+          <span>Looking for a developer?</span><a class="text-link" href="/work#resume"
+            >Explore my background <Arrow diagonal /></a
+          >
+        </div><div class="about-path">
+          <span>Have a project in mind?</span><a class="text-link" href="/services"
+            >See how we could work together <Arrow diagonal /></a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
 </RootLayout>

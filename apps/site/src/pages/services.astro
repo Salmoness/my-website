@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import RootLayout from '../layouts/RootLayout.astro';
+import Arrow from '../components/portfolio/Arrow.astro';
+import { DEFAULT_PAGE_METADATA, PORTFOLIO, packageInquiryLink } from '../config/site';
+import '../styles/portfolio-pages.css';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const assessmentUrl = packageInquiryLink('Free workflow improvement assessment', PORTFOLIO.email);
+---
+
+<RootLayout metadata={DEFAULT_PAGE_METADATA['/services']} activeRoute="/services">
+  <div class="site-wrap">
+    <section class="page-intro services-intro" aria-labelledby="services-title">
+      <h1 class="page-title" id="services-title">
+        Get online.<br /><em>Work smarter.</em>
+      </h1>
+      <div class="services-intro-bottom">
+        <p>
+          A website that helps customers find you. Automation that makes the next step easier. Start
+          with a free workflow improvement assessment.
+        </p>
+        <a class="button-link" href={assessmentUrl ?? '#contact'}>
+          Book Your Free Assessment <Arrow diagonal />
+        </a>
+      </div>
+    </section>
+    <section class="services-list" aria-label="Service packages">
+      {
+        services.map((service) => {
+          const data = service.data;
+          const inquiryUrl = packageInquiryLink(`Free assessment: ${data.title}`, PORTFOLIO.email);
+          const price =
+            data.pricing?.amount === undefined
+              ? ''
+              : new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: data.pricing.currency ?? 'USD',
+                  maximumFractionDigits: 0,
+                }).format(data.pricing.amount);
+          return (
+            <article id={service.id} class="service-entry">
+              <div class="service-copy">
+                <h2>{data.title}</h2>
+                <div class="service-header-meta">
+                  <span>Offer {service.id === 'web-development' ? '01' : '02'}</span>
+                  <span>One-time setup</span>
+                </div>
+                <p>{data.summary}</p>
+                {data.pricing && (
+                  <p class="package-pricing-badge">
+                    <strong class="pricing-mode">
+                      {data.pricing.mode === 'custom-quote'
+                        ? 'Custom quote'
+                        : data.pricing.mode === 'starting-at'
+                          ? `Starting at ${price}`
+                          : price}
+                    </strong>
+                    {data.pricing.note && <span class="pricing-note">{data.pricing.note}</span>}
+                  </p>
+                )}
+                <div id={`disclosure-${service.id}`} class="story-body">
+                  <ul>
+                    {data.deliverables.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                  {data.support && (
+                    <p>
+                      <strong>{data.support}</strong>
+                    </p>
+                  )}
+                  <div class="service-exclusions-block">
+                    <p class="service-exclusions-title">Limits &amp; Exclusions</p>
+                    {data.exclusions.map((item) => (
+                      <p class="content-note">{item}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div class="service-action">
+                <a class="button-link" href={inquiryUrl ?? '#contact'}>
+                  Book Your Free Assessment <Arrow diagonal />
+                </a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </section>
+    <section class="working-together" aria-labelledby="working-title">
+      <div><h2 id="working-title">Find your<br />next improvement.</h2></div>
+      <div>
+        <p>
+          Tell me about your business and the processes you would like to improve. We'll discuss
+          where a website, automation, or custom software could help.
+        </p>
+        <p class="content-note">
+          Assessment links open your email app to arrange a time. No appointment is booked
+          automatically.
+        </p>
+      </div>
+    </section>
+  </div>
+</RootLayout>

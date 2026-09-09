@@ -1,0 +1,27 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+  id?: string;
+  isExternal?: boolean;
+  isBracketed?: boolean;
+}
+
+const { href, class: className = '', id, isExternal = false, isBracketed = false } = Astro.props;
+---
+
+<a
+  id={id}
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  class:list={[
+    'font-mono text-sm font-bold text-[var(--color-ink-primary)] transition-colors duration-150 hover:text-[var(--color-signal-action)] focus-visible:outline-3 focus-visible:outline-[var(--color-signal-cobalt)] focus-visible:outline-offset-2',
+    isBracketed ? 'bracket-link inline-flex items-center gap-1' : 'underline underline-offset-4',
+    className,
+  ]}
+>
+  {isBracketed && <span aria-hidden="true">[</span>}
+  <slot />
+  {isBracketed && <span aria-hidden="true">&rarr; ]</span>}
+</a>

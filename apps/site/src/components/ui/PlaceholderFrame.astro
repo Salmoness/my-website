@@ -1,0 +1,28 @@
+---
+interface Props {
+  label: string;
+  requirement?: string;
+  class?: string;
+}
+
+const { label, requirement, class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={[
+    'border-2 border-dashed border-[var(--color-rule-faint)] bg-[#FAF5EE] p-6 text-center font-mono my-4',
+    className,
+  ]}
+>
+  <div class="text-xs text-[var(--color-signal-action-hover)] font-bold tracking-widest uppercase">
+    [ CONTENT REQUIRED ]
+  </div>
+  <div class="text-sm font-extrabold text-[var(--color-ink-primary)] mt-1">{label}</div>
+  {
+    requirement && (
+      <div class="text-xs text-[var(--color-ink-muted)] mt-1 max-w-[50ch] mx-auto">
+        {requirement}
+      </div>
+    )
+  }
+</div>

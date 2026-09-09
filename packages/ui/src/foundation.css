@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Foundation & Base Composition Styles — Surveyor's Field Ledger (Option C3)
+   ========================================================================== */
+
+/* Browser Text Selection */
+::selection {
+  background: var(--color-ink-primary);
+  color: #ffffff;
+}
+
+/* Base Body Styles */
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    min-height: 100vh;
+    width: 100%;
+  }
+}
+
+/* High-Contrast Accessible Focus Rings */
+:focus-visible {
+  outline: 3px solid var(--color-signal-action);
+  outline-offset: 3px;
+}
+
+/* Shared Owner & System Motion Policy */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-motion='off'] *,
+html[data-motion='off'] *::before,
+html[data-motion='off'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+html[data-motion='off'] [data-scroll-art] {
+  transform: none !important;
+}
+
+/* Drafting Crosshair Markers */
+.crosshair-corner {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-primary);
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 10;
+  line-height: 1;
+}
+
+/* Reusable Dossier Card Primitive */
+.dossier-card {
+  background: var(--color-sheet);
+  border: 3px solid var(--color-ink-primary);
+  box-shadow: 5px 5px 0px var(--color-ink-primary);
+  position: relative;
+  transition:
+    transform var(--duration-state) var(--ease-dossier),
+    box-shadow var(--duration-state) var(--ease-dossier);
+}
+
+.dossier-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px var(--color-ink-primary);
+}
+
+/* Bracketed Links */
+.bracket-link {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-ink-primary);
+  transition: color var(--duration-feedback) ease;
+}
+
+.bracket-link:hover {
+  color: var(--color-signal-action);
+}

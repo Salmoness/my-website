@@ -1,0 +1,22 @@
+{
+  "name": "Saymon Rivas",
+  "role": "Web developer",
+  "headline": "Websites with character. Built with care.",
+  "introduction": "I'm a web developer interested in automation and helping modernize processes. I'm equally open to employment opportunities and client projects.",
+  "about": "I'm a Computer Science graduate from the University of Central Florida (Class of 2026), with experience in web applications and AI quality assurance. I'm interested in using automation to improve how people work and helping modernize everyday processes. I speak English and Spanish, and welcome both employment opportunities and client projects.",
+  "featuredProjectId": "project-one",
+  "email": "slrivas24@gmail.com",
+  "github": "https://github.com/Salmoness",
+  "linkedin": "https://www.linkedin.com/in/saymonrivas",
+  "resumeUrl": "/resume.pdf",
+  "headshotUrl": "",
+  "headshotAlt": "",
+  "siteUrl": "",
+  "heroImageUrl": "/images/paper-study.webp",
+  "heroImageAlt": "Abstract red paper sculpture on a warm paper background.",
+  "contactHeading": "Have something in mind?",
+  "contactIntro": "For a project, a role, or a good conversation, get in touch.",
+  "socialImageUrl": "",
+  "socialImageAlt": "",
+  "motionEnabled": true
+}

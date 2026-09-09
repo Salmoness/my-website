@@ -1,0 +1,101 @@
+@theme static {
+  /* ==========================================================================
+     Option C3: Technical Specimen Dossier — Theme Tokens
+     ========================================================================== */
+
+  /* Palette: Warm tactile newsprint, pure white sheet, deep carbon ink */
+  --color-canvas: #f5efe6;
+  --color-sheet: #ffffff;
+  --color-paper-inset: #e9e1d5;
+  --color-paper-soft: #faf6f0;
+  --color-cobalt-paper: #e2e8ed;
+  --color-footer-muted: #b8b8b2;
+  --color-ink-primary: #0f1215;
+  --color-ink-muted: #4a5568;
+  --color-rule: #0f1215;
+  --color-rule-faint: rgba(15, 18, 21, 0.15);
+
+  /* Signals & Accents */
+  --color-signal-action: #dc2626;
+  --color-signal-action-hover: #b91c1c;
+  --color-signal-cobalt: #1d4ed8;
+  --color-signal-verified: #15803d;
+
+  /* Typography */
+  --font-sans:
+    'IBM Plex Sans Variable', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Fluid Display and Major Heading Scales */
+  --text-display: clamp(2.75rem, 6vw, 5.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.04em;
+
+  --text-heading-1: clamp(2rem, 4vw, 3.25rem);
+  --text-heading-1--line-height: 1.15;
+  --text-heading-1--letter-spacing: -0.03em;
+
+  --text-heading-2: clamp(1.5rem, 2.5vw, 2.25rem);
+  --text-heading-2--line-height: 1.2;
+  --text-heading-2--letter-spacing: -0.02em;
+
+  --text-heading-3: 1.25rem;
+  --text-heading-3--line-height: 1.35;
+
+  --text-heading-4: 1.0625rem;
+  --text-heading-4--line-height: 1.4;
+
+  --text-body-large: clamp(1.125rem, 1.8vw, 1.35rem);
+  --text-body-large--line-height: 1.55;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+
+  --text-body-small: 0.875rem;
+  --text-body-small--line-height: 1.5;
+
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.05em;
+
+  --text-metadata: 0.75rem;
+  --text-metadata--line-height: 1.4;
+  --text-metadata--letter-spacing: 0.06em;
+
+  /* Spacing Grid (0.25rem base with 1, 2, 3, 4, 6, 8, 12, 16, 24 steps) */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-24: 6rem;
+
+  /* Responsive Breakpoints (Mobile-first) */
+  --breakpoint-sm: 40rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* Reading Measures */
+  --width-reading: 65ch;
+  --width-prose: 68ch;
+
+  /* Motion Timing & Physics */
+  --duration-feedback: 120ms;
+  --duration-state: 200ms;
+  --duration-expansion: 360ms;
+  --ease-dossier: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Architectural Shadows & Borders */
+  --shadow-dossier: 4px 4px 0px var(--color-ink-primary);
+  --shadow-dossier-hover: 6px 6px 0px var(--color-ink-primary);
+  --shadow-dossier-bold: 8px 8px 0px var(--color-ink-primary);
+  --shadow-dossier-accent: 4px 4px 0px var(--color-signal-action);
+  --border-carbon-thin: 1px solid var(--color-ink-primary);
+  --border-carbon: 2px solid var(--color-ink-primary);
+  --border-carbon-thick: 3px solid var(--color-ink-primary);
+  --border-carbon-faint: 1px solid var(--color-rule-faint);
+}

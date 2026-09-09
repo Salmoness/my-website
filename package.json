@@ -12,7 +12,8 @@
     "typecheck": "pnpm --filter site typecheck",
     "lint": "eslint . --max-warnings 0",
     "format:check": "prettier --check .",
-    "test": "pnpm --filter site test"
+    "test": "pnpm --filter site test",
+    "test:e2e": "pnpm --filter site test:e2e"
   },
   "devDependencies": {
     "eslint": "10.9.1",
