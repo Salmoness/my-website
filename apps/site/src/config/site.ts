@@ -5,13 +5,34 @@ import type {
   PageMetadata,
   ContactConfig,
   PortfolioSettings,
+  SiteConfig,
   SiteMetadata,
   SiteMode,
 } from '../types/site';
+import saymonFounder from '../assets/images/azul/saymon-rivas-founder.png';
 
 import portfolioData from './portfolio.json';
 
-// Build-time site constants: supply final copy and asset/link values in portfolio.json before public launch.
+/** Current public identity. An empty form endpoint remains a release checklist item. */
+export const SITE: SiteConfig = {
+  name: 'Azul Online Projects',
+  shortName: 'Azul',
+  operator: 'Saymon Rivas',
+  headline: 'Grow your online identity.',
+  supportingLine:
+    'Websites and systems that sharpen your business. Content that brings people to you.',
+  email: 'saymon@azulonlineprojects.com',
+  siteUrl: 'https://azulonlineprojects.com',
+  location: 'Orlando, Florida',
+  serviceArea: 'Central Florida and remote clients across the United States',
+  consultationHref: '/services#contact',
+  formEndpoint: '',
+  founderPortrait: saymonFounder,
+  motionEnabled: true,
+  scrollFogEnabled: false,
+};
+
+/** Temporary compatibility export for the unlinked legacy Work route and its pending cleanup. */
 export const PORTFOLIO: PortfolioSettings = portfolioData;
 
 /** Allow HTTPS destinations and local paths, never protocol-relative URLs or credentials. */
@@ -29,7 +50,6 @@ export function safeLink(value: string | undefined): string | undefined {
   }
 
   try {
-    // Reject malformed escapes before they reach an href or image source.
     decodeURIComponent(value);
     if (/^\/(?!\/|%2f)/i.test(value)) return value;
     if (!/^https:\/\//i.test(value)) return undefined;
@@ -48,10 +68,10 @@ export function emailLink(value: string | undefined): string | undefined {
     : undefined;
 }
 
-/** Generate an encoded mailto: URL for a specific package inquiry. */
+/** Generate an encoded mailto URL for a specific package inquiry. */
 export function packageInquiryLink(
   packageTitle: string,
-  email: string | undefined = PORTFOLIO.email,
+  email: string | undefined = SITE.email,
 ): string | undefined {
   const mail = emailLink(email);
   if (!mail) return undefined;
@@ -66,7 +86,7 @@ function getPublicOrigin(value: string): string | undefined {
   return url.pathname === '/' && !url.search && !url.hash ? url.origin : undefined;
 }
 
-/** Resolve only supplied sharing inputs; never use a development/preview request origin. */
+/** Resolve only configured sharing inputs; never use a preview request origin. */
 export function getPageSharing(
   metadata: PageMetadata | SiteMetadata,
   settings: PortfolioSettings = PORTFOLIO,
@@ -103,33 +123,32 @@ export function getPageSharing(
   };
 }
 
-export const MAIN_ROUTES: readonly MainRoute[] = ['/', '/work', '/services'] as const;
+export const MAIN_ROUTES: readonly MainRoute[] = [
+  '/',
+  '/services',
+  '/how-we-work',
+  '/about',
+] as const;
 
 export const SITE_NAV: readonly NavItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Work', href: '/work' },
   { label: 'Services', href: '/services' },
+  { label: 'How We Work', href: '/how-we-work' },
+  { label: 'About', href: '/about' },
 ] as const;
 
 export const AUDIENCE_ACTIONS: readonly AudienceAction[] = [
   {
-    id: 'selected-work',
-    label: 'Explore Selected Work',
-    href: '/work',
-    audience: 'both',
+    id: 'starting',
+    label: 'I’m starting a business',
+    href: '/services#online-foundation',
+    audience: 'client',
     variant: 'primary',
   },
   {
-    id: 'resume',
-    label: 'View résumé',
-    href: '/work#resume',
-    audience: 'employer',
-    variant: 'secondary',
-  },
-  {
-    id: 'start-project',
-    label: 'Start a project',
-    href: '/services#contact',
+    id: 'growing',
+    label: 'I’m ready to grow',
+    href: '/services#ongoing-visibility',
     audience: 'client',
     variant: 'secondary',
   },
@@ -137,40 +156,63 @@ export const AUDIENCE_ACTIONS: readonly AudienceAction[] = [
 
 export const DEFAULT_PAGE_METADATA: Record<MainRoute, PageMetadata> = {
   '/': {
-    title: `${PORTFOLIO.name} — ${PORTFOLIO.role}`,
-    description: `Work, ideas, and web development by ${PORTFOLIO.name}. Explore projects, read the stories behind them, and start a conversation.`,
+    title: 'Azul Online Projects — Grow your online identity',
+    description:
+      'Websites, digital systems, and social content for small businesses in Orlando, Central Florida, and across the United States.',
     canonicalPath: '/',
     lang: 'en',
     charset: 'UTF-8',
   },
-  '/work': {
-    title: `Work & Experience — ${PORTFOLIO.name}`,
-    description: `Explore projects, experience, and computer-science education from ${PORTFOLIO.name}.`,
-    canonicalPath: '/work',
-    lang: 'en',
-    charset: 'UTF-8',
-  },
   '/services': {
-    title: `Web Development Services — ${PORTFOLIO.name}`,
+    title: 'Services — Azul Online Projects',
     description:
-      'Business Essentials from $1,200 and Business Growth from $2,400. Websites, lead generation, and automation with a free workflow improvement assessment.',
+      'Build a professional online foundation or keep your business visible with websites, business profiles, and social content.',
     canonicalPath: '/services',
     lang: 'en',
     charset: 'UTF-8',
   },
+  '/how-we-work': {
+    title: 'How We Work — Azul Online Projects',
+    description:
+      'A clear path from first conversation to proposal, collaborative build, launch, and handoff.',
+    canonicalPath: '/how-we-work',
+    lang: 'en',
+    charset: 'UTF-8',
+  },
+  '/about': {
+    title: 'About — Azul Online Projects',
+    description:
+      'Why Azul brings dependable websites and systems together with practical creative content.',
+    canonicalPath: '/about',
+    lang: 'en',
+    charset: 'UTF-8',
+  },
+  '/privacy': {
+    title: 'Privacy — Azul Online Projects',
+    description: 'How Azul handles the information shared through a project enquiry.',
+    canonicalPath: '/privacy',
+    lang: 'en',
+    charset: 'UTF-8',
+  },
+  '/work': {
+    title: 'Archived portfolio route — Azul Online Projects',
+    description: 'A legacy staging route scheduled for removal before the Azul MVP is released.',
+    canonicalPath: '/work',
+    lang: 'en',
+    charset: 'UTF-8',
+    noindex: true,
+  },
 };
 
 export const CONTACT_CONFIG: ContactConfig = {
-  email: PORTFOLIO.email,
-  github: PORTFOLIO.github,
-  linkedin: PORTFOLIO.linkedin,
-  isPlaceholder: !emailLink(PORTFOLIO.email),
-  notes: 'Contact details will be added before launch.',
+  email: SITE.email,
+  github: '',
+  linkedin: '',
+  isPlaceholder: !emailLink(SITE.email),
+  notes: 'Public mailbox configuration remains a release checklist item.',
 };
 
 export function getRobotsContent(siteMode: SiteMode): string {
-  if (siteMode === 'production') {
-    return 'User-agent: *\nAllow: /\n';
-  }
+  if (siteMode === 'production') return 'User-agent: *\nAllow: /\n';
   return 'User-agent: *\nDisallow: /\n';
 }

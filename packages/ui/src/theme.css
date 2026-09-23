@@ -1,69 +1,55 @@
 @theme static {
-  /* ==========================================================================
-     Option C3: Technical Specimen Dossier — Theme Tokens
-     ========================================================================== */
+  /* Azul Online Projects — signal-stage system */
+  --color-deep-azul: #071a2b;
+  --color-azul-ink: #0b2238;
+  --color-night-stage: #04131f;
+  --color-slate-current: #334a5f;
+  --color-cloud-gray: #edf2f5;
+  --color-cloud-white: #f8fbfc;
+  --color-coral-signal: #ff6f61;
+  --color-coral-active: #ff887d;
+  --color-azul-electric: #54a7d8;
+  --color-azul-mist: #a8c8d9;
 
-  /* Palette: Warm tactile newsprint, pure white sheet, deep carbon ink */
-  --color-canvas: #f5efe6;
-  --color-sheet: #ffffff;
-  --color-paper-inset: #e9e1d5;
-  --color-paper-soft: #faf6f0;
-  --color-cobalt-paper: #e2e8ed;
-  --color-footer-muted: #b8b8b2;
-  --color-ink-primary: #0f1215;
-  --color-ink-muted: #4a5568;
-  --color-rule: #0f1215;
-  --color-rule-faint: rgba(15, 18, 21, 0.15);
+  /* Compatibility aliases while legacy routes are removed in the second slice. */
+  --color-canvas: var(--color-deep-azul);
+  --color-sheet: var(--color-cloud-white);
+  --color-paper-inset: var(--color-cloud-gray);
+  --color-paper-soft: var(--color-cloud-white);
+  --color-cobalt-paper: #d9e8f0;
+  --color-footer-muted: var(--color-azul-mist);
+  --color-ink-primary: var(--color-deep-azul);
+  --color-ink-muted: var(--color-slate-current);
+  --color-rule: var(--color-slate-current);
+  --color-rule-faint: rgba(51, 74, 95, 0.24);
+  --color-signal-action: var(--color-coral-signal);
+  --color-signal-action-hover: var(--color-coral-active);
+  --color-signal-cobalt: var(--color-azul-electric);
+  --color-signal-verified: #2f866f;
 
-  /* Signals & Accents */
-  --color-signal-action: #dc2626;
-  --color-signal-action-hover: #b91c1c;
-  --color-signal-cobalt: #1d4ed8;
-  --color-signal-verified: #15803d;
+  --font-display: 'Epilogue Variable', 'Epilogue', sans-serif;
+  --font-body: 'Manrope Variable', 'Manrope', sans-serif;
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-body);
 
-  /* Typography */
-  --font-sans:
-    'IBM Plex Sans Variable', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* Fluid Display and Major Heading Scales */
-  --text-display: clamp(2.75rem, 6vw, 5.5rem);
-  --text-display--line-height: 1.05;
+  --text-display: clamp(5.6rem, 9.2vw, 9rem);
+  --text-display--line-height: 0.88;
   --text-display--letter-spacing: -0.04em;
-
-  --text-heading-1: clamp(2rem, 4vw, 3.25rem);
-  --text-heading-1--line-height: 1.15;
-  --text-heading-1--letter-spacing: -0.03em;
-
-  --text-heading-2: clamp(1.5rem, 2.5vw, 2.25rem);
-  --text-heading-2--line-height: 1.2;
-  --text-heading-2--letter-spacing: -0.02em;
-
-  --text-heading-3: 1.25rem;
-  --text-heading-3--line-height: 1.35;
-
-  --text-heading-4: 1.0625rem;
-  --text-heading-4--line-height: 1.4;
-
-  --text-body-large: clamp(1.125rem, 1.8vw, 1.35rem);
+  --text-heading-1: clamp(2.65rem, 5.8vw, 5.25rem);
+  --text-heading-1--line-height: 0.98;
+  --text-heading-1--letter-spacing: -0.035em;
+  --text-heading-2: clamp(2rem, 3.8vw, 3.65rem);
+  --text-heading-2--line-height: 1.04;
+  --text-heading-2--letter-spacing: -0.03em;
+  --text-heading-3: clamp(1.25rem, 2vw, 1.65rem);
+  --text-heading-3--line-height: 1.2;
+  --text-body-large: clamp(1.1rem, 1.7vw, 1.35rem);
   --text-body-large--line-height: 1.55;
-
   --text-body: 1rem;
-  --text-body--line-height: 1.6;
-
+  --text-body--line-height: 1.65;
   --text-body-small: 0.875rem;
-  --text-body-small--line-height: 1.5;
+  --text-body-small--line-height: 1.55;
 
-  --text-label: 0.8125rem;
-  --text-label--line-height: 1.4;
-  --text-label--letter-spacing: 0.05em;
-
-  --text-metadata: 0.75rem;
-  --text-metadata--line-height: 1.4;
-  --text-metadata--letter-spacing: 0.06em;
-
-  /* Spacing Grid (0.25rem base with 1, 2, 3, 4, 6, 8, 12, 16, 24 steps) */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
@@ -74,28 +60,21 @@
   --spacing-16: 4rem;
   --spacing-24: 6rem;
 
-  /* Responsive Breakpoints (Mobile-first) */
   --breakpoint-sm: 40rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
+  --width-reading: 70ch;
 
-  /* Reading Measures */
-  --width-reading: 65ch;
-  --width-prose: 68ch;
+  --duration-feedback: 150ms;
+  --duration-state: 260ms;
+  --duration-scene: 700ms;
+  --ease-signal: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-dossier: var(--ease-signal);
 
-  /* Motion Timing & Physics */
-  --duration-feedback: 120ms;
-  --duration-state: 200ms;
-  --duration-expansion: 360ms;
-  --ease-dossier: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --shadow-depth: 0 18px 55px rgba(2, 12, 22, 0.24);
+  --shadow-focus: 0 0 0 4px rgba(84, 167, 216, 0.32);
 
-  /* Architectural Shadows & Borders */
-  --shadow-dossier: 4px 4px 0px var(--color-ink-primary);
-  --shadow-dossier-hover: 6px 6px 0px var(--color-ink-primary);
-  --shadow-dossier-bold: 8px 8px 0px var(--color-ink-primary);
-  --shadow-dossier-accent: 4px 4px 0px var(--color-signal-action);
-  --border-carbon-thin: 1px solid var(--color-ink-primary);
-  --border-carbon: 2px solid var(--color-ink-primary);
-  --border-carbon-thick: 3px solid var(--color-ink-primary);
-  --border-carbon-faint: 1px solid var(--color-rule-faint);
+  --radius-control: 2px;
+  --radius-surface: 2px;
+  --radius-signal: 50%;
 }

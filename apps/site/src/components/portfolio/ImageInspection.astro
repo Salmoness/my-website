@@ -1,0 +1,56 @@
+---
+import Arrow from './Arrow.astro';
+
+const titleId = 'project-image-inspection-title';
+const descriptionId = 'project-image-inspection-description';
+---
+
+<dialog
+  class="image-inspection"
+  data-image-inspection
+  aria-labelledby={titleId}
+  aria-describedby={descriptionId}
+>
+  <div class="image-inspection__panel">
+    <header class="image-inspection__header">
+      <h2 id={titleId} data-image-inspection-title>Project image</h2>
+      <button class="image-inspection__close" type="button" data-image-inspection-close>
+        <span>Close</span>
+        <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+          <path d="m4 4 12 12M16 4 4 16"></path>
+        </svg>
+      </button>
+    </header>
+
+    <figure class="image-inspection__figure">
+      <img
+        data-image-inspection-image
+        src="/images/paper-study.webp"
+        alt=""
+        width="1200"
+        height="800"
+        decoding="async"
+        hidden
+      />
+      <figcaption id={descriptionId} data-image-inspection-description>
+        Larger project image.
+      </figcaption>
+    </figure>
+
+    <p class="image-inspection__error" data-image-inspection-error role="status" hidden>
+      The larger image could not be loaded. You can still try opening the original file.
+    </p>
+
+    <a
+      class="text-link image-inspection__original"
+      data-image-inspection-original
+      href="/work"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Open original image <Arrow diagonal />
+    </a>
+  </div>
+</dialog>
+
+<script src="../../scripts/image-inspection.ts"></script>

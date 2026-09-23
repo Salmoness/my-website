@@ -1,0 +1,55 @@
+---
+const pathname = Astro.url.pathname;
+const mirrored = pathname.startsWith('/services') || pathname.startsWith('/about');
+---
+
+<div
+  class="fog-field"
+  data-fog-field
+  data-route={pathname}
+  data-mirrored={mirrored ? 'true' : 'false'}
+  aria-hidden="true"
+>
+  <svg
+    class="fog-field__still"
+    viewBox="0 0 1600 1000"
+    preserveAspectRatio="xMidYMid slice"
+    focusable="false"
+  >
+    <defs>
+      <linearGradient id="azul-fog-still" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#54a7d8" stop-opacity="0.22"></stop>
+        <stop offset="0.48" stop-color="#edf2f5" stop-opacity="0.34"></stop>
+        <stop offset="1" stop-color="#334a5f" stop-opacity="0.2"></stop>
+      </linearGradient>
+      <filter id="azul-fog-soften" x="-30%" y="-40%" width="160%" height="180%">
+        <feGaussianBlur stdDeviation="34"></feGaussianBlur>
+      </filter>
+      <filter id="azul-fog-glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="12"></feGaussianBlur>
+      </filter>
+    </defs>
+    <g class="fog-field__still-flow">
+      <path
+        class="fog-field__still-haze"
+        d="M-150 75C190-35 315 165 155 305S100 520 545 535s960-80 1120 95-145 230-515 205S285 810-120 1010"
+      ></path>
+      <path
+        class="fog-field__still-core"
+        d="M-150 75C190-35 315 165 155 305S100 520 545 535s960-80 1120 95-145 230-515 205S285 810-120 1010"
+      ></path>
+      <path class="fog-field__still-coral" d="M735 535c54-8 112-9 168-5M1090 836c48 3 96 4 142-1"
+      ></path>
+      <circle class="fog-field__still-signal" cx="812" cy="532" r="13"></circle>
+      <circle class="fog-field__still-signal" cx="1164" cy="837" r="9"></circle>
+    </g>
+  </svg>
+  <canvas data-fog-canvas></canvas>
+</div>
+<noscript
+  ><style>
+    .fog-field__still {
+      opacity: 0.42 !important;
+    }
+  </style></noscript
+>

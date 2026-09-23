@@ -1,110 +1,102 @@
 import { expect, test, type Page } from '@playwright/test';
 
-const routes = [
-  { path: '/', label: 'Home' },
-  { path: '/work', label: 'Work' },
-  { path: '/services', label: 'Services' },
-] as const;
+function collectRuntimeErrors(page: Page): string[] {
+  const errors: string[] = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') errors.push(message.text());
+  });
+  page.on('pageerror', (error) => errors.push(error.message));
+  return errors;
+}
 
-const primaryNav = (page: Page) => page.getByRole('banner').getByRole('navigation');
+test.describe('Azul MVP journeys', () => {
+  test('the service guide recommends a path and transfers useful context', async ({ page }) => {
+    const errors = collectRuntimeErrors(page);
+    await page.goto('/services');
 
-test.describe('portfolio journeys', () => {
-  test('all routes render cleanly and fit the viewport', async ({ page }) => {
-    const runtimeErrors: string[] = [];
-    page.on('console', (message) => {
-      if (message.type() === 'error') runtimeErrors.push(message.text());
-    });
-    page.on('pageerror', (error) => runtimeErrors.push(error.message));
+    await page.locator('input[name="guide-stage"][value="starting"]').check();
+    await page.locator('input[name="guide-presence"][value="none"]').check();
+    await page.locator('input[name="guide-goal"][value="credible"]').check();
 
-    for (const route of routes) {
-      await page.goto(route.path);
-      await expect(page.getByRole('main')).toHaveAttribute('id', 'main-content');
-      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-      await expect(page.locator('#contact')).toBeVisible();
-      await expect(primaryNav(page).locator('[aria-current="page"]')).toHaveCount(1);
-      for (const details of await page.locator('details').all()) {
-        if (!(await details.evaluate((element: HTMLDetailsElement) => element.open))) {
-          await details.locator('summary').click();
-        }
-      }
-      expect(
-        await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
-      ).toBe(false);
-    }
-    expect(runtimeErrors).toEqual([]);
+    await expect(page.locator('[data-guide-title]')).toHaveText('Online Foundation');
+    await expect(page.locator('[data-guide-apply]')).not.toHaveAttribute('aria-disabled');
+    await page.locator('[data-guide-apply]').click();
+
+    await expect(page).toHaveURL(/#contact$/);
+    await expect(page.locator('[data-enquiry-stage]')).toHaveValue('starting');
+    await expect(page.locator('[data-service-interest]')).toHaveValue('Online Foundation');
+    await expect(page.locator('[data-enquiry-goal]')).toHaveValue('Look credible');
+    await expect(page.locator('[data-guide-summary]')).toHaveValue(/suggestion=Online Foundation/);
+
+    await page.locator('[data-service-interest]').selectOption('Social Content');
+    await expect(page.locator('[data-content-needs]')).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+      false,
+    );
+    expect(errors).toEqual([]);
   });
 
-  test('primary work, résumé, project details, and contact paths reach real destinations', async ({
+  test('process and founder pages make responsibilities and positioning explicit', async ({
     page,
   }) => {
-    await page.goto('/');
-    await page.locator('#explore-link').click();
-    await expect(page).toHaveURL(/\/work\/?$/);
+    const errors = collectRuntimeErrors(page);
 
-    const story = page.locator('#disclosure-project-two');
-    await page.goto('/work#disclosure-project-two');
-    await expect(story).toHaveJSProperty('open', true);
-    await page.locator('a[href="#resume"]').first().click();
-    await expect(page.locator('#resume')).toBeInViewport();
+    await page.goto('/how-we-work');
+    await expect(page.locator('.process-route--expanded li')).toHaveCount(4);
+    await expect(page.getByText('You bring', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('Azul shapes', { exact: true }).first()).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Your presence should stay yours.' }),
+    ).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+      false,
+    );
 
-    await page.goto('/services');
-    const assessment = page.getByRole('link', { name: 'Book Your Free Assessment', exact: true });
-    await expect(assessment).toHaveCount(3);
-    await expect(assessment.first()).toHaveAttribute('href', /^mailto:.*subject=/);
-    await expect(page.locator('#web-development .service-action a')).toHaveAttribute(
-      'href',
-      /Business%20Essentials/,
+    await page.goto('/about');
+    await expect(page.getByText('Saymon Rivas', { exact: true })).toBeVisible();
+    await expect(page.getByText('Founder of Azul Online Projects', { exact: true })).toBeVisible();
+    await expect(page.getByText('University of Central Florida')).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+      false,
     );
-    await expect(page.locator('#frontend-architecture .service-action a')).toHaveAttribute(
-      'href',
-      /Business%20Growth/,
-    );
+    expect(errors).toEqual([]);
   });
 
-  test('keyboard users can skip navigation and operate project disclosures', async ({ page }) => {
-    await page.goto('/');
-    await page.keyboard.press('Tab');
-    await expect(page.locator('#skip-to-content')).toBeFocused();
-    await page.keyboard.press('Enter');
-    await expect(page.getByRole('main')).toBeFocused();
+  test('consultation and privacy paths stay useful before a form provider is connected', async ({
+    page,
+  }) => {
+    await page.goto('/services#contact');
+    await expect(
+      page.getByRole('heading', { name: 'Tell me what you’re working through.' }),
+    ).toBeVisible();
+    await expect(page.locator('[data-enquiry-form]')).toBeVisible();
+    await expect(
+      page.locator('#contact').getByRole('link', { name: 'saymon@azulonlineprojects.com' }),
+    ).toHaveAttribute('href', 'mailto:saymon@azulonlineprojects.com');
 
-    await page.goto('/work');
-    const details = page.locator('details').first();
-    const summary = details.locator('summary');
-    await summary.focus();
-    const initial = await details.evaluate((element: HTMLDetailsElement) => element.open);
-    await page.keyboard.press('Enter');
-    await expect(details).toHaveJSProperty('open', !initial);
-  });
-
-  test('reduced motion keeps the main artwork still while scrolling', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/');
-    const artwork = page.locator('[data-scroll-art]');
-    await expect(artwork).toBeVisible();
-    await page.keyboard.press('End');
-    await expect(artwork).toHaveCSS('transform', 'none');
-    await expect(artwork).toHaveCSS('animation-name', 'none');
+    await page.goto('/privacy');
+    await expect(page.getByRole('heading', { name: 'Privacy, in plain language.' })).toBeVisible();
+    await expect(
+      page.locator('main').getByText('Saymon Rivas, operating as Azul Online Projects'),
+    ).toBeVisible();
   });
 });
 
-test.describe('without JavaScript', () => {
+test.describe('Azul essentials without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('navigation, contact, résumé, and native disclosures remain usable', async ({ page }) => {
-    await page.goto('/');
-    await page.locator('#explore-link').click();
-    await expect(page).toHaveURL(/\/work\/?$/);
-    await expect(page.locator('#resume')).toBeVisible();
-
-    const details = page.locator('details').first();
-    await details.locator('summary').focus();
-    const initial = await details.evaluate((element: HTMLDetailsElement) => element.open);
-    await page.keyboard.press('Enter');
-    await expect(details).toHaveJSProperty('open', !initial);
-
-    await primaryNav(page).locator('a[href="/services"]').click();
-    await expect(page).toHaveURL(/\/services\/?$/);
-    await expect(page.locator('#contact')).toBeVisible();
+  test('services, direct contact, and process content remain available', async ({ page }) => {
+    await page.goto('/services');
+    await expect(page.getByRole('heading', { name: 'Online Foundation' }).first()).toBeVisible();
+    await expect(page.locator('[data-service-guide]')).toBeVisible();
+    await expect(page.locator('[data-enquiry-form]')).toBeVisible();
+    await expect(
+      page.locator('#contact').getByRole('link', { name: 'saymon@azulonlineprojects.com' }),
+    ).toBeVisible();
+    await page.goto('/how-we-work');
+    await expect(page.locator('.process-route--expanded li')).toHaveCount(4);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+      false,
+    );
   });
 });

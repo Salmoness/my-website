@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  position?: string;
+}
+
+const { image, position = '50% 44%' } = Astro.props;
+---
+
+<div class="route-hero__media" aria-hidden="true" style={`--hero-photo-position: ${position}`}>
+  <Image
+    src={image}
+    alt=""
+    widths={[640, 960, 1440, 1920]}
+    sizes="100vw"
+    format="webp"
+    quality={76}
+    loading="eager"
+    decoding="async"
+  />
+</div>

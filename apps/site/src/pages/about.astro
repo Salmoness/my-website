@@ -1,0 +1,131 @@
+---
+import SignalMark from '../components/brand/SignalMark.astro';
+import EditorialPlate from '../components/media/EditorialPlate.astro';
+import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
+import RootLayout from '../layouts/RootLayout.astro';
+import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
+import founderIntersection from '../assets/images/azul/founder-intersection.png';
+
+const principles = [
+  [
+    'Clarity before complexity',
+    'Start with the result the business needs, then choose the smallest useful system.',
+  ],
+  [
+    'Creative with a destination',
+    'Content should point toward a clear offer, profile, website, or next action.',
+  ],
+  [
+    'Ownership without dependency',
+    'Core accounts and approved deliverables stay in the client’s control.',
+  ],
+] as const;
+---
+
+<RootLayout metadata={DEFAULT_PAGE_METADATA['/about']} activeRoute="/about">
+  <section class="route-hero route-hero--about route-hero--photo">
+    <RouteHeroMedia image={founderIntersection} position="55% 48%" />
+    <div class="site-frame route-hero__layout">
+      <h1>Technical enough to work. Creative enough to matter.</h1>
+      <p>
+        Azul exists because a small business should not have to choose between a reliable digital
+        foundation and ideas people actually notice.
+      </p>
+    </div>
+    <div class="site-frame about-equation" aria-label="Code and creative direction meet at Azul">
+      <div>
+        <span>Performance systems</span><strong>Make the business feel high quality</strong>
+      </div>
+      <i aria-hidden="true"></i>
+      <div class="about-equation__core"><SignalMark /><strong>Azul</strong></div>
+      <i aria-hidden="true"></i>
+      <div><span>Creative ideas</span><strong>Bring people toward the service</strong></div>
+    </div>
+  </section>
+
+  <section class="about-studio-bridge" aria-label="Meet the founder of Azul Online Projects">
+    <div class="site-frame">
+      <EditorialPlate
+        image={SITE.founderPortrait}
+        alt="Saymon Rivas holding a laptop displaying the Azul Online Projects website."
+        label="Saymon Rivas / Founder"
+        caption="Azul is a founder-led Orlando business built where dependable implementation and creative presentation meet."
+        code="Orlando / Building Azul"
+        className="founder-photo-card about-studio-plate"
+        position="50% 10%"
+      />
+    </div>
+  </section>
+
+  <section
+    class="founder-story chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
+    aria-labelledby="founder-story-title"
+  >
+    <div class="site-frame founder-story__layout">
+      <div class="founder-story__identity">
+        <span>Saymon Rivas</span>
+        <strong>Founder of Azul Online Projects</strong>
+        <div class="founder-story__location">
+          <span>Based</span><strong>Orlando, Florida</strong>
+          <span>Available</span><strong>Central Florida + remote across the U.S.</strong>
+        </div>
+      </div>
+      <div class="founder-story__copy">
+        <h2 id="founder-story-title">
+          I learned to build systems. Small businesses showed me why the story around them matters.
+        </h2>
+        <p>
+          Studying computer science at the University of Central Florida taught me how to break a
+          problem apart and make the pieces work together. Watching small businesses compete for
+          attention revealed the other half: a sound system can still be invisible without clear,
+          useful creative work around it.
+        </p>
+        <p>
+          I created Azul to work at that intersection. Websites and profiles establish credibility.
+          Content gives people a reason to notice. The best result is not more digital clutter—it is
+          one online identity that makes the business easier to find, understand, and contact.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="principles-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    aria-labelledby="principles-title"
+  >
+    <div class="site-frame principles-layout">
+      <h2 id="principles-title">A few rules keep the work useful.</h2>
+      <div class="principles-list">
+        {
+          principles.map(([title, text]) => (
+            <article>
+              <>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="about-close chapter-stack chapter-stack--wide chapter-stack--slate"
+    aria-labelledby="about-close-title"
+  >
+    <div class="site-frame about-close__layout">
+      <h2 id="about-close-title">Bring the business problem. We’ll find the useful first move.</h2>
+      <div>
+        <p>
+          Tell me what feels scattered, what you want to avoid, and what needs to work better. I’ll
+          respond within two business days.
+        </p>
+        <a class="signal-button" href={SITE.consultationHref}>
+          <span>Let’s hop on a call</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</RootLayout>

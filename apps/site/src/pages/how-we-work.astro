@@ -1,0 +1,147 @@
+---
+import ProcessRoute from '../components/brand/ProcessRoute.astro';
+import EditorialPlate from '../components/media/EditorialPlate.astro';
+import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
+import RootLayout from '../layouts/RootLayout.astro';
+import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
+import projectHandoff from '../assets/images/azul/project-handoff.png';
+import webDevelopment from '../assets/images/azul/web-development.png';
+
+const changeFactors = [
+  {
+    title: 'Scope moves',
+    text: 'New pages, formats, platforms, integrations, or deliverables change the work being priced.',
+    signal: 'Price + schedule',
+  },
+  {
+    title: 'Inputs arrive late',
+    text: 'Missing content, account access, source files, or approvals can pause the agreed timeline.',
+    signal: 'Schedule',
+  },
+  {
+    title: 'Feedback expands',
+    text: 'Revisions beyond the proposal or conflicting decision-makers require a new agreement.',
+    signal: 'Price + schedule',
+  },
+] as const;
+---
+
+<RootLayout metadata={DEFAULT_PAGE_METADATA['/how-we-work']} activeRoute="/how-we-work">
+  <section class="route-hero route-hero--process route-hero--photo">
+    <RouteHeroMedia image={webDevelopment} position="58% 49%" />
+    <div class="site-frame route-hero__layout">
+      <h1>Clear work starts before anything gets built.</h1>
+      <div>
+        <p>
+          Know what happens, what each side owns, and what can change the quote or schedule before
+          the project begins.
+        </p>
+        <a class="signal-link" href={SITE.consultationHref}>
+          Start with your context
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+        </a>
+      </div>
+    </div>
+    <div class="site-frame process-key" aria-label="Process responsibilities">
+      <span><i class="process-key__client"></i>You bring the context and decisions</span>
+      <span><i class="process-key__azul"></i>Azul turns them into direction and work</span>
+    </div>
+  </section>
+
+  <section
+    class="work-route-section chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
+    aria-labelledby="work-route-title"
+  >
+    <div class="site-frame work-route-intro">
+      <h2 id="work-route-title">One conversation becomes a bounded project.</h2>
+      <p>
+        Every phase ends with something concrete. That keeps the work understandable and gives both
+        sides a chance to correct direction before the next handoff.
+      </p>
+    </div>
+    <div class="site-frame"><ProcessRoute expanded headingId="work-route-title" /></div>
+  </section>
+
+  <section
+    class="expectations-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    aria-labelledby="expectations-title"
+  >
+    <div class="site-frame expectations-layout">
+      <div class="expectations-heading">
+        <h2 id="expectations-title">The proposal is the control point.</h2>
+        <p>
+          Published ranges help with orientation. The written proposal is where deliverables,
+          exclusions, revision rounds, ownership, price, timing, and payment terms become specific.
+        </p>
+      </div>
+      <div class="scope-shifts" aria-label="What can change a project quote or schedule">
+        {
+          changeFactors.map((factor) => (
+            <article>
+              <div>
+                <>
+                  <h3>{factor.title}</h3>
+                  <span>{factor.signal}</span>
+                </>
+              </div>
+              <p>{factor.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="timing-section chapter-stack chapter-stack--medium chapter-stack--light"
+    aria-labelledby="timing-title"
+  >
+    <div class="site-frame timing-layout">
+      <div>
+        <h2 id="timing-title">Timing begins when the work can begin.</h2>
+        <p>
+          Estimates start after required content, access, and approvals are available. Azul may
+          deliver sooner, but a rushed promise is not the process.
+        </p>
+      </div>
+      <div class="timeline-band">
+        <div><span>Profile setup</span><strong>1–2 weeks</strong></div>
+        <div><span>Focused website</span><strong>2–4 weeks</strong></div>
+        <div><span>Online Foundation</span><strong>3–6 weeks</strong></div>
+        <div><span>Content + ongoing work</span><strong>Agreed cadence</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="handoff-section chapter-stack chapter-stack--wide chapter-stack--slate"
+    aria-labelledby="handoff-title"
+  >
+    <div class="site-frame handoff-layout">
+      <h2 id="handoff-title">Your presence should stay yours.</h2>
+      <EditorialPlate
+        image={projectHandoff}
+        alt="Two people exchange an organized project handoff folder and tablet."
+        label="The work leaves with you"
+        caption="Accounts, approved deliverables, and the next steps are organized for practical ownership."
+        code="04 / Launch + handoff"
+        className="handoff-plate"
+        compact
+      />
+      <div>
+        <p>
+          Clients own their domain, hosting accounts, Google and Meta assets, website content, and
+          approved final deliverables by default. Optional ongoing support stays optional.
+        </p>
+        <p>
+          The consultation provides a concise recommended direction—not a free complete audit,
+          custom strategy, or speculative design.
+        </p>
+        <a class="signal-button" href={SITE.consultationHref}>
+          <span>Let’s hop on a call</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</RootLayout>

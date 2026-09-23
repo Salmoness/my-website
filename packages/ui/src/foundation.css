@@ -1,42 +1,82 @@
-/* ==========================================================================
-   Foundation & Base Composition Styles — Surveyor's Field Ledger (Option C3)
-   ========================================================================== */
-
-/* Browser Text Selection */
-::selection {
-  background: var(--color-ink-primary);
-  color: #ffffff;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* Base Body Styles */
+html {
+  min-width: 20rem;
+  background: var(--color-deep-azul);
+  scroll-behavior: smooth;
+}
+
 @layer base {
   body {
-    background-color: var(--color-canvas);
-    color: var(--color-ink-primary);
-    font-family: var(--font-sans);
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    background: var(--color-deep-azul);
+    color: var(--color-cloud-gray);
+    font-family: var(--font-body);
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
-    min-height: 100vh;
-    width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-/* High-Contrast Accessible Focus Rings */
-:focus-visible {
-  outline: 3px solid var(--color-signal-action);
-  outline-offset: 3px;
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
 }
 
-/* Shared Owner & System Motion Policy */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-coral-signal);
+  color: var(--color-deep-azul);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-azul-electric);
+  outline-offset: 4px;
+  box-shadow: var(--shadow-focus);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
+}
+
+html[data-motion='off'] {
+  scroll-behavior: auto;
 }
 
 html[data-motion='off'] *,
@@ -44,54 +84,6 @@ html[data-motion='off'] *::before,
 html[data-motion='off'] *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
-}
-
-html[data-motion='off'] [data-scroll-art] {
-  transform: none !important;
-}
-
-/* Drafting Crosshair Markers */
-.crosshair-corner {
-  position: absolute;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-ink-primary);
-  font-weight: 700;
-  pointer-events: none;
-  z-index: 10;
-  line-height: 1;
-}
-
-/* Reusable Dossier Card Primitive */
-.dossier-card {
-  background: var(--color-sheet);
-  border: 3px solid var(--color-ink-primary);
-  box-shadow: 5px 5px 0px var(--color-ink-primary);
-  position: relative;
-  transition:
-    transform var(--duration-state) var(--ease-dossier),
-    box-shadow var(--duration-state) var(--ease-dossier);
-}
-
-.dossier-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px var(--color-ink-primary);
-}
-
-/* Bracketed Links */
-.bracket-link {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  color: var(--color-ink-primary);
-  transition: color var(--duration-feedback) ease;
-}
-
-.bracket-link:hover {
-  color: var(--color-signal-action);
+  transition-duration: 0.01ms !important;
 }

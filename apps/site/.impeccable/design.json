@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T18:50:55Z",
+  "title": "Design System: Azul Online Projects",
+  "extensions": {
+    "colorMeta": {
+      "deep-azul": {
+        "role": "primary",
+        "displayName": "Deep Azul",
+        "canonical": "#071A2B",
+        "tonalRamp": ["#02090F", "#071A2B", "#0E304C", "#1D4C6D", "#397294", "#66A0BC", "#A8C8D9", "#EAF4F8"]
+      },
+      "azul-ink": {
+        "role": "neutral",
+        "displayName": "Azul Ink",
+        "canonical": "#0B2238",
+        "tonalRamp": ["#030B12", "#0B2238", "#173B58", "#2A5878", "#467998", "#70A0B8", "#AAC7D4", "#EEF6F8"]
+      },
+      "night-stage": {
+        "role": "neutral",
+        "displayName": "Night Stage",
+        "canonical": "#04131F",
+        "tonalRamp": ["#02070C", "#04131F", "#0B2A40", "#174662", "#306885", "#5D95AE", "#A1C4D3", "#EDF7F9"]
+      },
+      "slate-current": {
+        "role": "secondary",
+        "displayName": "Slate Current",
+        "canonical": "#334A5F",
+        "tonalRamp": ["#0D151D", "#1B2B39", "#334A5F", "#4E687F", "#6F8AA0", "#9EB1C0", "#CAD6DE", "#EEF3F6"]
+      },
+      "cloud-gray": {
+        "role": "neutral",
+        "displayName": "Cloud Gray",
+        "canonical": "#EDF2F5",
+        "tonalRamp": ["#172028", "#2D3A44", "#4B5A65", "#71808A", "#9DA9B1", "#C5CDD2", "#E1E7EA", "#F6F9FA"]
+      },
+      "cloud-white": {
+        "role": "neutral",
+        "displayName": "Cloud White",
+        "canonical": "#F8FBFC",
+        "tonalRamp": ["#151E23", "#29363C", "#47565D", "#697980", "#95A3A9", "#C2CDD1", "#E2E9EC", "#F8FBFC"]
+      },
+      "coral-signal": {
+        "role": "primary",
+        "displayName": "Coral Signal",
+        "canonical": "#FF6F61",
+        "tonalRamp": ["#3A0E0A", "#6E1F18", "#A83B31", "#D95549", "#FF6F61", "#FF9C91", "#FFC8C2", "#FFF0EE"]
+      },
+      "coral-active": {
+        "role": "secondary",
+        "displayName": "Coral Active",
+        "canonical": "#FF887D",
+        "tonalRamp": ["#3B100D", "#6F251F", "#A9453D", "#DE675D", "#FF887D", "#FFABA3", "#FFD1CB", "#FFF2F0"]
+      },
+      "azul-electric": {
+        "role": "secondary",
+        "displayName": "Azul Electric",
+        "canonical": "#54A7D8",
+        "tonalRamp": ["#061D2B", "#0D3550", "#174F74", "#2B749F", "#54A7D8", "#83C2E4", "#B6DDEE", "#ECF8FC"]
+      },
+      "azul-mist": {
+        "role": "neutral",
+        "displayName": "Azul Mist",
+        "canonical": "#A8C8D9",
+        "tonalRamp": ["#10232D", "#1D3D4C", "#31596B", "#527D91", "#7EA6B9", "#A8C8D9", "#D1E2EA", "#F1F8FA"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Hero Statement", "purpose": "The dominant first-view proposition." },
+      "headline": { "displayName": "Chapter Statement", "purpose": "Narrative and conversion turns." },
+      "section-title": { "displayName": "Section Title", "purpose": "A stronger option for process stages, offers, and consequential headings." },
+      "title": { "displayName": "Compact Title", "purpose": "Headings when the composition already carries the emphasis." },
+      "body": { "displayName": "Clear Explanation", "purpose": "Plain-language service and process copy." },
+      "body-large": { "displayName": "Narrative Body", "purpose": "Explanatory copy that participates in the visual story." },
+      "label": { "displayName": "Quiet Metadata", "purpose": "Small route, price, and state context only." }
+    },
+    "shadows": [
+      { "name": "chapter-overlap", "value": "0 -1.35rem 3.75rem -1.6rem rgba(2, 13, 24, 0.34)", "purpose": "Soft depth at a foreground chapter edge." },
+      { "name": "stage-depth", "value": "0 18px 55px rgba(2, 12, 22, 0.24)", "purpose": "Protects legibility on occasional dark surfaces." },
+      { "name": "focus-halo", "value": "0 0 0 4px rgba(84, 167, 216, 0.32)", "purpose": "Keyboard focus visibility." }
+    ],
+    "motion": [
+      { "name": "feedback", "value": "150ms", "purpose": "Direct color and border response." },
+      { "name": "state", "value": "260ms", "purpose": "Arrow travel and selected states." },
+      { "name": "scene", "value": "700ms", "purpose": "Home Signal Field handoff, not a page-wide reveal." },
+      { "name": "signal-ease", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Responsive motion with a calm settle." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "40rem" },
+      { "name": "lg", "value": "64rem" },
+      { "name": "xl", "value": "80rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Signal Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Square coral consultation action with a divided arrow cell.",
+      "html": "<a class=\"ds-signal-button\" href=\"#contact\"><span>LET’S HOP ON A CALL</span><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M4 10h11M11 5l5 5-5 5\"/></svg></a>",
+      "css": ".ds-signal-button { display:inline-flex; min-height:50px; align-items:stretch; padding-left:1rem; border:1px solid var(--color-coral-signal); border-radius:2px; background:var(--color-coral-signal); color:var(--color-deep-azul); font:800 .78rem/1 var(--font-body); text-decoration:none; transition:background 150ms ease,border-color 150ms ease; } .ds-signal-button span { display:inline-flex; align-items:center; padding-right:1rem; } .ds-signal-button svg { width:3rem; padding:.9rem; border-left:1px solid rgba(7,26,43,.28); fill:none; stroke:currentColor; stroke-width:1.6; transition:transform 260ms cubic-bezier(.16,1,.3,1); } .ds-signal-button:hover,.ds-signal-button:focus-visible { background:var(--color-cloud-white); border-color:var(--color-cloud-white); } .ds-signal-button:hover svg,.ds-signal-button:focus-visible svg { transform:translateX(.28rem); } .ds-signal-button:focus-visible { outline:3px solid var(--color-azul-electric); outline-offset:4px; }"
+    },
+    {
+      "name": "Signal Text Link",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Ruled secondary route with a quiet forward-moving arrow.",
+      "html": "<a class=\"ds-signal-link\" href=\"#services\">Explore Services <svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M4 10h11M11 5l5 5-5 5\"/></svg></a>",
+      "css": ".ds-signal-link { display:inline-flex; min-height:44px; align-items:center; gap:.72rem; border-bottom:1px solid rgba(168,200,217,.5); color:var(--color-cloud-gray); font:750 .85rem/1 var(--font-body); text-decoration:none; transition:color 150ms ease,border-color 150ms ease; } .ds-signal-link svg { width:1.1rem; fill:none; stroke:currentColor; stroke-width:1.6; transition:transform 260ms cubic-bezier(.16,1,.3,1); } .ds-signal-link:hover,.ds-signal-link:focus-visible { color:var(--color-coral-signal); border-color:var(--color-coral-signal); } .ds-signal-link:hover svg,.ds-signal-link:focus-visible svg { transform:translateX(.28rem); } .ds-signal-link:focus-visible { outline:3px solid var(--color-azul-electric); outline-offset:4px; }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Four legible routes with a restrained coral registration line.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><a class=\"ds-nav-active\" href=\"#home\">Home</a><a href=\"#services\">Services</a><a href=\"#how\">How We Work</a><a href=\"#about\">About</a></nav>",
+      "css": ".ds-nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:1.5rem; padding:.5rem 1rem; background:var(--color-deep-azul); font:650 .82rem/1 var(--font-body); } .ds-nav a { display:inline-flex; min-height:44px; align-items:center; border-bottom:1px solid transparent; color:var(--color-azul-mist); text-decoration:none; transition:color 150ms ease,border-color 260ms ease; } .ds-nav a:hover,.ds-nav a:focus-visible,.ds-nav a.ds-nav-active { color:var(--color-cloud-white); border-color:var(--color-coral-signal); } .ds-nav a:focus-visible { outline:3px solid var(--color-azul-electric); outline-offset:4px; }"
+    },
+    {
+      "name": "Enquiry Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Explicitly labeled rectangular field with an electric focus state.",
+      "html": "<label class=\"ds-field\"><span>Your email</span><input type=\"email\" placeholder=\"you@example.com\"/></label>",
+      "css": ".ds-field { display:flex; flex-direction:column; gap:.5rem; color:var(--color-deep-azul); font:750 .74rem/1.4 var(--font-body); } .ds-field input { min-height:3.25rem; padding:.8rem .9rem; border:1px solid rgba(51,74,95,.48); border-radius:2px; background:var(--color-cloud-white); color:var(--color-deep-azul); font:400 1rem/1.4 var(--font-body); caret-color:var(--color-coral-signal); } .ds-field input:focus-visible { border-color:var(--color-azul-electric); outline:3px solid rgba(84,167,216,.28); outline-offset:0; }"
+    },
+    {
+      "name": "Foreground Chapter",
+      "kind": "card",
+      "refersTo": "chapter-dark",
+      "description": "A dark narrative plane that visibly overlaps the next light chapter.",
+      "html": "<section class=\"ds-chapter\"><p>SYSTEMS + CONTENT</p><h2>Build the ground.<br/>Send the signal.</h2></section>",
+      "css": ".ds-chapter { margin:0 1.5rem; padding:3.5rem; border-radius:clamp(1.75rem,4.5vw,4.5rem); background:var(--color-deep-azul); color:var(--color-cloud-gray); box-shadow:0 -1.35rem 3.75rem -1.6rem rgba(2,13,24,.34); font-family:var(--font-body); } .ds-chapter p { color:var(--color-azul-mist); font-size:.75rem; font-weight:700; letter-spacing:.07em; } .ds-chapter h2 { margin:1rem 0 0; font:610 clamp(2.65rem,5.8vw,5.25rem)/.98 var(--font-display); letter-spacing:-.035em; }"
+    },
+    {
+      "name": "Home Starting Paths",
+      "kind": "card",
+      "refersTo": "chapter-light",
+      "description": "One Azul Mist tray with two equal clickable halves; each half lights up softly.",
+      "html": "<div class=\"ds-paths\"><a href=\"#start\"><small>I’m starting a business</small><strong>Build the foundation →</strong></a><a href=\"#grow\"><small>I need a stronger online presence</small><strong>Strengthen the signal →</strong></a></div>",
+      "css": ".ds-paths { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); overflow:hidden; border-radius:clamp(1.75rem,4.5vw,4.5rem) clamp(1.75rem,4.5vw,4.5rem) 0 0; background:var(--color-azul-mist); font-family:var(--font-body); } .ds-paths a { display:grid; align-content:center; min-height:8rem; gap:.4rem; padding:1.5rem 2rem; color:var(--color-deep-azul); text-decoration:none; transition:background 360ms cubic-bezier(.16,1,.3,1); } .ds-paths a:hover,.ds-paths a:focus-visible { background:var(--color-cloud-white); } .ds-paths a:focus-visible { outline:3px solid var(--color-azul-electric); outline-offset:-3px; } .ds-paths small { color:var(--color-slate-current); font-size:.74rem; font-weight:700; } .ds-paths strong { font:580 1.55rem/1.2 var(--font-display); } @media(max-width:40rem) { .ds-paths { grid-template-columns:1fr; } }"
+    },
+    {
+      "name": "Offer Card",
+      "kind": "card",
+      "refersTo": "offer-light",
+      "description": "Large rounded offer with one oversized title and a clear typical range.",
+      "html": "<article class=\"ds-offer\"><h2>Online<br/>Foundation</h2><p>$1,500–$4,000 typical · one time</p><a href=\"#foundation\">See the foundation →</a></article>",
+      "css": ".ds-offer { display:grid; gap:1.5rem; padding:clamp(2.5rem,5vw,5rem); border-radius:clamp(1.5rem,3vw,3rem); background:var(--color-cloud-white); color:var(--color-deep-azul); box-shadow:0 .9rem 2.5rem rgba(7,26,43,.08); font-family:var(--font-body); } .ds-offer h2 { margin:0; font:610 clamp(4rem,5.4vw,6rem)/.92 var(--font-display); letter-spacing:-.04em; } .ds-offer p { margin:0; color:var(--color-slate-current); font-size:1rem; } .ds-offer a { width:max-content; min-height:44px; display:inline-flex; align-items:center; border-bottom:1px solid var(--color-slate-current); color:var(--color-deep-azul); text-decoration:none; } .ds-offer a:hover,.ds-offer a:focus-visible { border-color:var(--color-coral-signal); color:var(--color-coral-signal); } .ds-offer a:focus-visible { outline:3px solid var(--color-azul-electric); outline-offset:4px; }"
+    },
+    {
+      "name": "Azul Signal Mark",
+      "kind": "custom",
+      "refersTo": "signal-mark",
+      "description": "Two electric currents converging at one coral node.",
+      "html": "<svg class=\"ds-mark\" viewBox=\"0 0 36 36\" aria-hidden=\"true\"><path d=\"M4 25.5C9.5 25.5 9.5 10.5 15 10.5S20.5 25.5 26 25.5\"/><path d=\"M10 30C15.5 30 15.5 6 21 6s5.5 24 11 24\"/><circle cx=\"26\" cy=\"25.5\" r=\"2.75\"/></svg>",
+      "css": ".ds-mark { width:3rem; height:3rem; overflow:visible; } .ds-mark path { fill:none; stroke:var(--color-azul-electric); stroke-linecap:round; stroke-width:1.6; } .ds-mark circle { fill:var(--color-coral-signal); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Signal Relay / Working Map",
+    "overview": "Azul looks like a founder can trace a small-business problem, connect the right technical and creative work, and carry it through launch. The site is premium and cinematic in pacing, but its map is useful rather than theatrical or disguised as software.\n\nDeep-blue fields establish focus; light planes make explanations effortless to read. Oversized statements, operational labels, real photography, and a few diagrammatic routes make the systems-plus-media practice recognizable without turning every section into a feature grid.",
+    "keyCharacteristics": [
+      "Alternating opaque Azul and Cloud Gray chapters with visibly varied side insets.",
+      "Oversized Epilogue statements supported by measured Manrope explanations.",
+      "Coral for decisions and live points; electric blue for lines and focus.",
+      "Square actions and fields inside generously rounded narrative planes.",
+      "Room for section-specific changes in scale, density, alignment, and diagram treatment.",
+      "One thin-line, scroll-responsive Signal Field confined to the Home hero."
+    ],
+    "rules": [
+      { "name": "The Live Signal Rule", "body": "Coral marks a meaningful next action or one live point; it loses its meaning when used as ambient decoration.", "section": "colors" },
+      { "name": "The Statement First Rule", "body": "One decisive heading owns a section; supporting text clarifies it instead of competing at display scale.", "section": "typography" },
+      { "name": "The Scale Is a Starting Point Rule", "body": "These are current reusable roles, not ceilings for every section. Live explorations may change scale, weight, wrapping, and hierarchy—including much larger step titles—while retaining Epilogue and Manrope and clear reading order.", "section": "typography" },
+      { "name": "The Routed, Not Floating Rule", "body": "Elements belong to a shared narrative field; elevation should clarify which chapter or control is in front, not make every block hover.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use full-width changes and visibly stepped widths to clarify narrative hierarchy.",
+      "Do try bolder step typography, larger explanatory copy, different pacing, and line-free groupings when they make a section more legible or memorable.",
+      "Do let one large statement, one useful diagram, or one editorial image carry a section.",
+      "Do keep Coral Signal rare enough to mean action or live status.",
+      "Do preserve readable content, natural scrolling, and a static Signal Field when animation is unavailable.",
+      "Do treat conceptual images as illustrative and the real portrait as actual founder evidence."
+    ],
+    "donts": [
+      "Don't copy Mahhou's or Wispr Flow's words, fonts, graphics, or exact compositions.",
+      "Don't turn every content block into a rounded card or repeat tiny accent lips at every transition.",
+      "Don't treat the current process grid, fine dividers, or compact labels as required Azul motifs.",
+      "Don't re-enable the page-wide fog, add repeated entrance reveals, or hijack scrolling without a new decision.",
+      "Don't use pill controls, hard block shadows, emoji interface icons, or decorative monospace.",
+      "Don't imply generated scenes show real clients, completed work, results, or Saymon's likeness."
+    ]
+  }
+}

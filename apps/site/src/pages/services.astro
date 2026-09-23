@@ -1,104 +1,285 @@
 ---
-import { getCollection } from 'astro:content';
+import EnquiryForm from '../components/contact/EnquiryForm.astro';
+import EditorialPlate from '../components/media/EditorialPlate.astro';
+import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
+import ServiceGuide from '../components/services/ServiceGuide.astro';
 import RootLayout from '../layouts/RootLayout.astro';
-import Arrow from '../components/portfolio/Arrow.astro';
-import { DEFAULT_PAGE_METADATA, PORTFOLIO, packageInquiryLink } from '../config/site';
-import '../styles/portfolio-pages.css';
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
-const assessmentUrl = packageInquiryLink('Free workflow improvement assessment', PORTFOLIO.email);
+import { DEFAULT_PAGE_METADATA } from '../config/site';
+import systemsContentStudio from '../assets/images/azul/systems-content-studio.png';
+import webDevelopment from '../assets/images/azul/web-development.png';
+import localDiscovery from '../assets/images/azul/local-discovery.png';
+import metaBusiness from '../assets/images/azul/meta-business.png';
+import socialContent from '../assets/images/azul/social-content.png';
+
+const capabilities = [
+  {
+    id: 'web-development',
+    title: 'Web development',
+    outcome: 'Give the business one credible place to be understood and contacted.',
+    range: '$800–$3,500',
+    includes: [
+      'Focused mobile-friendly website',
+      'Clear offer and enquiry path',
+      'Launch and handoff guidance',
+    ],
+    boundary: 'E-commerce, portals, custom apps, and unusual integrations are scoped separately.',
+    image: webDevelopment,
+    imageAlt: 'Hands refine a responsive website layout across a laptop and tablet.',
+    imageLabel: 'Web development',
+    imageCaption: 'Structure the offer, the proof, and the next action around one dependable home.',
+  },
+  {
+    id: 'google-business',
+    title: 'Google Business Profile',
+    outcome: 'Improve the local discovery point people use before they call or visit.',
+    range: '$300–$900',
+    includes: [
+      'Setup, correction, or optimization',
+      'Service and profile clarity',
+      'Practical review-path support',
+    ],
+    boundary:
+      'Eligibility, verification, ranking, reviews, and platform approval cannot be guaranteed.',
+    image: localDiscovery,
+    imageAlt:
+      'A phone with a local-discovery layout is held in front of a neighborhood storefront.',
+    imageLabel: 'Google Business Profile',
+    imageCaption: 'Strengthen the answer customers see when they compare nearby businesses.',
+  },
+  {
+    id: 'meta-business',
+    title: 'Meta Business',
+    outcome: 'Create a cleaner operational base for Facebook and Instagram activity.',
+    range: '$300–$900',
+    includes: [
+      'Account setup or cleanup',
+      'Profile baseline optimization',
+      'Scheduling and management direction',
+    ],
+    boundary:
+      'Paid campaign management and guaranteed account approval are not included in the MVP offer.',
+    image: metaBusiness,
+    imageAlt: 'A business-profile workflow is arranged across several devices and content cards.',
+    imageLabel: 'Meta Business',
+    imageCaption: 'Organize the profile foundation before asking content to carry the business.',
+  },
+  {
+    id: 'social-content',
+    title: 'Social Content',
+    outcome: 'Turn business goals and available material into useful, platform-ready content.',
+    range: '$400–$1,500 / project',
+    includes: [
+      'Ideas, hooks, scripts, or captions',
+      'Editing and platform-ready cuts',
+      'Static graphics or approved generated assets',
+    ],
+    boundary:
+      'On-location filming, unlimited revisions, and guaranteed reach or sales are not implied.',
+    image: socialContent,
+    imageAlt: 'A compact content shoot uses a phone, small light, storyboard, and editing screen.',
+    imageLabel: 'Social Content',
+    imageCaption: 'Shape useful material with a real destination, not content for its own sake.',
+  },
+] as const;
+
+const faqs = [
+  [
+    'What changes the final price?',
+    'Scope, existing assets, timeline, source material, access, and unusual integrations. Published ranges are guidance; the written proposal sets the final price.',
+  ],
+  [
+    'Who owns the finished work?',
+    'Clients own their domain, hosting, business accounts, website content, and approved final deliverables by default. Exact handoff terms are confirmed in the proposal.',
+  ],
+  [
+    'What will you need from me?',
+    'Accurate business information, timely account access, usable source material where relevant, consolidated feedback, and approvals at agreed milestones.',
+  ],
+  [
+    'How long does the work take?',
+    'Focused websites usually take 2–4 weeks, Online Foundation 3–6 weeks, and profile work 1–2 weeks once required inputs are available. Work may finish sooner, but it is not promised.',
+  ],
+  [
+    'Can Azul improve what I already have?',
+    'Yes. A targeted website, profile, or content improvement may be more useful than rebuilding a foundation that already works.',
+  ],
+  [
+    'Does Azul guarantee rankings, views, enquiries, or sales?',
+    'No. Azul improves the quality, clarity, and consistency of the presence; platforms, audiences, competition, and the business itself also affect performance.',
+  ],
+  [
+    'How is AI used for content?',
+    'As a human-directed production tool for planning, scripting, editing, repurposing, or approved assets. AI is not sold as the outcome, and client approval remains part of delivery.',
+  ],
+  [
+    'What if my project is larger?',
+    'Larger websites and unusual projects are welcome for discussion. They simply sit outside the standard package scope and receive a case-specific proposal.',
+  ],
+] as const;
 ---
 
 <RootLayout metadata={DEFAULT_PAGE_METADATA['/services']} activeRoute="/services">
-  <div class="site-wrap">
-    <section class="page-intro services-intro" aria-labelledby="services-title">
-      <h1 class="page-title" id="services-title">
-        Get online.<br /><em>Work smarter.</em>
-      </h1>
-      <div class="services-intro-bottom">
-        <p>
-          A website that helps customers find you. Automation that makes the next step easier. Start
-          with a free workflow improvement assessment.
-        </p>
-        <a class="button-link" href={assessmentUrl ?? '#contact'}>
-          Book Your Free Assessment <Arrow diagonal />
-        </a>
-      </div>
-    </section>
-    <section class="services-list" aria-label="Service packages">
-      {
-        services.map((service) => {
-          const data = service.data;
-          const inquiryUrl = packageInquiryLink(`Free assessment: ${data.title}`, PORTFOLIO.email);
-          const price =
-            data.pricing?.amount === undefined
-              ? ''
-              : new Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: data.pricing.currency ?? 'USD',
-                  maximumFractionDigits: 0,
-                }).format(data.pricing.amount);
-          return (
-            <article id={service.id} class="service-entry">
-              <div class="service-copy">
-                <h2>{data.title}</h2>
-                <div class="service-header-meta">
-                  <span>Offer {service.id === 'web-development' ? '01' : '02'}</span>
-                  <span>One-time setup</span>
-                </div>
-                <p>{data.summary}</p>
-                {data.pricing && (
-                  <p class="package-pricing-badge">
-                    <strong class="pricing-mode">
-                      {data.pricing.mode === 'custom-quote'
-                        ? 'Custom quote'
-                        : data.pricing.mode === 'starting-at'
-                          ? `Starting at ${price}`
-                          : price}
-                    </strong>
-                    {data.pricing.note && <span class="pricing-note">{data.pricing.note}</span>}
-                  </p>
-                )}
-                <div id={`disclosure-${service.id}`} class="story-body">
-                  <ul>
-                    {data.deliverables.map((item) => (
-                      <li>{item}</li>
-                    ))}
-                  </ul>
-                  {data.support && (
-                    <p>
-                      <strong>{data.support}</strong>
-                    </p>
-                  )}
-                  <div class="service-exclusions-block">
-                    <p class="service-exclusions-title">Limits &amp; Exclusions</p>
-                    {data.exclusions.map((item) => (
-                      <p class="content-note">{item}</p>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div class="service-action">
-                <a class="button-link" href={inquiryUrl ?? '#contact'}>
-                  Book Your Free Assessment <Arrow diagonal />
-                </a>
-              </div>
-            </article>
-          );
-        })
-      }
-    </section>
-    <section class="working-together" aria-labelledby="working-title">
-      <div><h2 id="working-title">Find your<br />next improvement.</h2></div>
+  <section class="route-hero route-hero--services route-hero--photo">
+    <RouteHeroMedia image={systemsContentStudio} />
+    <div class="site-frame route-hero__layout">
+      <h1>Start where the business changes most.</h1>
       <div>
         <p>
-          Tell me about your business and the processes you would like to improve. We'll discuss
-          where a website, automation, or custom software could help.
+          Build the online foundation, repair one weak point, or create a steadier presence over
+          time. Every service can stand alone; every final scope is case-specific.
         </p>
-        <p class="content-note">
-          Assessment links open your email app to arrange a time. No appointment is booked
-          automatically.
-        </p>
+        <a class="signal-link" href="#service-guide">
+          Find a starting point
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5 12l5 5 5-5"></path></svg>
+        </a>
       </div>
-    </section>
+    </div>
+    <div class="site-frame service-spectrum" aria-label="Azul service spectrum">
+      <span>Establish</span><i></i><span>Connect</span><i></i><span>Stay visible</span>
+    </div>
+  </section>
+
+  <section
+    class="package-section chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
+    aria-labelledby="packages-title"
+  >
+    <div class="site-frame package-intro">
+      <h2 id="packages-title">Two outcomes. No forced bundle.</h2>
+      <p>
+        Packages show useful combinations, not a requirement to rebuy work the business already has.
+        Third-party costs stay separate unless a proposal says otherwise.
+      </p>
+    </div>
+
+    <div class="site-frame package-ledger">
+      <article id="online-foundation">
+        <header>
+          <h3>Online Foundation</h3>
+          <p>A credible place to be found, understood, and contacted.</p>
+        </header>
+        <div class="package-ledger__fit">
+          <span>Best fit</span>
+          <p>New or very small businesses without a dependable online home.</p>
+        </div>
+        <div class="package-ledger__scope">
+          <span>Working scope</span>
+          <ul>
+            <li>Focused business website and enquiry path</li>
+            <li>Google profile setup, correction, or optimization where eligible</li>
+            <li>Meta account and profile baseline</li>
+            <li>Launch support, ownership guidance, and basic training</li>
+          </ul>
+        </div>
+        <footer>
+          <div><span>Typical investment</span><strong>$1,500–$4,000 one-time</strong></div>
+          <div><span>Typical timing</span><strong>3–6 weeks after inputs</strong></div>
+        </footer>
+      </article>
+
+      <article id="ongoing-visibility">
+        <header>
+          <h3>Ongoing Visibility</h3>
+          <p>Keep the business current and recognizable after the foundation exists.</p>
+        </header>
+        <div class="package-ledger__fit">
+          <span>Best fit</span>
+          <p>Operating businesses ready for consistent profile and content activity.</p>
+        </div>
+        <div class="package-ledger__scope">
+          <span>Working scope</span>
+          <ul>
+            <li>Agreed Google and Meta profile upkeep</li>
+            <li>Practical content planning and scheduling</li>
+            <li>Human-directed scripting, editing, and repurposing</li>
+            <li>Periodic review of consistency and next opportunities</li>
+          </ul>
+        </div>
+        <footer>
+          <div><span>Typical investment</span><strong>$600–$1,800 per month</strong></div>
+          <div><span>Cadence</span><strong>Defined per engagement</strong></div>
+        </footer>
+      </article>
+    </div>
+  </section>
+
+  <div
+    id="service-guide"
+    class="guide-field chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+  >
+    <div class="site-frame"><ServiceGuide /></div>
+  </div>
+
+  <section
+    id="capabilities"
+    class="capability-section chapter-stack chapter-stack--medium chapter-stack--light"
+    aria-labelledby="capabilities-title"
+  >
+    <div class="site-frame capability-intro">
+      <h2 id="capabilities-title">Use only the capability you need.</h2>
+      <p>Each one has a clear job, a typical range, and a boundary that protects the project.</p>
+    </div>
+    <div class="site-frame capability-ledger">
+      {
+        capabilities.map((capability, index) => (
+          <article id={capability.id}>
+            <EditorialPlate
+              image={capability.image}
+              alt={capability.imageAlt}
+              label={capability.imageLabel}
+              caption={capability.imageCaption}
+              code={`0${index + 1} / Standalone`}
+              className="capability-ledger__plate"
+              compact
+            />
+            <div class="capability-ledger__content">
+              <div class="capability-ledger__title">
+                <h3>{capability.title}</h3>
+                <strong>{capability.range}</strong>
+              </div>
+              <p class="capability-ledger__outcome">{capability.outcome}</p>
+              <ul>
+                {capability.includes.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+              <p class="capability-ledger__boundary">{capability.boundary}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section
+    class="faq-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    aria-labelledby="faq-title"
+  >
+    <div class="site-frame faq-layout">
+      <div>
+        <h2 id="faq-title">The useful questions, answered early.</h2>
+        <p>Clarity before the call makes the call more valuable.</p>
+      </div>
+      <div class="faq-list">
+        {
+          faqs.map(([question, answer]) => (
+            <details data-animated-disclosure>
+              <summary>
+                {question}
+                <span aria-hidden="true" />
+              </summary>
+              <div class="faq-answer">
+                <p>{answer}</p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="enquiry-field chapter-stack chapter-stack--wide chapter-stack--slate">
+    <div class="site-frame"><EnquiryForm /></div>
   </div>
 </RootLayout>
+
+<script src="../scripts/dropdown-motion.ts"></script>

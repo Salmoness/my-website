@@ -1,0 +1,38 @@
+---
+import RootLayout from '../layouts/RootLayout.astro';
+import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
+import { DEFAULT_PAGE_METADATA, SITE, emailLink } from '../config/site';
+import projectHandoff from '../assets/images/azul/project-handoff.png';
+const email = emailLink(SITE.email);
+---
+
+<RootLayout metadata={DEFAULT_PAGE_METADATA['/privacy']} activeRoute="/privacy">
+  <section class="route-hero route-hero--compact route-hero--privacy route-hero--photo">
+    <RouteHeroMedia image={projectHandoff} position="54% 42%" />
+    <div class="site-frame route-hero__layout">
+      <h1>Privacy, in plain language.</h1><p>
+        What happens to information shared when you ask Azul about a project.
+      </p>
+    </div>
+  </section>
+  <section
+    class="route-content route-content--light chapter-stack chapter-stack--wide chapter-stack--light"
+  >
+    <div class="site-frame privacy-baseline">
+      <h2>The short version</h2>
+      <p>
+        Saymon Rivas, operating as Azul Online Projects, uses enquiry details only to understand the
+        request, respond, and assess whether the work is a fit.
+      </p>
+      <h2>What is collected</h2><p>
+        Only the contact and business context you choose to provide. Azul does not add enquiries to
+        a marketing list or sell their information.
+      </p>
+      <h2>Your choices</h2><p>
+        You can ask what information is held or request deletion by contacting {
+          email ? <a href={email}>{SITE.email}</a> : SITE.email
+        }. The final notice will identify the selected form-delivery provider before public launch.
+      </p>
+    </div>
+  </section>
+</RootLayout>

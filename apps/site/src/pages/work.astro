@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import RootLayout from '../layouts/RootLayout.astro';
 import ProjectArtwork from '../components/portfolio/ProjectArtwork.astro';
+import ImageInspection from '../components/portfolio/ImageInspection.astro';
 import Arrow from '../components/portfolio/Arrow.astro';
 import { DEFAULT_PAGE_METADATA, PORTFOLIO, safeLink } from '../config/site';
 import '../styles/portfolio-pages.css';
@@ -41,6 +42,7 @@ const resume = safeLink(PORTFOLIO.resumeUrl);
       {
         projects.map((project, index) => {
           const data = project.data;
+          const inspectionImage = safeLink(data.image);
           const links = [
             { label: 'Visit project', href: safeLink(data.links?.live) },
             { label: 'View source', href: safeLink(data.links?.repo) },
@@ -55,6 +57,21 @@ const resume = safeLink(PORTFOLIO.resumeUrl);
                 >
                   <ProjectArtwork index={index} image={data.image} alt={data.imageAlt} />
                 </a>
+                {inspectionImage && data.imageAlt && (
+                  <a
+                    class="text-link image-inspection-trigger"
+                    href={inspectionImage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-image-inspection-trigger
+                    data-image-return-id={project.id}
+                    data-image-title={`${data.title} — project image`}
+                    data-image-alt={data.imageAlt}
+                    data-image-description={data.imageAlt}
+                  >
+                    View larger image <Arrow diagonal />
+                  </a>
+                )}
               </div>
               <div class="work-entry-copy">
                 <h2>{data.title}</h2>
@@ -222,5 +239,6 @@ const resume = safeLink(PORTFOLIO.resumeUrl);
         }
       </div>
     </section>
+    <ImageInspection />
   </div>
 </RootLayout>

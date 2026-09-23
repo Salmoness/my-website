@@ -36,3 +36,11 @@ lerna-debug.log*
 
 # Tool artifacts
 .impeccable/
+!apps/site/.impeccable/
+apps/site/.impeccable/*
+!apps/site/.impeccable/design.json
+
+# Obsidian per-device UI state (shared vault settings remain tracked)
+docs/.obsidian/workspace.json
+docs/.obsidian/workspace-mobile.json
+docs/.obsidian/cache

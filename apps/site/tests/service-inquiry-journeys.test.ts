@@ -35,7 +35,7 @@ describe('Spec 005 Tasks 5 & 6: Service Packages and Staging Verification', () =
 
   it('retains accurate service metadata descriptions', () => {
     const serviceMeta = DEFAULT_PAGE_METADATA['/services'];
-    expect(serviceMeta.description).toContain('Business Essentials');
-    expect(serviceMeta.description).toContain('$2,400');
+    expect(serviceMeta.description).toContain('online foundation');
+    expect(serviceMeta.description).toContain('social content');
   });
 });

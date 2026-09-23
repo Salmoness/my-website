@@ -5,10 +5,9 @@ import { PORTFOLIO, safeLink, emailLink } from '../src/config/site';
 describe('Spec 005 Tasks 3 & 4: Identity, Credentials, Projects & Case Studies', () => {
   describe('Task 3: Site Identity, Credentials & Contact Assets (FR-1, FR-4, FR-6, FR-10)', () => {
     it('agrees with approved identity and UCF education credentials', async () => {
-      expect(PORTFOLIO.name).toBe('Saymon Rivas');
-      expect(PORTFOLIO.role.trim()).not.toBe('');
+      expect(PORTFOLIO.name).toBe('Azul Online Projects');
+      expect(PORTFOLIO.role).toContain('small businesses');
       expect(PORTFOLIO.about).toContain('University of Central Florida');
-      expect(PORTFOLIO.about).toContain('2026');
 
       const education = await getCollection('education');
       const ucf = education.find((item) => /central florida|ucf/i.test(item.data.institution));

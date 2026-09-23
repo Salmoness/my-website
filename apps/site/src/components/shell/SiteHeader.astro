@@ -1,23 +1,27 @@
 ---
+import SignalMark from '../brand/SignalMark.astro';
 import PrimaryNav from './PrimaryNav.astro';
-import Arrow from '../portfolio/Arrow.astro';
-import { PORTFOLIO } from '../../config/site';
+import { SITE } from '../../config/site';
 import type { MainRoute } from '../../types/site';
+
 interface Props {
   activeRoute?: MainRoute | undefined;
   class?: string | undefined;
 }
+
 const { activeRoute, class: className = '' } = Astro.props;
 ---
 
 <header class:list={['site-header', className]}>
-  <div class="site-wrap header-row">
-    <a href="/" class="brand-link"
-      ><span class="brand-mark" aria-hidden="true"></span>{PORTFOLIO.name}<span class="brand-dot"
-        >.</span
-      ></a
-    >
+  <div class="site-frame header-row">
+    <a href="/" class="brand-link" aria-label={`${SITE.name} home`}>
+      <SignalMark />
+      <span>Azul Online <strong>Projects</strong></span>
+    </a>
     <PrimaryNav activeRoute={activeRoute} />
-    <a href="#contact" class="header-contact">Let's talk <Arrow diagonal /></a>
+    <a href={SITE.consultationHref} class="header-cta">
+      <span>Let’s hop on a call</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+    </a>
   </div>
 </header>

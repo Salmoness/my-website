@@ -15,7 +15,7 @@ describe('site settings and destination safety', () => {
   it('defines the static identity, navigation, metadata, and staging state', () => {
     expect(PORTFOLIO.name.trim()).not.toBe('');
     expect(PORTFOLIO.headline.trim()).not.toBe('');
-    expect(MAIN_ROUTES).toEqual(['/', '/work', '/services']);
+    expect(MAIN_ROUTES).toEqual(['/', '/services', '/how-we-work', '/about']);
     expect(SITE_NAV.map(({ href }) => href)).toEqual(MAIN_ROUTES);
     for (const route of MAIN_ROUTES) expect(DEFAULT_PAGE_METADATA[route].title.trim()).not.toBe('');
     expect(CONTACT_CONFIG.isPlaceholder).toBe(!emailLink(PORTFOLIO.email));
@@ -56,7 +56,7 @@ describe('site settings and destination safety', () => {
   });
 
   it('emits sharing URLs only when a valid public origin is supplied', () => {
-    const metadata = DEFAULT_PAGE_METADATA['/work'];
+    const metadata = DEFAULT_PAGE_METADATA['/about'];
     expect(getPageSharing(metadata, { ...PORTFOLIO, siteUrl: '' }).canonicalUrl).toBeUndefined();
     expect(
       getPageSharing(metadata, {
@@ -66,7 +66,7 @@ describe('site settings and destination safety', () => {
         socialImageAlt: 'Portfolio preview',
       }),
     ).toEqual({
-      canonicalUrl: 'https://portfolio.example/work',
+      canonicalUrl: 'https://portfolio.example/about',
       imageUrl: 'https://portfolio.example/images/share.webp',
       imageAlt: 'Portfolio preview',
     });

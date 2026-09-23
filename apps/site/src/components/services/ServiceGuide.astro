@@ -1,0 +1,98 @@
+<section class="service-guide" aria-labelledby="guide-title" data-service-guide>
+  <div class="service-guide__intro">
+    <h2 id="guide-title">Find a useful place to begin.</h2>
+    <p>
+      Three quick choices turn the full service list into a practical starting point. The result is
+      guidance—not a quote or an automatic decision.
+    </p>
+  </div>
+
+  <form class="service-guide__form">
+    <fieldset data-guide-question="stage">
+      <legend>Where is the business now?</legend>
+      <div class="choice-grid">
+        <label>
+          <input type="radio" name="guide-stage" value="starting" />
+          <span><strong>Starting</strong><small>Building the first credible presence</small></span>
+        </label>
+        <label>
+          <input type="radio" name="guide-stage" value="operating" />
+          <span
+            ><strong>Operating</strong><small>Open, but difficult to find or understand</small
+            ></span
+          >
+        </label>
+        <label>
+          <input type="radio" name="guide-stage" value="growing" />
+          <span
+            ><strong>Growing</strong><small>Ready for a steadier stream of attention</small></span
+          >
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset data-guide-question="presence">
+      <legend>What already exists?</legend>
+      <div class="choice-grid">
+        <label>
+          <input type="radio" name="guide-presence" value="none" />
+          <span><strong>Very little</strong><small>No dependable home or profiles yet</small></span>
+        </label>
+        <label>
+          <input type="radio" name="guide-presence" value="scattered" />
+          <span
+            ><strong>Scattered pieces</strong><small
+              >Some profiles or a site, but no clear system</small
+            ></span
+          >
+        </label>
+        <label>
+          <input type="radio" name="guide-presence" value="solid" />
+          <span
+            ><strong>A solid base</strong><small
+              >A useful site or profiles are already working</small
+            ></span
+          >
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset data-guide-question="goal">
+      <legend>What matters most right now?</legend>
+      <div class="choice-grid choice-grid--four">
+        <label>
+          <input type="radio" name="guide-goal" value="credible" />
+          <span><strong>Look credible</strong><small>Make the business feel ready</small></span>
+        </label>
+        <label>
+          <input type="radio" name="guide-goal" value="discovered" />
+          <span><strong>Get discovered</strong><small>Be easier to find locally</small></span>
+        </label>
+        <label>
+          <input type="radio" name="guide-goal" value="promote" />
+          <span><strong>Promote services</strong><small>Give offers more attention</small></span>
+        </label>
+        <label>
+          <input type="radio" name="guide-goal" value="active" />
+          <span><strong>Stay active</strong><small>Build a sustainable cadence</small></span>
+        </label>
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="service-guide__result" aria-live="polite" data-guide-result>
+    <div>
+      <span data-guide-label>Choose one answer in each row</span>
+      <h3 data-guide-title>Your starting point will appear here.</h3>
+      <p data-guide-copy>
+        You can still explore every service below or contact Azul directly without using this guide.
+      </p>
+    </div>
+    <a class="signal-button is-disabled" href="#contact" aria-disabled="true" data-guide-apply>
+      <span>Carry this into my enquiry</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+    </a>
+  </div>
+</section>
+
+<script src="../../scripts/service-guide.ts"></script>

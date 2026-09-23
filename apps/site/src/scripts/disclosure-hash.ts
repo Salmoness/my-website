@@ -1,5 +1,21 @@
+function motionIsAllowed(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined' &&
+    document.documentElement.dataset.motion !== 'off' &&
+    (typeof window.matchMedia !== 'function' ||
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  );
+}
+
+function targetNeedsPositioning(target: HTMLElement): boolean {
+  const bounds = target.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  return bounds.top < 0 || bounds.bottom > viewportHeight;
+}
+
 /** Reveal a linked story, including details enclosing or contained by its target. */
-export function openDisclosureForHash(hashId: string): boolean {
+export function openDisclosureForHash(hashId: string, preserveVisiblePosition = true): boolean {
   if (!hashId || typeof document === 'undefined') return false;
 
   let id: string;
@@ -23,12 +39,9 @@ export function openDisclosureForHash(hashId: string): boolean {
     current = current.parentElement?.closest<HTMLDetailsElement>('details') ?? null;
   }
 
-  const allowMotion =
-    typeof window !== 'undefined' &&
-    typeof window.matchMedia === 'function' &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // "instant" overrides any CSS smooth scrolling when reduced motion is requested.
-  target.scrollIntoView({ behavior: allowMotion ? 'smooth' : 'instant', block: 'nearest' });
+  if (!preserveVisiblePosition || targetNeedsPositioning(target)) {
+    target.scrollIntoView({ behavior: motionIsAllowed() ? 'smooth' : 'auto', block: 'nearest' });
+  }
   return true;
 }
 
@@ -38,6 +51,11 @@ export function initDisclosureHash(): () => void {
 
   function handleCurrentHash(): void {
     openDisclosureForHash(window.location.hash);
+  }
+
+  function handlePageShow(): void {
+    // Let the browser keep a restored reading position when the target is already visible.
+    openDisclosureForHash(window.location.hash, true);
   }
 
   function handleSameHashClick(event: MouseEvent): void {
@@ -62,7 +80,12 @@ export function initDisclosureHash(): () => void {
       return;
     }
 
-    const destination = new URL(anchor.href, window.location.href);
+    let destination: URL;
+    try {
+      destination = new URL(anchor.href, window.location.href);
+    } catch {
+      return;
+    }
     const current = window.location;
     if (
       destination.origin === current.origin &&
@@ -78,6 +101,7 @@ export function initDisclosureHash(): () => void {
   }
 
   window.addEventListener('hashchange', handleCurrentHash);
+  window.addEventListener('pageshow', handlePageShow);
   document.addEventListener('click', handleSameHashClick);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', handleCurrentHash, { once: true });
@@ -87,6 +111,7 @@ export function initDisclosureHash(): () => void {
 
   return () => {
     window.removeEventListener('hashchange', handleCurrentHash);
+    window.removeEventListener('pageshow', handlePageShow);
     document.removeEventListener('click', handleSameHashClick);
     document.removeEventListener('DOMContentLoaded', handleCurrentHash);
   };

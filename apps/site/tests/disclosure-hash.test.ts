@@ -10,6 +10,7 @@ class ElementStub {
   href = '/work#story';
   target = '';
   hasAttribute = vi.fn<(name: string) => boolean>().mockReturnValue(false);
+  getBoundingClientRect = vi.fn(() => ({ top: -20, bottom: 40 }));
 }
 
 function details() {
@@ -26,6 +27,7 @@ function fixture(target = new ElementStub()) {
   });
   const documentStub = {
     readyState: 'complete',
+    documentElement: { dataset: { motion: 'on' }, clientHeight: 900 },
     getElementById: vi.fn<(id: string) => ElementStub | null>().mockReturnValue(target),
     addEventListener: vi.fn<(type: string, listener: (event: MouseEvent) => void) => void>(),
     removeEventListener: vi.fn(),
@@ -65,8 +67,8 @@ describe('disclosure hash enhancement', () => {
     expect(target.scrollIntoView).not.toHaveBeenCalled();
   });
 
-  it('honors the current reduced-motion preference', () => {
-    const { target, media } = fixture(details());
+  it('honors system and owner motion preferences', () => {
+    const { target, media, documentStub } = fixture(details());
     openDisclosureForHash('#story');
     expect(target.scrollIntoView).toHaveBeenLastCalledWith({
       behavior: 'smooth',
@@ -75,9 +77,29 @@ describe('disclosure hash enhancement', () => {
     media.matches = true;
     openDisclosureForHash('#story');
     expect(target.scrollIntoView).toHaveBeenLastCalledWith({
-      behavior: 'instant',
+      behavior: 'auto',
       block: 'nearest',
     });
+    media.matches = false;
+    documentStub.documentElement.dataset.motion = 'off';
+    openDisclosureForHash('#story');
+    expect(target.scrollIntoView).toHaveBeenLastCalledWith({
+      behavior: 'auto',
+      block: 'nearest',
+    });
+  });
+
+  it('preserves an already visible reading position', () => {
+    const target = details();
+    target.getBoundingClientRect.mockReturnValue({ top: 120, bottom: 420 });
+    fixture(target);
+
+    expect(openDisclosureForHash('#story')).toBe(true);
+    expect(target.open).toBe(true);
+    expect(target.scrollIntoView).not.toHaveBeenCalled();
+
+    openDisclosureForHash('#story', false);
+    expect(target.scrollIntoView).toHaveBeenCalledOnce();
   });
 
   it('handles initial and changed hashes and removes its listeners', () => {
@@ -88,6 +110,9 @@ describe('disclosure hash enhancement', () => {
     browser.location.hash = '#another-story';
     browser.dispatchEvent(new Event('hashchange'));
     expect(documentStub.getElementById).toHaveBeenLastCalledWith('another-story');
+    expect(target.open).toBe(true);
+    target.open = false;
+    browser.dispatchEvent(new Event('pageshow'));
     expect(target.open).toBe(true);
     cleanup();
     target.open = false;

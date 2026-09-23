@@ -1,4 +1,23 @@
-export type MainRoute = '/' | '/work' | '/services';
+import type { ImageMetadata } from 'astro';
+
+export type MainRoute = '/' | '/services' | '/how-we-work' | '/about' | '/privacy' | '/work';
+
+export interface SiteConfig {
+  readonly name: string;
+  readonly shortName: string;
+  readonly operator: string;
+  readonly headline: string;
+  readonly supportingLine: string;
+  readonly email: string;
+  readonly siteUrl: string;
+  readonly location: string;
+  readonly serviceArea: string;
+  readonly consultationHref: string;
+  readonly formEndpoint: string;
+  readonly founderPortrait: ImageMetadata;
+  readonly motionEnabled: boolean;
+  readonly scrollFogEnabled: boolean;
+}
 
 /** Owner-editable copy and optional destinations. Empty strings mean unavailable. */
 export interface PortfolioSettings {
