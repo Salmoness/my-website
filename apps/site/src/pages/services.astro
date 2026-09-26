@@ -6,12 +6,12 @@ import RootLayout from '../layouts/RootLayout.astro';
 import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
 import systemsContentStudio from '../assets/images/azul/systems-content-studio.png';
 
-const planPrice = SITE.monthlyPlanPrice.trim();
+const maintenancePrice = SITE.maintenancePrice.trim();
 const quoted = 'Quoted after the call';
 
 const jumpLinks = [
   { href: '#packages', label: 'Packages' },
-  { href: '#ways-to-pay', label: 'Pay once or monthly' },
+  { href: '#pricing', label: 'One-time or ongoing' },
   { href: '#services', label: 'Every service' },
   { href: '#service-guide', label: 'Help me choose' },
   { href: '#questions', label: 'Questions' },
@@ -50,16 +50,19 @@ const systems: readonly Service[] = [
     id: 'web-development',
     icon: 'website',
     name: 'Website',
-    tagline: 'A clear home that explains your offer and asks for the call.',
+    tagline: 'A clear site that explains what you offer and makes it easy to call.',
     price: '$800–$3,500',
-    priceNote: planPrice
-      ? `one time, or ${planPrice}/mo on the plan`
-      : 'one time, or on the monthly plan',
+    priceNote: maintenancePrice
+      ? `one time, plus ${maintenancePrice}/mo maintenance`
+      : 'one time, plus monthly maintenance',
     includes: [
-      'Custom, mobile-friendly design, never a template',
+      'Custom design that works well on phones',
       'A clear offer and an easy way to get in touch',
       'Search and social-sharing basics',
       'Launch, handoff, and a walkthrough',
+      maintenancePrice
+        ? `Hosting, updates, and support after launch for ${maintenancePrice} a month`
+        : 'Hosting, updates, and support after launch for a monthly fee',
     ],
     boundary: 'Online stores, member portals, and custom apps are scoped separately.',
     interest: 'Web development',
@@ -70,11 +73,13 @@ const systems: readonly Service[] = [
     name: 'CRM',
     tagline: 'Every enquiry in one place, so nothing slips through a notebook.',
     price: quoted,
+    priceNote: 'setup',
     includes: [
       'A CRM set up around how you already work',
       'Website and social enquiries flow straight in',
       'Simple stages, so you always know who needs a reply',
       'A walkthrough for you and your team',
+      'Monthly CRM management if you want it, quoted after the call',
     ],
     boundary: 'The CRM account is yours. Its subscription is billed by the provider.',
     interest: 'CRM & automations',
@@ -85,6 +90,7 @@ const systems: readonly Service[] = [
     name: 'Automations',
     tagline: 'Confirmations, reminders, and hand-offs that run on their own.',
     price: quoted,
+    priceNote: 'setup',
     includes: [
       'Instant confirmations when someone reaches out',
       'Appointment and follow-up reminders',
@@ -100,6 +106,7 @@ const systems: readonly Service[] = [
     name: 'Follow-ups',
     tagline: 'Timely replies by text, WhatsApp, or email, so leads don’t go cold.',
     price: quoted,
+    priceNote: 'setup',
     includes: [
       'Reply templates written in your voice',
       'Follow-up sequences by text, WhatsApp, or email',
@@ -131,14 +138,14 @@ const media: readonly Service[] = [
     id: 'meta-business',
     icon: 'social',
     name: 'Social strategy',
-    tagline: 'A steady plan for Instagram and Facebook that keeps you visible.',
+    tagline: 'A posting plan for Instagram and Facebook, so people keep seeing you.',
     price: '$300–$900',
     priceNote: 'setup',
     includes: [
       'Account setup or cleanup',
       'Profiles that match your brand and offer',
       'A posting plan and scheduling',
-      'Ongoing management through Ongoing Visibility',
+      'Monthly management, quoted after the call or included in Ongoing Visibility',
     ],
     boundary: 'Account approval is up to Meta and can’t be guaranteed.',
     interest: 'Meta Business',
@@ -151,7 +158,7 @@ const media: readonly Service[] = [
     price: '$300–$900',
     priceNote: 'setup',
     includes: [
-      'Setup, correction, or optimization',
+      'Setup, or fixing a profile that already exists',
       'Services, hours, and photos that answer questions',
       'A simple way to ask happy customers for reviews',
     ],
@@ -194,16 +201,16 @@ const menus = [
 
 const faqs = [
   [
-    'How does the monthly website plan work?',
-    `One monthly fee covers building your website, hosting it, keeping it updated, and support${planPrice ? `, and typically runs ${planPrice} a month depending on the site` : ''}. Your domain and your content stay in your name. The exact fee, the minimum length, and the price to buy the site outright are written into your proposal before anything starts.`,
+    'What’s paid once, and what’s monthly?',
+    'Anything I build or set up is paid once: your website, content projects, and setting up your Google profile, social accounts, CRM, or automations. Work I keep doing for you is billed monthly: website maintenance, social media management, running your ads or CRM, and analytics and strategy.',
   ],
   [
-    'What happens if I stop the monthly plan?',
-    'You keep your domain and all of your content: text, photos, logos, and videos. Your proposal spells out the buyout option for the website itself, so you know the exit before you begin.',
+    'What does website maintenance cover?',
+    `Hosting, updates, and support, so your site stays online and current${maintenancePrice ? `. It usually runs ${maintenancePrice} a month, depending on the site` : ''}. Every website I build has it, and the exact fee is in your proposal.`,
   ],
   [
-    'Should I pay once or monthly?',
-    'Paying once means a bigger upfront cost and full ownership from launch day. The monthly plan spreads the cost and bundles hosting, updates, and support. On the call I’ll lay out both for your situation.',
+    'Do I own my website?',
+    'Yes. You pay for the build once, and the site, your domain, and your content are yours. The monthly maintenance fee pays for keeping it hosted and up to date.',
   ],
   [
     'Is ad spend included in ad management?',
@@ -219,15 +226,15 @@ const faqs = [
   ],
   [
     'Can you improve what I already have?',
-    'Yes. A targeted fix to your website, profile, or content is often more useful than rebuilding something that already works.',
+    'Yes. If part of your website, profile, or content already works, fixing the rest usually makes more sense than starting over.',
   ],
   [
     'Do you guarantee rankings, views, enquiries, or sales?',
-    'No. I improve how clear, consistent, and easy to reach your business is. Platforms, audiences, competition, and the business itself also shape results.',
+    'No. I can make your business clearer and easier to find and contact, but platforms, audiences, competition, and the business itself also shape results.',
   ],
   [
     'How is AI used for content?',
-    'As a tool I direct for planning, scripting, editing, and approved assets. AI is never the product, and nothing goes out without your approval.',
+    'I use it as a tool for planning, scripting, editing, and assets you approve. Nothing goes out without your OK.',
   ],
 ] as const;
 ---
@@ -243,12 +250,13 @@ const faqs = [
       <div class="pg-hero__card dot-card">
         <p class="pg-hero__lede">
           Two packages cover what most small businesses need, and every service also works on its
-          own. Pay once and own your website outright, or let me run it for a simple monthly fee.
+          own. Building and setup are paid once. Work I keep doing for you, like website maintenance
+          or social media, is billed monthly.
         </p>
         <ul class="pg-hero__points">
           <li>Typical prices on every service</li>
-          <li>No bundle you don’t need</li>
-          <li>Your exact quote after a free call</li>
+          <li>Buy only the pieces you need</li>
+          <li>An exact quote after a free call</li>
         </ul>
         <div class="pg-hero__actions">
           <a class="signal-button" href="#contact">
@@ -292,7 +300,8 @@ const faqs = [
       </div>
       <p>
         Most businesses start with the Online Foundation, then keep it active with Ongoing
-        Visibility. Prices are typical ranges; your exact quote is written after a free call.
+        Visibility. Prices are typical ranges, and your exact quote comes in writing after a free
+        call.
       </p>
     </div>
 
@@ -305,8 +314,8 @@ const faqs = [
         <p class="package-card__kicker"><span>1</span> One-time project</p>
         <h3 id="svc-foundation">Online Foundation</h3>
         <p class="package-card__fit">
-          A credible place to be found, understood, and contacted, set up across the places people
-          look.
+          Your website, Google profile, and social accounts, set up so people can find you and get
+          in touch.
         </p>
         <div class="package-card__price">
           <strong>$1,500–$4,000</strong>
@@ -323,21 +332,25 @@ const faqs = [
         <dl class="svc-facts">
           <div>
             <dt>Best for</dt>
-            <dd>New or very small businesses without a dependable home online.</dd>
+            <dd>New or very small businesses that don’t have a dependable website yet.</dd>
           </div>
           <div>
             <dt>Timing</dt>
             <dd>Usually 3–6 weeks once content and access are ready.</dd>
           </div>
           <div>
+            <dt>After launch</dt>
+            <dd>
+              Website maintenance{maintenancePrice ? `, ${maintenancePrice} a month` : ''}: hosting,
+              updates, and support.
+            </dd>
+          </div>
+          <div>
             <dt>Billed separately</dt>
-            <dd>Domain, hosting, and software subscriptions.</dd>
+            <dd>Your domain and any software subscriptions.</dd>
           </div>
         </dl>
-        <p class="svc-pay-note">
-          Rather not pay upfront? The website can run on the <a href="#ways-to-pay">monthly plan</a
-          >.
-        </p>
+
         <div class="package-card__actions">
           <a class="signal-button" href="#contact" data-interest="Online Foundation">
             <span>Start with the foundation</span>
@@ -362,7 +375,7 @@ const faqs = [
         <p class="package-card__kicker"><span>2</span> Monthly support</p>
         <h3 id="svc-visibility">Ongoing Visibility</h3>
         <p class="package-card__fit">
-          Keep the business current, active, and easy to find once the foundation exists.
+          Keeps your business active and easy to find once the foundation is in place.
         </p>
         <div class="package-card__price">
           <strong>$600–$1,800</strong>
@@ -401,70 +414,98 @@ const faqs = [
   </section>
 
   <section
-    id="ways-to-pay"
-    class="pg-section pg-dark svc-pay chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    id="pricing"
+    class="pg-section pg-dark svc-pay chapter-stack chapter-stack--medium chapter-stack--dark chapter-stack--foreground"
     aria-labelledby="pay-title"
   >
     <div class="site-frame pg-head pg-head--stacked">
-      <p class="pg-eyebrow">Your website, your way</p>
-      <h2 id="pay-title">Pay once and own it.<br /><span>Or let me run it monthly.</span></h2>
+      <p class="pg-eyebrow">How pricing works</p>
+      <h2 id="pay-title">Build it once.<br /><span>Keep it running monthly.</span></h2>
       <p>
-        Every website I build is custom, and your domain and content are always in your name. The
-        only choice is how you’d like to pay for it.
+        Anything I build or set up is paid once. Anything I keep doing for you is billed monthly.
+        Every website comes with a small monthly maintenance fee that keeps it online and up to
+        date.
       </p>
     </div>
 
-    <div class="site-frame svc-pay__grid">
-      <article class="svc-pay__option svc-pay__option--once" aria-labelledby="pay-once">
-        <span class="svc-stamp" aria-hidden="true">Paid in full</span>
-        <p class="svc-pay__kicker"><span>A</span> Pay once</p>
-        <h3 id="pay-once">Own it outright</h3>
-        <div class="svc-pay__price">
-          <strong>$800–$3,500</strong>
-          <span>one time · website on its own</span>
+    <ol class="site-frame price-line">
+      <li class="price-stage price-stage--once">
+        <div class="price-stage__rail" aria-hidden="true">
+          <span class="price-stage__node">$</span>
+          <span class="price-stage__tag">One payment</span>
         </div>
-        <ul class="svc-pay__list">
-          <li>The website is yours from launch day</li>
-          <li>Hosting and domain renewals billed by their providers</li>
-          <li>Later changes quoted when you need them, or covered by Ongoing Visibility</li>
-        </ul>
-        <p class="svc-pay__best">Best if you’d rather make one payment and own everything.</p>
-        <a class="signal-button" href="#contact" data-interest="Web development">
-          <span>Pay once</span>
+        <p class="price-stage__when">Before launch</p>
+        <h3>Paid once</h3>
+        <p class="price-stage__lede">Anything I build or set up for you.</p>
+        <dl class="price-ledger">
+          <div class="price-ledger__lead">
+            <dt>Website</dt>
+            <dd>$800–$3,500</dd>
+          </div>
+          <div>
+            <dt>Content projects</dt>
+            <dd>$400–$1,500</dd>
+          </div>
+          <div>
+            <dt>Google Business Profile setup</dt>
+            <dd>$300–$900</dd>
+          </div>
+          <div>
+            <dt>Facebook and Instagram setup</dt>
+            <dd>$300–$900</dd>
+          </div>
+          <div>
+            <dt>CRM, automation, or follow-up setup</dt>
+            <dd>{quoted}</dd>
+          </div>
+        </dl>
+        <a class="signal-link" href="#contact" data-interest="Web development">
+          Ask about a project
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
         </a>
-      </article>
+      </li>
 
-      <div class="svc-pay__or" aria-hidden="true"><span>or</span></div>
-
-      <article class="svc-pay__option svc-pay__option--monthly" aria-labelledby="pay-monthly">
-        <span class="svc-months" aria-hidden="true">
-          {Array.from({ length: 12 }, () => <i />)}
-        </span>
-        <p class="svc-pay__kicker"><span>B</span> Monthly plan</p>
-        <h3 id="pay-monthly">Let me run it</h3>
-        <div class:list={['svc-pay__price', { 'svc-pay__price--quoted': !planPrice }]}>
-          <strong>{planPrice || quoted}</strong>
-          <span>{planPrice ? 'per month · typical range' : 'one simple monthly fee'}</span>
+      <li class="price-stage price-stage--monthly">
+        <div class="price-stage__rail" aria-hidden="true">
+          <span class="price-stage__node price-stage__node--flag"
+            ><svg viewBox="0 0 20 20"
+              ><path d="M5.5 17.5V3"></path><path d="M5.5 3.5h9l-2.2 3.2 2.2 3.3h-9z"></path></svg
+            ></span
+          >
+          <span class="price-stage__tag">Launch</span>
+          <span class="price-stage__months">
+            {Array.from({ length: 12 }, (_, month) => <i style={`--i: ${month}`} />)}
+          </span>
         </div>
-        <ul class="svc-pay__list">
-          <li>One fee covers the build, hosting, updates, and support</li>
-          <li>No big upfront cost</li>
-          <li>Your domain and content stay in your name</li>
-          <li>Terms, minimum length, and buyout price written into your proposal</li>
+        <p class="price-stage__when">Every month after launch</p>
+        <h3>Billed monthly</h3>
+        <div class="price-meter">
+          <strong>{maintenancePrice || quoted}{maintenancePrice && <small>/mo</small>}</strong>
+          <p><b>Website maintenance</b> on every website: hosting, updates, and support.</p>
+        </div>
+        <p class="price-stage__label">Add any of these if you want them</p>
+        <ul class="price-addons">
+          <li>Social media management</li>
+          <li>Running your Google or Meta ads</li>
+          <li>Managing your CRM and automations</li>
+          <li>Analytics and strategy</li>
         </ul>
-        <p class="svc-pay__best">Best if you’d rather not think about your website at all.</p>
-        <a class="signal-button" href="#contact" data-interest="Monthly website plan">
-          <span>Ask about the monthly plan</span>
+        <p class="price-stage__note">
+          Quoted after the call. Social media and content also come bundled in{' '}<a
+            href="#ongoing-visibility">Ongoing Visibility</a
+          >.
+        </p>
+        <a class="signal-link" href="#contact" data-interest="Ongoing management">
+          Ask about monthly work
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
         </a>
-      </article>
-    </div>
+      </li>
+    </ol>
 
     <div class="site-frame svc-pay__always">
-      <span>Either way</span>
+      <span>With every project</span>
       <ul>
-        <li>Custom-built, never a template</li>
+        <li>Built for your business</li>
         <li>Your domain in your name</li>
         <li>Your content stays yours</li>
         <li>A launch walkthrough</li>
@@ -488,69 +529,81 @@ const faqs = [
       </p>
     </div>
 
-    <div class="site-frame outreach-map svc-menu__map">
+    <div class="site-frame svc-index">
       {
-        menus.map((menu, menuIndex) => (
-          <>
-            {menuIndex === 1 && (
-              <div class="outreach-flow" aria-hidden="true">
-                <span class="outreach-flow__label">People</span>
-                <div class="outreach-flow__track">
-                  <i />
-                  <i />
-                  <i />
-                  <i />
-                </div>
-              </div>
-            )}
-            <article
-              class:list={['outreach-panel', `outreach-panel--${menu.key}`, 'svc-menu__panel']}
+        menus.map((menu, menuIndex) => {
+          const offset = menuIndex === 0 ? 0 : menus[0].services.length;
+          return (
+            <section
+              class:list={['svc-index__group', `svc-index__group--${menu.key}`]}
               aria-labelledby={`menu-${menu.key}`}
             >
-              <p class="outreach-panel__eyebrow">{menu.eyebrow}</p>
-              <h3 id={`menu-${menu.key}`}>{menu.title}</h3>
-              <ul class="svc-menu__list">
-                {menu.services.map((service) => (
-                  <li id={service.id}>
+              <header class="svc-index__label">
+                <span class="svc-index__letter" aria-hidden="true">
+                  {menuIndex === 0 ? 'A' : 'B'}
+                </span>
+                <p class="svc-index__eyebrow">{menu.eyebrow}</p>
+                <h3 id={`menu-${menu.key}`}>{menu.title}</h3>
+                <p class="svc-index__range">
+                  {`Services ${String(offset + 1).padStart(2, '0')}–${String(offset + menu.services.length).padStart(2, '0')}`}
+                </p>
+              </header>
+              <ol class="svc-index__list">
+                {menu.services.map((service, serviceIndex) => (
+                  <li class="svc-row" id={service.id}>
                     <details data-animated-disclosure>
                       <summary>
-                        <span class="outreach-list__icon" aria-hidden="true">
+                        <span class="svc-row__num" aria-hidden="true">
+                          {String(offset + serviceIndex + 1).padStart(2, '0')}
+                        </span>
+                        <span class="svc-row__icon" aria-hidden="true">
                           <svg viewBox="0 0 24 24" set:html={icons[service.icon]} />
                         </span>
-                        <span class="svc-menu__name">
+                        <span class="svc-row__name">
                           <strong>{service.name}</strong>
                           <span>{service.tagline}</span>
                         </span>
-                        <span class="svc-menu__price">
+                        <span class="svc-row__price">
                           <strong>{service.price}</strong>
                           {service.priceNote && <small>{service.priceNote}</small>}
                         </span>
-                        <span class="svc-menu__toggle" aria-hidden="true" />
+                        <span class="svc-row__toggle" aria-hidden="true" />
                       </summary>
-                      <div class="svc-menu__detail" data-disclosure-body>
-                        <div class="svc-menu__detail-inner">
-                          <p class="svc-menu__label">What’s included</p>
-                          <ul>
-                            {service.includes.map((item) => (
-                              <li>{item}</li>
-                            ))}
-                          </ul>
-                          <p class="svc-menu__boundary">{service.boundary}</p>
-                          <a class="signal-link" href="#contact" data-interest={service.interest}>
-                            Ask about {service.name}
-                            <svg viewBox="0 0 20 20" aria-hidden="true">
-                              <path d="M4 10h11M11 5l5 5-5 5" />
-                            </svg>
-                          </a>
+                      <div class="svc-row__detail" data-disclosure-body>
+                        <div class="svc-row__detail-inner">
+                          <div class="svc-row__includes">
+                            <p class="svc-row__label">What’s included</p>
+                            <ul>
+                              {service.includes.map((item) => (
+                                <li>{item}</li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div class="svc-stub">
+                            <span class="svc-stub__label">Typical price</span>
+                            <strong>{service.price}</strong>
+                            {service.priceNote && <small>{service.priceNote}</small>}
+                            <p class="svc-stub__fine">{service.boundary}</p>
+                            <a
+                              class="signal-link signal-link--dark"
+                              href="#contact"
+                              data-interest={service.interest}
+                            >
+                              Ask about {service.name}
+                              <svg viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M4 10h11M11 5l5 5-5 5" />
+                              </svg>
+                            </a>
+                          </div>
                         </div>
                       </div>
                     </details>
                   </li>
                 ))}
-              </ul>
-            </article>
-          </>
-        ))
+              </ol>
+            </section>
+          );
+        })
       }
     </div>
 
@@ -576,8 +629,9 @@ const faqs = [
         <p class="pg-eyebrow">Questions</p>
         <h2 id="faq-title">Before you<br /><span>get in touch.</span></h2>
         <p>
-          The questions people ask most before the call. How the work runs, timing, and ownership
-          are covered step by step on <a href="/how-we-work">How We Work</a>.
+          These come up most before a first call. For how the work runs, timing, and ownership, see <a
+            href="/how-we-work">How We Work</a
+          >.
         </p>
       </div>
       <div class="faq-list">

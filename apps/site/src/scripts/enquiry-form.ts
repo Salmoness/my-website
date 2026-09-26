@@ -38,7 +38,7 @@ enquiryForms.forEach((form) => {
     if (!endpoint) {
       event.preventDefault();
       const data = new FormData(form);
-      const subject = `Azul project enquiry — ${String(data.get('business') ?? 'New project')}`;
+      const subject = `Azul enquiry: ${String(data.get('business') ?? 'New project')}`;
       const fields = [
         ['Name', data.get('name')],
         ['Email', data.get('email')],
@@ -58,7 +58,8 @@ enquiryForms.forEach((form) => {
         .map(([label, value]) => `${label}: ${String(value)}`)
         .join('\n\n');
 
-      status.textContent = 'Your email app is opening with these details. Nothing has been erased.';
+      status.textContent =
+        'Your email app is opening with these details. Your entries are still here.';
       status.dataset.state = 'success';
       window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       return;
@@ -67,7 +68,7 @@ enquiryForms.forEach((form) => {
     event.preventDefault();
     const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     submit?.setAttribute('disabled', 'true');
-    status.textContent = 'Sending your project context…';
+    status.textContent = 'Sending your enquiry…';
     status.dataset.state = 'loading';
 
     try {
@@ -79,10 +80,10 @@ enquiryForms.forEach((form) => {
       if (!response.ok) throw new Error('The form provider did not accept the request.');
       form.reset();
       syncContentNeeds();
-      status.textContent = 'Thanks—your context is in. I’ll respond within two business days.';
+      status.textContent = 'Thanks, I got your enquiry. I’ll reply within two business days.';
       status.dataset.state = 'success';
     } catch {
-      status.innerHTML = `The form could not send. Your entries are still here—please try again or email <a href="mailto:${email}">${email}</a>.`;
+      status.innerHTML = `The form couldn’t send. Your entries are still here, so try again or email <a href="mailto:${email}">${email}</a>.`;
       status.dataset.state = 'error';
     } finally {
       submit?.removeAttribute('disabled');

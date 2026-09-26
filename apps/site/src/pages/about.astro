@@ -16,15 +16,15 @@ const facts = [
 const promises = [
   {
     title: 'You talk to me.',
-    text: 'The person on your first call is the person who builds your work. No account managers, no hand-offs.',
+    text: 'The person on your first call is the person who builds your work. There’s no account manager in between.',
   },
   {
     title: 'You hear back fast.',
     text: 'I reply to every enquiry within two business days, and I keep you posted as the work moves.',
   },
   {
-    title: 'Plain language, always.',
-    text: 'No jargon. When a decision matters, I explain it in words that make sense for your business.',
+    title: 'Plain language.',
+    text: 'When a decision matters, I explain it without jargon and in terms of your business.',
   },
   {
     title: 'You see progress.',
@@ -36,7 +36,7 @@ const promises = [
   },
   {
     title: 'It stays in your name.',
-    text: 'Your domain, accounts, and content belong to you, whichever way you pay.',
+    text: 'Your domain, accounts, and content belong to you.',
   },
 ] as const;
 ---
@@ -47,12 +47,12 @@ const promises = [
     <div class="site-frame pg-hero__layout">
       <p class="pg-eyebrow">About Azul</p>
       <h1 id="about-title">
-        Technical enough to work.<br /><span>Creative enough to matter.</span>
+        Code and content,<br /><span>from the same person.</span>
       </h1>
       <div class="pg-hero__card dot-card">
         <p class="pg-hero__lede">
-          Azul exists because a small business shouldn’t have to choose between a website that works
-          and ideas people actually notice. I do both, and you work with me directly.
+          I build the website and make the content, so a small business gets both from one place.
+          You work with me directly.
         </p>
         <div class="pg-hero__actions">
           <a class="signal-button" href={SITE.consultationHref}>
@@ -109,8 +109,8 @@ const promises = [
       <div class="about-story__copy">
         <p class="pg-eyebrow">My story</p>
         <h2 id="story-title">
-          I learned to build systems.<br /><span
-            >Small businesses showed me why the story matters.</span
+          I learned to build websites.<br /><span
+            >Small businesses taught me they need visitors too.</span
           >
         </h2>
         <p class="about-story__lead">
@@ -118,15 +118,14 @@ const promises = [
           learned to take a problem apart and make every piece work together.
         </p>
         <p>
-          Watching small businesses compete for attention showed me the other half. A website can
-          work perfectly and still be invisible if nothing brings people to it. And great content
-          goes nowhere when there’s no clear place for people to land.
+          Then I watched small businesses compete for attention. A website can work perfectly and
+          still get no visitors if nothing sends people to it, and good content does little when
+          there’s no clear place for people to land.
         </p>
         <p>
-          So I started Azul to do both: build the systems that make a business easy to trust and
-          contact, and make the media that gives people a reason to find it. The goal is never more
-          digital clutter. It’s one online identity that makes your business easier to find,
-          understand, and reach.
+          So I started Azul to do both. I build the systems that make a business easy to trust and
+          contact, and I make the media that gives people a reason to look it up. I keep the setup
+          small: one online identity, with only the accounts you need.
         </p>
         {
           /* TODO(Saymon): add a personal paragraph here — why Orlando, what got you into this, or life outside work. */
@@ -146,18 +145,15 @@ const promises = [
   </section>
 
   <section
-    class="pg-section pg-dark about-working chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    class="pg-section pg-dark about-working chapter-stack chapter-stack--medium chapter-stack--dark chapter-stack--foreground"
     aria-labelledby="working-title"
   >
     <div class="site-frame pg-head">
       <div>
         <p class="pg-eyebrow">Working with me</p>
-        <h2 id="working-title">What it’s actually like<br /><span>to work with me.</span></h2>
+        <h2 id="working-title">What working<br /><span>with me is like.</span></h2>
       </div>
-      <p>
-        Azul is founder-led, so these aren’t company values on a wall. They’re promises from the
-        person doing the work.
-      </p>
+      <p>Azul is founder-led, so these promises come from the person doing the work.</p>
     </div>
 
     <ol class="site-frame about-promises">

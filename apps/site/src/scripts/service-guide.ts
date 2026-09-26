@@ -13,19 +13,19 @@ const recommendations = {
   foundation: {
     title: 'Online Foundation',
     label: 'Suggested starting point',
-    copy: 'Build the dependable home first, then connect the profiles and contact path around it.',
+    copy: 'Start with a website, then set up your Google and social profiles so they point people to it.',
     service: 'Online Foundation',
   },
   website: {
     title: 'A focused website',
     label: 'Suggested targeted improvement',
-    copy: 'Create one clear place where people can understand the offer, trust the business, and make contact.',
+    copy: 'One clear website where people can see what you offer and get in touch.',
     service: 'Web development',
   },
   google: {
     title: 'Google Business Profile support',
     label: 'Suggested targeted improvement',
-    copy: 'Strengthen the local profile people check before they call or visit. Add Google Ads later if you want to be seen sooner.',
+    copy: 'Fix up the Google profile people check before they call or visit. You can add Google Ads later to show up sooner.',
     service: 'Google Business Profile',
   },
   content: {
@@ -43,7 +43,7 @@ const recommendations = {
   visibility: {
     title: 'Ongoing Visibility',
     label: 'Suggested next phase',
-    copy: 'Use the existing foundation as a destination, then build a sustainable profile and content cadence.',
+    copy: 'Your website already works. Keep your profiles and content active every month so people keep finding you.',
     service: 'Ongoing Visibility',
   },
 } satisfies Record<string, GuideRecommendation>;
@@ -86,7 +86,7 @@ guides.forEach((guide) => {
       recommendation = undefined;
       label.textContent = `${answered} of 3 choices made`;
       title.textContent = answered
-        ? 'Keep going—each answer changes the direction.'
+        ? 'Keep going. Each answer changes the suggestion.'
         : 'Your starting point will appear here.';
       copy.textContent =
         'You can still browse every service above, or contact me directly without using this guide.';

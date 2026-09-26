@@ -45,7 +45,7 @@ test.describe('Azul MVP journeys', () => {
     await expect(page.locator('.work-steps__list > li')).toHaveCount(4);
     await expect(page.getByText('You bring', { exact: true }).first()).toBeVisible();
     await expect(page.getByText('I handle', { exact: true }).first()).toBeVisible();
-    await expect(page.getByRole('heading', { name: /Your presence stays yours/ })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Everything I set up/ })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
     );
@@ -63,9 +63,9 @@ test.describe('Azul MVP journeys', () => {
   test('offer buttons pre-select the matching service in the enquiry', async ({ page }) => {
     const errors = collectRuntimeErrors(page);
     await page.goto('/services');
-    await page.getByRole('link', { name: 'Ask about the monthly plan' }).click();
+    await page.getByRole('link', { name: 'Ask about monthly work' }).click();
     await expect(page).toHaveURL(/#contact$/);
-    await expect(page.locator('[data-service-interest]')).toHaveValue('Monthly website plan');
+    await expect(page.locator('[data-service-interest]')).toHaveValue('Ongoing management');
 
     await page.goto('/services?interest=Google%20or%20Meta%20ads#contact');
     await expect(page.locator('[data-service-interest]')).toHaveValue('Google or Meta ads');

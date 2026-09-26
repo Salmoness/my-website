@@ -28,7 +28,7 @@ const steps = [
       'You leave with a clear recommendation for where to begin.',
     ],
     you: 'Your story: what you offer, who you serve, and what is and isn’t working.',
-    me: 'Listening, asking the right questions, and being honest about what you don’t need.',
+    me: 'Asking questions, listening, and telling you plainly what you don’t need.',
     leaves: 'A clear direction',
     note: 'The call gives you a focused recommendation. It isn’t a free full audit or a finished strategy.',
     timing: [],
@@ -39,7 +39,7 @@ const steps = [
     kicker: 'The written proposal',
     title: 'A plan we both agree on',
     time: 'Before any work starts',
-    lead: 'I turn the call into a written proposal built around what you actually need. Nothing starts until you’ve read it and said yes.',
+    lead: 'I turn the call into a written proposal built around what you need. Nothing starts until you’ve read it and said yes.',
     happens: [
       'You receive a written proposal.',
       'It lists what’s included and what isn’t, the milestones, and the revision rounds.',
@@ -68,12 +68,12 @@ const steps = [
     you: 'Content, access, and feedback as each milestone lands.',
     me: 'Design, build, setup, and check-ins that keep every decision clear.',
     leaves: 'Work you approved',
-    note: 'The clock starts once content, access, and approvals are ready. Work may finish sooner, but a rushed promise isn’t part of the process.',
+    note: 'The clock starts once content, access, and approvals are ready. Some work finishes sooner, but I won’t promise a rushed date.',
     timing: [
       ['Profile setup', '1–2 weeks'],
       ['Focused website', '2–4 weeks'],
       ['Online Foundation', '3–6 weeks'],
-      ['Content + ongoing work', 'Agreed rhythm'],
+      ['Content and monthly work', 'Agreed schedule'],
     ],
   },
   {
@@ -82,17 +82,17 @@ const steps = [
     kicker: 'Launch + handoff',
     title: 'Launch day, then everything handed over',
     time: 'Launch + handoff',
-    lead: 'Your presence goes live, and you get the keys: every login, a walkthrough, and honest notes on what’s worth doing next.',
+    lead: 'Your site and profiles go live, and you get every login, a walkthrough, and my notes on what to do next.',
     happens: [
       'We go live together.',
       'You get every login and a walkthrough of how things work.',
-      'I share honest suggestions for what’s worth doing next.',
-      'Ongoing support is there if you want it, never required.',
+      'I suggest what’s worth doing next.',
+      'Monthly maintenance keeps your website hosted and up to date from here.',
     ],
     you: 'A final look and the go-ahead.',
     me: 'The launch, a documented handoff, and a clear list of next steps.',
     leaves: 'A presence you own',
-    note: 'On the monthly website plan, I keep hosting and updating your site after launch.',
+    note: 'Other monthly work, like social media or ads, is optional and quoted separately.',
     timing: [],
   },
 ] as const;
@@ -107,7 +107,7 @@ const changes = [
   {
     icon: '<circle cx="12" cy="12" r="8"></circle><path d="M12 8v4.5l3 2"></path>',
     title: 'Something arrives late',
-    text: 'If content, logins, or approvals come in later than planned, the schedule moves with them. You get a new date, not a penalty.',
+    text: 'If content, logins, or approvals come in later than planned, the schedule moves with them. You get a new date and no penalty.',
     tag: 'Date only',
   },
   {
@@ -133,11 +133,11 @@ const keys = [
     <RouteHeroMedia image={webDevelopment} position="58% 49%" />
     <div class="site-frame pg-hero__layout">
       <p class="pg-eyebrow">How we work</p>
-      <h1 id="work-title">No mystery.<br /><span>Every step, before it happens.</span></h1>
+      <h1 id="work-title">Know every step<br /><span>before it happens.</span></h1>
       <div class="pg-hero__card dot-card">
         <p class="pg-hero__lede">
-          From the first call to launch day: what happens, what you bring, what I handle, how long
-          it usually takes, and what stays yours when we’re done.
+          What happens from the first call to launch day, what you bring, what I handle, how long it
+          takes, and what you own at the end.
         </p>
         <div class="pg-hero__actions">
           <a class="signal-button" href={SITE.consultationHref}>
@@ -173,11 +173,11 @@ const keys = [
     <div class="site-frame pg-head">
       <div>
         <p class="pg-eyebrow">The process</p>
-        <h2 id="steps-title">Four steps.<br /><span>Nothing hidden in between.</span></h2>
+        <h2 id="steps-title">The four steps,<br /><span>up close.</span></h2>
       </div>
       <p>
-        The same four steps you saw on the home page, with everything inside them: what happens, who
-        does what, how long it usually takes, and what you have at the end.
+        The four steps from the home page in more detail: what happens, who does what, how long it
+        takes, and what you have at the end.
       </p>
     </div>
 
@@ -252,9 +252,7 @@ const keys = [
                   <span>Leaves this step</span>
                   <strong>{step.leaves}</strong>
                 </div>
-                <p class="work-step__note">
-                  <strong>Good to know:</strong> {step.note}
-                </p>
+                <p class="work-step__note">{step.note}</p>
               </footer>
             </li>
           ))
@@ -265,7 +263,7 @@ const keys = [
 
   <section
     id="changes"
-    class="pg-section pg-dark work-changes chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    class="pg-section pg-dark work-changes chapter-stack chapter-stack--medium chapter-stack--dark chapter-stack--foreground"
     aria-labelledby="changes-title"
   >
     <div class="site-frame pg-head">
@@ -274,8 +272,8 @@ const keys = [
         <h2 id="changes-title">Plans change.<br /><span>Surprise bills don’t.</span></h2>
       </div>
       <p>
-        Your proposal is the agreement we both work from. If something shifts along the way, here’s
-        what happens, and you’ll always hear it from me before any extra work starts.
+        Your proposal is the agreement we both work from. If something shifts, you’ll hear about it
+        from me before any extra work starts.
       </p>
     </div>
 
@@ -307,11 +305,10 @@ const keys = [
     <div class="site-frame pg-head">
       <div>
         <p class="pg-eyebrow">Ownership</p>
-        <h2 id="own-title">Your presence stays yours.<br /><span>However you pay.</span></h2>
+        <h2 id="own-title">Everything I set up<br /><span>is in your name.</span></h2>
       </div>
       <p>
-        The accounts people find you through are set up in your name from day one. Here’s exactly
-        what’s yours, and what happens with each way to pay.
+        Your domain and the accounts people find you through are created in your name from day one.
       </p>
     </div>
 
@@ -330,24 +327,21 @@ const keys = [
         </ul>
         <div class="work-own__ways">
           <article>
-            <p class="work-own__way-kicker"><span>A</span> If you pay once</p>
+            <p class="work-own__way-kicker"><span>A</span> Your website</p>
             <p>
-              The website is handed over to you at launch, along with every login. It’s yours to
-              keep, change, or move.
+              You pay for the build once, and the site is yours at launch, along with every login.
             </p>
           </article>
           <article>
-            <p class="work-own__way-kicker"><span>B</span> If you’re on the monthly plan</p>
+            <p class="work-own__way-kicker"><span>B</span> Monthly work</p>
             <p>
-              I host, update, and look after the site while the plan runs. If you stop, your domain
-              and content go with you, and your proposal spells out how to buy the site itself.
+              Maintenance keeps your site hosted and up to date. If I also manage your social media,
+              ads, or CRM, those accounts stay in your name the whole time.
             </p>
           </article>
         </div>
         <p class="work-own__support">
-          Ongoing support is always optional. <a href="/services#ways-to-pay"
-            >Compare the two ways to pay</a
-          >
+          <a href="/services#pricing">See what’s paid once and what’s monthly</a>
         </p>
       </div>
       <EditorialPlate
@@ -374,10 +368,10 @@ const keys = [
       </div>
       <div class="work-start__copy">
         <p class="pg-eyebrow">Step one</p>
-        <h2 id="start-title">Ready when you are.<br /><span>It starts with a call.</span></h2>
+        <h2 id="start-title">The first step<br /><span>is a free call.</span></h2>
         <p>
-          The first call is free, takes <span class="pg-nowrap">20–30 minutes</span>, and you leave
-          with a clear direction. I reply to every enquiry within two business days.
+          It takes <span class="pg-nowrap">20–30 minutes</span>, and you leave knowing where to
+          start. I reply to every enquiry within two business days.
         </p>
         <div class="pg-hero__actions">
           <a class="signal-button" href={SITE.consultationHref}>

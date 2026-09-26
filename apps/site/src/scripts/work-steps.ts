@@ -1,7 +1,7 @@
 /**
- * How We Work: the sticky rail beside the four steps highlights the step being read and fills
- * a progress line down to it. The current step is the last one whose top has passed the upper
- * part of the screen. Without JavaScript the rail is a plain list of jump links.
+ * How We Work: the sticky rail beside the four steps highlights the step crossing the reading
+ * line and fills a progress line down to it. Without JavaScript the rail remains a plain list of
+ * jump links and every step stays fully visible.
  */
 const workSteps = document.querySelector<HTMLElement>('[data-work-steps]');
 
@@ -22,15 +22,19 @@ if (workSteps) {
       if (linkIndex === index) link.setAttribute('aria-current', 'step');
       else link.removeAttribute('aria-current');
     });
-    stepEls.forEach((step, stepIndex) => step.classList.toggle('is-current', stepIndex === index));
+    stepEls.forEach((step, stepIndex) => {
+      step.classList.toggle('is-current', stepIndex === index);
+      step.classList.toggle('is-past', stepIndex < index);
+      step.classList.toggle('is-future', stepIndex > index);
+    });
   };
 
   const measure = (): void => {
     frame = 0;
-    const line = window.innerHeight * 0.45;
+    const line = window.innerHeight * 0.5;
     let index = 0;
     stepEls.forEach((step, stepIndex) => {
-      if (step.getBoundingClientRect().top < line) index = stepIndex;
+      if (step.getBoundingClientRect().top <= line) index = stepIndex;
     });
     show(index);
   };

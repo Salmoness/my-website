@@ -44,7 +44,8 @@ describe('generated Azul site', () => {
     expect(services).toContain('$600–$1,800');
     expect(services).toContain('id="service-guide"');
     expect(services).toContain('id="contact"');
-    expect(services).toContain('id="ways-to-pay"');
+    expect(services).toContain('id="pricing"');
+    expect(services).toContain('website maintenance');
     expect(services).toContain('Google Ads + Meta Ads');
     expect(process).toContain('A free call to understand your business');
     expect(process).toContain('A plan we both agree on');

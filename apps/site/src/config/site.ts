@@ -20,7 +20,7 @@ export const SITE: SiteConfig = {
   operator: 'Saymon Rivas',
   headline: 'Grow your online identity.',
   supportingLine:
-    'Websites and systems that sharpen your business. Content that brings people to you.',
+    'Websites and systems that help people trust your business, and content that helps them find it.',
   email: 'saymon@azulonlineprojects.com',
   siteUrl: 'https://azulonlineprojects.com',
   location: 'Orlando, Florida',
@@ -32,8 +32,8 @@ export const SITE: SiteConfig = {
   scrollFogEnabled: false,
   /** Home-page loading screen, shown on every Home load for at least one second. */
   loaderEnabled: true,
-  /** Monthly website plan price range, e.g. '$150–$400'. Leave empty to show "Quoted after the call". */
-  monthlyPlanPrice: '$50–$400',
+  /** Monthly website maintenance fee range; every website has one. Leave empty to show "Quoted after the call". */
+  maintenancePrice: '$50–$400',
 };
 
 /** Temporary compatibility export for the unlinked legacy Work route and its pending cleanup. */
@@ -170,7 +170,7 @@ export const DEFAULT_PAGE_METADATA: Record<MainRoute, PageMetadata> = {
   '/services': {
     title: 'Services — Azul Online Projects',
     description:
-      'Build an online foundation or stay visible: websites you own or run monthly, CRM, automations, follow-ups, social content, business profiles, and Google and Meta ads.',
+      'Websites, social content, and account setups paid once, plus monthly work like website maintenance, social media management, ads, and analytics. Start with an online foundation or pick single services.',
     canonicalPath: '/services',
     lang: 'en',
     charset: 'UTF-8',
@@ -186,7 +186,7 @@ export const DEFAULT_PAGE_METADATA: Record<MainRoute, PageMetadata> = {
   '/about': {
     title: 'About — Azul Online Projects',
     description:
-      'Meet Saymon Rivas, the Orlando founder behind Azul, and what working with him is actually like.',
+      'Meet Saymon Rivas, the Orlando founder behind Azul, and what it’s like to work with him.',
     canonicalPath: '/about',
     lang: 'en',
     charset: 'UTF-8',

@@ -77,18 +77,16 @@ const endpoint = safeLink(SITE.formEndpoint);
             <option value="Online Foundation">Online Foundation</option>
             <option value="Ongoing Visibility">Ongoing Visibility</option>
           </optgroup>
-          <optgroup label="Your website">
-            <option value="Web development">Website — pay once</option>
-            <option value="Monthly website plan">Website — monthly plan</option>
-          </optgroup>
-          <optgroup label="Your systems">
-            <option value="CRM & automations">CRM and automations</option>
+          <optgroup label="Paid once">
+            <option value="Web development">Website</option>
+            <option value="Social Content">Content</option>
+            <option value="Google Business Profile">Google Business Profile setup</option>
+            <option value="Meta Business">Facebook and Instagram setup</option>
+            <option value="CRM & automations">CRM and automations setup</option>
             <option value="Follow-ups">Follow-ups by text, WhatsApp, or email</option>
           </optgroup>
-          <optgroup label="Your media">
-            <option value="Social Content">Content</option>
-            <option value="Meta Business">Social strategy (Facebook + Instagram)</option>
-            <option value="Google Business Profile">Google Business Profile</option>
+          <optgroup label="Monthly">
+            <option value="Ongoing management">Social media, CRM, or analytics management</option>
             <option value="Google or Meta ads">Google or Meta ads</option>
           </optgroup>
           <option value="Not sure yet">Not sure yet</option>
@@ -119,18 +117,18 @@ const endpoint = safeLink(SITE.formEndpoint);
       <label class="form-grid__wide select-field">
         <span>Budget comfort <small>Optional</small></span>
         <select name="budget">
-          <option value="">Not sure yet — we can identify a realistic place to begin</option>
-          <option>Under $1,000 — let’s grow on a lean budget</option>
-          <option>$1,000–$2,500 — a focused site or targeted improvement</option>
-          <option>$2,500–$5,000 — a broader foundation across multiple needs</option>
-          <option>Over $5,000 — a larger, custom, or ongoing project</option>
+          <option value="">Not sure yet, we’ll find a realistic place to start</option>
+          <option>Under $1,000: a lean start</option>
+          <option>$1,000–$2,500: a focused site or one improvement</option>
+          <option>$2,500–$5,000: a fuller foundation</option>
+          <option>Over $5,000: a larger or ongoing project</option>
         </select>
       </label>
       <label class="form-grid__wide content-needs" data-content-needs hidden>
         <span>What kind of content would help?</span>
         <input
           name="content_needs"
-          placeholder="For example: short video, scripts, static graphics, or help deciding"
+          placeholder="For example: short videos, scripts, graphics, or help deciding"
         />
       </label>
       <label class="form-grid__wide">
@@ -139,7 +137,7 @@ const endpoint = safeLink(SITE.formEndpoint);
           name="message"
           rows="6"
           required
-          placeholder="Tell me about your current pain points, ideas you want to avoid, and the problems you need solved."
+          placeholder="What isn’t working right now, what you’d like to avoid, and what you need help with."
         ></textarea>
       </label>
     </div>
@@ -155,11 +153,11 @@ const endpoint = safeLink(SITE.formEndpoint);
 
     <div class="enquiry-form__submit">
       <button class="signal-button" type="submit">
-        <span>Send project context</span>
+        <span>Send my enquiry</span>
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
       </button>
       <p role="status" aria-live="polite" data-form-status>
-        No booking software. No automatic sales sequence.
+        I reply myself, without booking software or automated sales emails.
       </p>
     </div>
   </form>

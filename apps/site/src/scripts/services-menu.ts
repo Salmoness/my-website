@@ -11,7 +11,7 @@ function openLinkedService(): void {
   }
   if (!id) return;
   const target = document.getElementById(id);
-  if (!target?.matches('.svc-menu__list > li')) return;
+  if (!target?.matches('.svc-index__list > li')) return;
   const details = target.querySelector<HTMLDetailsElement>('details');
   if (details) details.open = true;
 }
