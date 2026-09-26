@@ -1,83 +1,66 @@
-# Saymon Rivas — Portfolio Platform Foundation
+# Azul Online Projects — Website
 
-This monorepo hosts the public software-development portfolio and agency platform for Saymon Rivas, with architectural boundaries reserved for a future authenticated CRM application (`apps/crm/`) and shared packages (`packages/`).
+The public website for **Azul Online Projects**, a founder-led company in Orlando that helps small businesses build a credible online presence. Azul serves Central Florida and remote clients across the United States. It combines websites and systems with social content: **Grow your online identity.**
 
-The public site is a static-first web application built with **Astro 7**, **TypeScript 6**, **React 19**, and **Tailwind CSS 4**, managed within a strict **pnpm 11** workspace.
+The site has five routes: `/`, `/services`, `/how-we-work`, `/about`, and `/privacy`. Its main action is **Let's hop on a call**, which leads to an enquiry and a free consultation that is scheduled by hand.
 
----
+## Where to start
 
-## 1. Prerequisites & Environment
+The product and company source of truth is the Obsidian vault in [`docs/`](docs/Home.md):
 
-This repository enforces deterministic runtime and toolchain versions:
+1. [`docs/Home.md`](docs/Home.md): map of the vault and reading recipe.
+2. [`docs/constitution.md`](docs/constitution.md): governing principles.
+3. [`docs/AGENTS.md`](docs/AGENTS.md): working rules for agents and contributors.
+4. [`docs/website/Website Release Plan.md`](docs/website/Website%20Release%20Plan.md): current launch checklist.
+5. [`docs/specs/007-azul-online-projects-mvp/`](docs/specs/007-azul-online-projects-mvp/spec.md): the active specification.
 
-- **Node.js**: `24.20.0` (Engine specification: `>=24.20.0 <25.0.0`, pinned in `.node-version`)
-- **pnpm**: `11.25.0` (Pinned via `packageManager` in `package.json`)
-- **Corepack**: Used to activate and manage the exact pnpm binary.
+Specs 002–006 record an earlier personal-portfolio direction. They are kept for history but do not describe the current product.
 
-### Corepack Activation
+## Status
 
-Enable and activate the pinned pnpm version:
+- Home, Services, How We Work, About, and Privacy are built with the Azul visual system (Deep Azul, Slate Current, Cloud Gray, and Coral Signal, set in Epilogue and Manrope). The Home hero shows a static puzzle cube.
+- The owner's final visual review is in progress.
+- Before launch: connect the enquiry form, add the 404 page and sitemap, remove the leftover portfolio route and content, buy the domain, set up email, and deploy. See the release plan for details.
+
+## Repository layout
+
+| Path                                | Purpose                                                      |
+| :---------------------------------- | :----------------------------------------------------------- |
+| `apps/site/`                        | Public Astro website (pages, components, styles, tests)      |
+| `apps/site/src/config/site.ts`      | Central identity, contact, form-endpoint, and release values |
+| `apps/site/DESIGN.md`, `PRODUCT.md` | Shipped design system and product brief for the site         |
+| `packages/ui/`                      | Shared design tokens and foundation CSS                      |
+| `docs/`                             | Company vault: decisions, offers, website direction, specs   |
+
+## Stack
+
+Astro 7, strict TypeScript 6, Tailwind CSS 4, Vitest, and Playwright, in a pnpm 11 workspace. Pages are static-first. Interactive pieces (the service guide and form enhancement) are small framework-free TypeScript modules. React is installed but only used where client state needs it.
+
+## Prerequisites
+
+- **Node.js** `24.20.0` (pinned in `.node-version`; engines `>=24.20.0 <25.0.0`)
+- **pnpm** `11.25.0` (pinned via `packageManager`), activated with Corepack:
 
 ```bash
 corepack enable
 corepack prepare pnpm@11.25.0 --activate
-```
-
-Verify your active environment:
-
-```bash
-node -v   # v24.20.0
-pnpm -v   # 11.25.0
-```
-
----
-
-## 2. Installation
-
-Install all workspace dependencies using the deterministic frozen lockfile:
-
-```bash
 pnpm install --frozen-lockfile
 ```
 
----
+## Commands
 
-## 3. Local Development
+Run from the repository root:
 
-Start the local Astro development server for the public site:
+| Command             | Purpose                                            |
+| :------------------ | :------------------------------------------------- |
+| `pnpm dev:site`     | Local dev server at `http://localhost:4321`        |
+| `pnpm build`        | Static production build to `apps/site/dist/`       |
+| `pnpm typecheck`    | `astro check` across TypeScript and `.astro` files |
+| `pnpm lint`         | ESLint with zero warnings allowed                  |
+| `pnpm format:check` | Prettier check (with the Astro plugin)             |
+| `pnpm test`         | Build, then run Vitest unit tests                  |
+| `pnpm test:e2e`     | Playwright browser tests                           |
 
-```bash
-pnpm dev:site
-```
+## Environment
 
-The site will be served locally at `http://localhost:4321`.
-
----
-
-## 4. Root Quality Gates
-
-All verification commands are orchestrated from the monorepo root, run non-interactively, and exit with actionable non-zero codes on failure:
-
-| Command             | Tool / Action               | Purpose                                                                                                        |
-| :------------------ | :-------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| `pnpm build`        | `astro build`               | Compiles static production output to `apps/site/dist/`.                                                        |
-| `pnpm typecheck`    | `astro check`               | Strictly typechecks TypeScript files and `.astro` frontmatter.                                                 |
-| `pnpm lint`         | `eslint . --max-warnings 0` | Enforces ESLint rules across `.astro`, `.ts`, and `.tsx` files.                                                |
-| `pnpm format:check` | `prettier --check .`        | Verifies formatting with `prettier-plugin-astro`.                                                              |
-| `pnpm test`         | `astro build && vitest run` | Runs automated smoke tests for zero-JS static contract, React island container rendering, and Tailwind styles. |
-
----
-
-## 5. Build Output & Static Delivery
-
-Building the application creates static assets under `apps/site/dist/`:
-
-```bash
-pnpm build
-```
-
-The static build output (`apps/site/dist/index.html` and assets) delivers:
-
-- Zero client-side JavaScript hydration by default for static pages.
-- Accessible semantic HTML5 structure (`<html lang="en">`, skip link, `<main id="main-content">`, `<h1>`).
-- Compiled utility styling generated via Tailwind CSS 4 (`@tailwindcss/vite`).
+Copy `apps/site/.env.example` to `apps/site/.env` when needed. `SITE_MODE` defaults to `staging`, which marks pages no-index. Switch to `production` only for the public release. Keep secrets and provider keys out of the repository.
