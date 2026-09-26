@@ -14,6 +14,20 @@ enquiryForms.forEach((form) => {
   };
 
   interest?.addEventListener('change', syncContentNeeds);
+
+  /** Pre-select the service a visitor came for: `?interest=` from another page, or a
+   *  `data-interest` link on this page. Unknown values are ignored. */
+  const chooseInterest = (value: string | null | undefined): void => {
+    if (!interest || !value) return;
+    if (!Array.from(interest.options).some((option) => option.value === value)) return;
+    interest.value = value;
+    interest.dispatchEvent(new Event('change', { bubbles: true }));
+  };
+
+  chooseInterest(new URLSearchParams(window.location.search).get('interest'));
+  document.querySelectorAll<HTMLAnchorElement>('a[data-interest]').forEach((link) => {
+    link.addEventListener('click', () => chooseInterest(link.dataset.interest));
+  });
   syncContentNeeds();
 
   form.addEventListener('submit', async (event) => {

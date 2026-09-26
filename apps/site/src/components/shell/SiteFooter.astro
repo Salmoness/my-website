@@ -1,5 +1,4 @@
 ---
-import SignalMark from '../brand/SignalMark.astro';
 import { SITE, SITE_NAV, emailLink } from '../../config/site';
 
 interface Props {
@@ -19,40 +18,59 @@ const email = emailLink(SITE.email);
     className,
   ]}
 >
-  <section class="footer-conversation" aria-labelledby="footer-title">
-    <div class="site-frame footer-conversation__layout">
-      <h2 id="footer-title">Give people a clear reason to find you.</h2>
-      <div>
-        <p>
-          Tell me what you’re working through. I’ll respond within two business days and we’ll
-          arrange a free 20–30 minute call.
-        </p>
-        <a class="signal-link signal-link--light" href={SITE.consultationHref}>
-          Let’s hop on a call
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
-      </div>
+  <section class="site-frame footer-cta" aria-labelledby="footer-title">
+    <div class="footer-cta__title">
+      <h2 id="footer-title">Give people a way to find you.</h2>
+    </div>
+    <div class="footer-cta__action">
+      <p>Tell me what you’re working through.</p>
+      <a class="signal-button" href={SITE.consultationHref}>
+        <span>Let’s hop on a call</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+      </a>
     </div>
   </section>
-  <div class="site-frame footer-main">
-    <a href="/" class="footer-brand" aria-label={`${SITE.name} home`}>
-      <SignalMark />
-      <span>{SITE.name}</span>
-    </a>
-    <div class="footer-location">
-      <span>{SITE.location}</span>
-      <span>Central Florida + remote</span>
+
+  <div class="site-frame footer-index">
+    <nav class="footer-index__nav" aria-label="Footer">
+      <ul>
+        {
+          SITE_NAV.map((item, index) => (
+            <li>
+              <a href={item.href}>
+                <span class="footer-index__num" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <div class="site-frame footer-base">
+    <div class="footer-base__contact">
+      {
+        email ? (
+          <a class="footer-base__email" href={email}>
+            {SITE.email}
+          </a>
+        ) : (
+          <span class="footer-base__email">{SITE.email}</span>
+        )
+      }
+      <span>{SITE.location} · Central Florida + remote</span>
     </div>
-    <div class="footer-contact">
-      <span>Direct contact</span>
-      {email ? <a href={email}>{SITE.email}</a> : <span>{SITE.email}</span>}
+    <div class="footer-legal">
+      <span>© {new Date().getFullYear()} {SITE.operator}, operating as {SITE.name}</span>
+      <div class="footer-legal__links">
+        <a href="/privacy">Privacy</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
     </div>
   </div>
-  <div class="site-frame footer-bottom">
-    <span>© {new Date().getFullYear()} {SITE.operator}, operating as {SITE.name}</span>
-    <div class="footer-links">
-      {SITE_NAV.map((item) => <a href={item.href}>{item.label}</a>)}
-      <a href="/privacy">Privacy</a>
-    </div>
-  </div>
+
+  <p class="footer-wordmark" aria-hidden="true">{SITE.name}</p>
 </footer>

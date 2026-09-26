@@ -42,12 +42,10 @@ test.describe('Azul MVP journeys', () => {
     const errors = collectRuntimeErrors(page);
 
     await page.goto('/how-we-work');
-    await expect(page.locator('.process-route--expanded li')).toHaveCount(4);
+    await expect(page.locator('.work-steps__list > li')).toHaveCount(4);
     await expect(page.getByText('You bring', { exact: true }).first()).toBeVisible();
-    await expect(page.getByText('Azul shapes', { exact: true }).first()).toBeVisible();
-    await expect(
-      page.getByRole('heading', { name: 'Your presence should stay yours.' }),
-    ).toBeVisible();
+    await expect(page.getByText('I handle', { exact: true }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Your presence stays yours/ })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
     );
@@ -59,6 +57,21 @@ test.describe('Azul MVP journeys', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
     );
+    expect(errors).toEqual([]);
+  });
+
+  test('offer buttons pre-select the matching service in the enquiry', async ({ page }) => {
+    const errors = collectRuntimeErrors(page);
+    await page.goto('/services');
+    await page.getByRole('link', { name: 'Ask about the monthly plan' }).click();
+    await expect(page).toHaveURL(/#contact$/);
+    await expect(page.locator('[data-service-interest]')).toHaveValue('Monthly website plan');
+
+    await page.goto('/services?interest=Google%20or%20Meta%20ads#contact');
+    await expect(page.locator('[data-service-interest]')).toHaveValue('Google or Meta ads');
+
+    await page.goto('/services#crm');
+    await expect(page.locator('#crm details')).toHaveAttribute('open', '');
     expect(errors).toEqual([]);
   });
 
@@ -94,7 +107,7 @@ test.describe('Azul essentials without JavaScript', () => {
       page.locator('#contact').getByRole('link', { name: 'saymon@azulonlineprojects.com' }),
     ).toBeVisible();
     await page.goto('/how-we-work');
-    await expect(page.locator('.process-route--expanded li')).toHaveCount(4);
+    await expect(page.locator('.work-steps__list > li')).toHaveCount(4);
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
       false,
     );

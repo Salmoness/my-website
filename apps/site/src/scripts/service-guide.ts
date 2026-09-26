@@ -25,14 +25,20 @@ const recommendations = {
   google: {
     title: 'Google Business Profile support',
     label: 'Suggested targeted improvement',
-    copy: 'Strengthen the local discovery point customers are most likely to use before they call or visit.',
+    copy: 'Strengthen the local profile people check before they call or visit. Add Google Ads later if you want to be seen sooner.',
     service: 'Google Business Profile',
   },
   content: {
-    title: 'Social Content + Meta support',
+    title: 'Content + Meta ads',
     label: 'Suggested visibility move',
-    copy: 'Turn useful ideas and source material into a repeatable way to show the business in motion.',
+    copy: 'Turn your work into short videos and posts, then put a small ad budget behind the best ones to reach nearby customers.',
     service: 'Social Content',
+  },
+  systems: {
+    title: 'CRM + follow-ups',
+    label: 'Suggested systems move',
+    copy: 'Put every enquiry in one place and reply fast by text, WhatsApp, or email, so the interest you already get turns into customers.',
+    service: 'CRM & automations',
   },
   visibility: {
     title: 'Ongoing Visibility',
@@ -45,6 +51,7 @@ const recommendations = {
 const chooseRecommendation = (answers: Record<GuideKey, string>): GuideRecommendation => {
   if (answers.stage === 'starting' || answers.presence === 'none')
     return recommendations.foundation;
+  if (answers.goal === 'convert') return recommendations.systems;
   if (answers.goal === 'discovered') return recommendations.google;
   if (answers.goal === 'promote') return recommendations.content;
   if (answers.goal === 'active' || answers.stage === 'growing') return recommendations.visibility;
@@ -82,7 +89,7 @@ guides.forEach((guide) => {
         ? 'Keep going—each answer changes the direction.'
         : 'Your starting point will appear here.';
       copy.textContent =
-        'You can still explore every service below or contact Azul directly without using this guide.';
+        'You can still browse every service above, or contact me directly without using this guide.';
       apply.classList.add('is-disabled');
       apply.setAttribute('aria-disabled', 'true');
       return;
@@ -130,6 +137,7 @@ guides.forEach((guide) => {
         discovered: 'Get discovered',
         promote: 'Promote services',
         active: 'Stay active',
+        convert: 'Answer every enquiry',
       };
       goal.value = goals[answers.goal] ?? '';
       goal.dispatchEvent(new Event('change', { bubbles: true }));

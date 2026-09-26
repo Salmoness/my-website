@@ -30,6 +30,10 @@ export const SITE: SiteConfig = {
   founderPortrait: saymonFounder,
   motionEnabled: true,
   scrollFogEnabled: false,
+  /** Home-page loading screen, shown on every Home load for at least one second. */
+  loaderEnabled: true,
+  /** Monthly website plan price range, e.g. '$150–$400'. Leave empty to show "Quoted after the call". */
+  monthlyPlanPrice: '$50–$400',
 };
 
 /** Temporary compatibility export for the unlinked legacy Work route and its pending cleanup. */
@@ -166,7 +170,7 @@ export const DEFAULT_PAGE_METADATA: Record<MainRoute, PageMetadata> = {
   '/services': {
     title: 'Services — Azul Online Projects',
     description:
-      'Build a professional online foundation or keep your business visible with websites, business profiles, and social content.',
+      'Build an online foundation or stay visible: websites you own or run monthly, CRM, automations, follow-ups, social content, business profiles, and Google and Meta ads.',
     canonicalPath: '/services',
     lang: 'en',
     charset: 'UTF-8',
@@ -174,7 +178,7 @@ export const DEFAULT_PAGE_METADATA: Record<MainRoute, PageMetadata> = {
   '/how-we-work': {
     title: 'How We Work — Azul Online Projects',
     description:
-      'A clear path from first conversation to proposal, collaborative build, launch, and handoff.',
+      'The four steps from a free first call to launch day: what happens, who does what, how long it takes, and what stays yours.',
     canonicalPath: '/how-we-work',
     lang: 'en',
     charset: 'UTF-8',
@@ -182,7 +186,7 @@ export const DEFAULT_PAGE_METADATA: Record<MainRoute, PageMetadata> = {
   '/about': {
     title: 'About — Azul Online Projects',
     description:
-      'Why Azul brings dependable websites and systems together with practical creative content.',
+      'Meet Saymon Rivas, the Orlando founder behind Azul, and what working with him is actually like.',
     canonicalPath: '/about',
     lang: 'en',
     charset: 'UTF-8',

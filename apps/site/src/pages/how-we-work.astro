@@ -1,5 +1,4 @@
 ---
-import ProcessRoute from '../components/brand/ProcessRoute.astro';
 import EditorialPlate from '../components/media/EditorialPlate.astro';
 import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
 import RootLayout from '../layouts/RootLayout.astro';
@@ -7,141 +6,395 @@ import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
 import projectHandoff from '../assets/images/azul/project-handoff.png';
 import webDevelopment from '../assets/images/azul/web-development.png';
 
-const changeFactors = [
+const promises = [
+  ['Free', 'first call, 20–30 minutes'],
+  ['Written', 'plan before any work starts'],
+  ['Visible', 'progress at every milestone'],
+  ['Yours', 'domain, accounts, and content'],
+] as const;
+
+const steps = [
   {
-    title: 'Scope moves',
-    text: 'New pages, formats, platforms, integrations, or deliverables change the work being priced.',
-    signal: 'Price + schedule',
+    id: 'step-call',
+    label: 'Call',
+    kicker: 'The consultation',
+    title: 'A free call to understand your business',
+    time: '20–30 minutes · free',
+    lead: 'You tell me about the business and what isn’t working yet. I ask questions, listen, and point to the most useful place to start.',
+    happens: [
+      'You send an enquiry, and I reply within two business days.',
+      'If it looks like a good fit, we pick a time to talk.',
+      'We go through your goals, what already exists, and your budget comfort.',
+      'You leave with a clear recommendation for where to begin.',
+    ],
+    you: 'Your story: what you offer, who you serve, and what is and isn’t working.',
+    me: 'Listening, asking the right questions, and being honest about what you don’t need.',
+    leaves: 'A clear direction',
+    note: 'The call gives you a focused recommendation. It isn’t a free full audit or a finished strategy.',
+    timing: [],
   },
   {
-    title: 'Inputs arrive late',
-    text: 'Missing content, account access, source files, or approvals can pause the agreed timeline.',
-    signal: 'Schedule',
+    id: 'step-plan',
+    label: 'Plan',
+    kicker: 'The written proposal',
+    title: 'A plan we both agree on',
+    time: 'Before any work starts',
+    lead: 'I turn the call into a written proposal built around what you actually need. Nothing starts until you’ve read it and said yes.',
+    happens: [
+      'You receive a written proposal.',
+      'It lists what’s included and what isn’t, the milestones, and the revision rounds.',
+      'It sets the price, payment terms, timing, and who owns what.',
+      'You ask questions, we adjust, and you approve it.',
+    ],
+    you: 'Your goals, your timing, and the logins or material the work will need.',
+    me: 'Scope, price, timeline, and ownership, written in plain language.',
+    leaves: 'An agreed plan',
+    note: 'Prices on the Services page are typical ranges. Your proposal is where your exact price is set.',
+    timing: [],
   },
   {
-    title: 'Feedback expands',
-    text: 'Revisions beyond the proposal or conflicting decision-makers require a new agreement.',
-    signal: 'Price + schedule',
+    id: 'step-build',
+    label: 'Build',
+    kicker: 'Building it',
+    title: 'Built in the open, one milestone at a time',
+    time: 'Usually 1–6 weeks',
+    lead: 'I design and build in stages you can see and react to, so nothing surprises you at the end.',
+    happens: [
+      'I share each milestone as soon as it’s ready.',
+      'You give feedback within the agreed revision rounds.',
+      'Every decision is explained in plain language.',
+      'Accounts and tools are set up in your name as we go.',
+    ],
+    you: 'Content, access, and feedback as each milestone lands.',
+    me: 'Design, build, setup, and check-ins that keep every decision clear.',
+    leaves: 'Work you approved',
+    note: 'The clock starts once content, access, and approvals are ready. Work may finish sooner, but a rushed promise isn’t part of the process.',
+    timing: [
+      ['Profile setup', '1–2 weeks'],
+      ['Focused website', '2–4 weeks'],
+      ['Online Foundation', '3–6 weeks'],
+      ['Content + ongoing work', 'Agreed rhythm'],
+    ],
   },
+  {
+    id: 'step-launch',
+    label: 'Launch',
+    kicker: 'Launch + handoff',
+    title: 'Launch day, then everything handed over',
+    time: 'Launch + handoff',
+    lead: 'Your presence goes live, and you get the keys: every login, a walkthrough, and honest notes on what’s worth doing next.',
+    happens: [
+      'We go live together.',
+      'You get every login and a walkthrough of how things work.',
+      'I share honest suggestions for what’s worth doing next.',
+      'Ongoing support is there if you want it, never required.',
+    ],
+    you: 'A final look and the go-ahead.',
+    me: 'The launch, a documented handoff, and a clear list of next steps.',
+    leaves: 'A presence you own',
+    note: 'On the monthly website plan, I keep hosting and updating your site after launch.',
+    timing: [],
+  },
+] as const;
+
+const changes = [
+  {
+    icon: '<path d="M12 5v14M5 12h14"></path>',
+    title: 'You want to add something',
+    text: 'New pages, platforms, or features are welcome. I’ll send an updated price and date for you to approve first.',
+    tag: 'Price + date',
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="8"></circle><path d="M12 8v4.5l3 2"></path>',
+    title: 'Something arrives late',
+    text: 'If content, logins, or approvals come in later than planned, the schedule moves with them. You get a new date, not a penalty.',
+    tag: 'Date only',
+  },
+  {
+    icon: '<path d="M4 5.5h16v10H9.5L5 19.5v-4H4zM8 9.5h8M8 12h5"></path>',
+    title: 'The feedback grows',
+    text: 'Your proposal includes set revision rounds. Going beyond them, or adding new decision-makers, means agreeing on the extra work first.',
+    tag: 'Price + date',
+  },
+] as const;
+
+const keys = [
+  'Your domain',
+  'Google Business Profile',
+  'Facebook + Instagram',
+  'Your content',
+  'Your CRM data',
+  'Your ad accounts',
 ] as const;
 ---
 
 <RootLayout metadata={DEFAULT_PAGE_METADATA['/how-we-work']} activeRoute="/how-we-work">
-  <section class="route-hero route-hero--process route-hero--photo">
+  <section class="route-hero route-hero--photo pg-hero" aria-labelledby="work-title">
     <RouteHeroMedia image={webDevelopment} position="58% 49%" />
-    <div class="site-frame route-hero__layout">
-      <h1>Clear work starts before anything gets built.</h1>
-      <div>
-        <p>
-          Know what happens, what each side owns, and what can change the quote or schedule before
-          the project begins.
+    <div class="site-frame pg-hero__layout">
+      <p class="pg-eyebrow">How we work</p>
+      <h1 id="work-title">No mystery.<br /><span>Every step, before it happens.</span></h1>
+      <div class="pg-hero__card dot-card">
+        <p class="pg-hero__lede">
+          From the first call to launch day: what happens, what you bring, what I handle, how long
+          it usually takes, and what stays yours when we’re done.
         </p>
-        <a class="signal-link" href={SITE.consultationHref}>
-          Start with your context
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
+        <div class="pg-hero__actions">
+          <a class="signal-button" href={SITE.consultationHref}>
+            <span>Let’s hop on a call</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link" href="#steps">
+            Walk through the steps
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5 12l5 5 5-5"></path></svg
+            >
+          </a>
+        </div>
       </div>
     </div>
-    <div class="site-frame process-key" aria-label="Process responsibilities">
-      <span><i class="process-key__client"></i>You bring the context and decisions</span>
-      <span><i class="process-key__azul"></i>Azul turns them into direction and work</span>
-    </div>
+    <ul class="site-frame pg-promises" aria-label="What you can count on">
+      {
+        promises.map(([word, rest]) => (
+          <li>
+            <strong>{word}</strong>
+            <span>{rest}</span>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   <section
-    class="work-route-section chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
-    aria-labelledby="work-route-title"
+    id="steps"
+    class="pg-section pg-light work-steps-section chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
+    aria-labelledby="steps-title"
   >
-    <div class="site-frame work-route-intro">
-      <h2 id="work-route-title">One conversation becomes a bounded project.</h2>
+    <div class="site-frame pg-head">
+      <div>
+        <p class="pg-eyebrow">The process</p>
+        <h2 id="steps-title">Four steps.<br /><span>Nothing hidden in between.</span></h2>
+      </div>
       <p>
-        Every phase ends with something concrete. That keeps the work understandable and gives both
-        sides a chance to correct direction before the next handoff.
+        The same four steps you saw on the home page, with everything inside them: what happens, who
+        does what, how long it usually takes, and what you have at the end.
       </p>
     </div>
-    <div class="site-frame"><ProcessRoute expanded headingId="work-route-title" /></div>
-  </section>
 
-  <section
-    class="expectations-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
-    aria-labelledby="expectations-title"
-  >
-    <div class="site-frame expectations-layout">
-      <div class="expectations-heading">
-        <h2 id="expectations-title">The proposal is the control point.</h2>
-        <p>
-          Published ranges help with orientation. The written proposal is where deliverables,
-          exclusions, revision rounds, ownership, price, timing, and payment terms become specific.
-        </p>
-      </div>
-      <div class="scope-shifts" aria-label="What can change a project quote or schedule">
+    <div class="site-frame work-steps" data-work-steps>
+      <nav class="work-steps__rail" aria-label="The four steps">
+        <ol>
+          {
+            steps.map((step, index) => (
+              <li>
+                <a href={`#${step.id}`} data-step-link={index}>
+                  <span class="work-steps__node" aria-hidden="true">
+                    {index + 1}
+                  </span>
+                  <span class="work-steps__label">
+                    <strong>{step.label}</strong>
+                    <small>{step.time}</small>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <ol class="work-steps__list">
         {
-          changeFactors.map((factor) => (
-            <article>
-              <div>
-                <>
-                  <h3>{factor.title}</h3>
-                  <span>{factor.signal}</span>
-                </>
+          steps.map((step, index) => (
+            <li class="work-step" id={step.id} data-step={index}>
+              <header class="work-step__head">
+                <span class="work-step__num" aria-hidden="true">
+                  {index + 1}
+                </span>
+                <div>
+                  <p class="work-step__kicker">{`Step ${index + 1} · ${step.kicker}`}</p>
+                  <h3>{step.title}</h3>
+                </div>
+                <span class="work-step__time">{step.time}</span>
+              </header>
+              <p class="work-step__lead">{step.lead}</p>
+              <div class="work-step__body">
+                <div class="work-step__happens">
+                  <p class="work-step__label">What happens</p>
+                  <ol>
+                    {step.happens.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ol>
+                </div>
+                <dl class="work-step__roles">
+                  <div class="work-step__role work-step__role--you">
+                    <dt>You bring</dt>
+                    <dd>{step.you}</dd>
+                  </div>
+                  <div class="work-step__role work-step__role--me">
+                    <dt>I handle</dt>
+                    <dd>{step.me}</dd>
+                  </div>
+                </dl>
               </div>
-              <p>{factor.text}</p>
-            </article>
+              {step.timing.length > 0 && (
+                <div class="work-step__timing" aria-label="Typical build times">
+                  {step.timing.map(([what, how]) => (
+                    <div>
+                      <span>{what}</span>
+                      <strong>{how}</strong>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <footer class="work-step__foot">
+                <div class="work-token">
+                  <span>Leaves this step</span>
+                  <strong>{step.leaves}</strong>
+                </div>
+                <p class="work-step__note">
+                  <strong>Good to know:</strong> {step.note}
+                </p>
+              </footer>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </section>
 
   <section
-    class="timing-section chapter-stack chapter-stack--medium chapter-stack--light"
-    aria-labelledby="timing-title"
+    id="changes"
+    class="pg-section pg-dark work-changes chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    aria-labelledby="changes-title"
   >
-    <div class="site-frame timing-layout">
+    <div class="site-frame pg-head">
       <div>
-        <h2 id="timing-title">Timing begins when the work can begin.</h2>
-        <p>
-          Estimates start after required content, access, and approvals are available. Azul may
-          deliver sooner, but a rushed promise is not the process.
+        <p class="pg-eyebrow">If something changes</p>
+        <h2 id="changes-title">Plans change.<br /><span>Surprise bills don’t.</span></h2>
+      </div>
+      <p>
+        Your proposal is the agreement we both work from. If something shifts along the way, here’s
+        what happens, and you’ll always hear it from me before any extra work starts.
+      </p>
+    </div>
+
+    <div class="site-frame work-changes__grid">
+      {
+        changes.map((change) => (
+          <article class="work-slip">
+            <span class="work-slip__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" set:html={change.icon} />
+            </span>
+            <h3>{change.title}</h3>
+            <p>{change.text}</p>
+            <span class="work-slip__tag">Changes: {change.tag}</span>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="site-frame work-changes__promise">
+      <span aria-hidden="true">✓</span> Nothing extra happens without your OK.
+    </p>
+  </section>
+
+  <section
+    id="ownership"
+    class="pg-section pg-light work-own chapter-stack chapter-stack--medium chapter-stack--light"
+    aria-labelledby="own-title"
+  >
+    <div class="site-frame pg-head">
+      <div>
+        <p class="pg-eyebrow">Ownership</p>
+        <h2 id="own-title">Your presence stays yours.<br /><span>However you pay.</span></h2>
+      </div>
+      <p>
+        The accounts people find you through are set up in your name from day one. Here’s exactly
+        what’s yours, and what happens with each way to pay.
+      </p>
+    </div>
+
+    <div class="site-frame work-own__layout">
+      <div class="work-own__keys">
+        <p class="work-own__label">Always yours, from day one</p>
+        <ul class="work-keys">
+          {
+            keys.map((key) => (
+              <li>
+                <span class="work-keys__hole" aria-hidden="true" />
+                {key}
+              </li>
+            ))
+          }
+        </ul>
+        <div class="work-own__ways">
+          <article>
+            <p class="work-own__way-kicker"><span>A</span> If you pay once</p>
+            <p>
+              The website is handed over to you at launch, along with every login. It’s yours to
+              keep, change, or move.
+            </p>
+          </article>
+          <article>
+            <p class="work-own__way-kicker"><span>B</span> If you’re on the monthly plan</p>
+            <p>
+              I host, update, and look after the site while the plan runs. If you stop, your domain
+              and content go with you, and your proposal spells out how to buy the site itself.
+            </p>
+          </article>
+        </div>
+        <p class="work-own__support">
+          Ongoing support is always optional. <a href="/services#ways-to-pay"
+            >Compare the two ways to pay</a
+          >
         </p>
       </div>
-      <div class="timeline-band">
-        <div><span>Profile setup</span><strong>1–2 weeks</strong></div>
-        <div><span>Focused website</span><strong>2–4 weeks</strong></div>
-        <div><span>Online Foundation</span><strong>3–6 weeks</strong></div>
-        <div><span>Content + ongoing work</span><strong>Agreed cadence</strong></div>
-      </div>
-    </div>
-  </section>
-
-  <section
-    class="handoff-section chapter-stack chapter-stack--wide chapter-stack--slate"
-    aria-labelledby="handoff-title"
-  >
-    <div class="site-frame handoff-layout">
-      <h2 id="handoff-title">Your presence should stay yours.</h2>
       <EditorialPlate
         image={projectHandoff}
         alt="Two people exchange an organized project handoff folder and tablet."
-        label="The work leaves with you"
-        caption="Accounts, approved deliverables, and the next steps are organized for practical ownership."
-        code="04 / Launch + handoff"
-        className="handoff-plate"
+        label="The keys change hands"
+        caption="Every login, a walkthrough, and notes on what’s next, organized so you can run things without me."
+        code="Step 4 / Handoff"
+        className="work-own__plate"
         compact
       />
-      <div>
+    </div>
+  </section>
+
+  <section
+    class="pg-section pg-slate work-start chapter-stack chapter-stack--wide chapter-stack--slate"
+    aria-labelledby="start-title"
+  >
+    <div class="site-frame work-start__layout">
+      <div class="work-start__rail" aria-hidden="true">
+        <span class="is-first">1</span><i></i><span>2</span><i></i><span>3</span><i></i><span
+          >4</span
+        >
+      </div>
+      <div class="work-start__copy">
+        <p class="pg-eyebrow">Step one</p>
+        <h2 id="start-title">Ready when you are.<br /><span>It starts with a call.</span></h2>
         <p>
-          Clients own their domain, hosting accounts, Google and Meta assets, website content, and
-          approved final deliverables by default. Optional ongoing support stays optional.
+          The first call is free, takes <span class="pg-nowrap">20–30 minutes</span>, and you leave
+          with a clear direction. I reply to every enquiry within two business days.
         </p>
-        <p>
-          The consultation provides a concise recommended direction—not a free complete audit,
-          custom strategy, or speculative design.
-        </p>
-        <a class="signal-button" href={SITE.consultationHref}>
-          <span>Let’s hop on a call</span>
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
+        <div class="pg-hero__actions">
+          <a class="signal-button" href={SITE.consultationHref}>
+            <span>Let’s hop on a call</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link" href="/services">
+            See services and prices
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
       </div>
     </div>
   </section>
 </RootLayout>
+
+<script src="../scripts/dot-spotlight.ts"></script>
+<script src="../scripts/work-steps.ts"></script>

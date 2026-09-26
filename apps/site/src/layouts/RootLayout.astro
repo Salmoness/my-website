@@ -4,6 +4,7 @@ import { SITE_MODE } from 'astro:env/server';
 import FogField from '../components/brand/FogField.astro';
 import SiteHeader from '../components/shell/SiteHeader.astro';
 import SiteFooter from '../components/shell/SiteFooter.astro';
+import SiteLoader from '../components/shell/SiteLoader.astro';
 import type { PageMetadata, SiteMetadata, MainRoute } from '../types/site';
 import { DEFAULT_PAGE_METADATA, PORTFOLIO, SITE, getPageSharing } from '../config/site';
 
@@ -21,6 +22,10 @@ const { canonicalUrl, imageUrl, imageAlt } = getPageSharing(
   'canonicalPath' in metadata ? metadata : { ...metadata, canonicalPath: Astro.url.pathname },
   PORTFOLIO,
 );
+/** Home only: runs before first paint to show the loader, with a hard failsafe. */
+const showLoader = SITE.loaderEnabled && activeRoute === '/';
+const LOADER_BOOT = `(function(){var d=document.documentElement;d.classList.add('is-loading');setTimeout(function(){d.classList.remove('is-loading');},6000);})();`;
+
 const isStaging =
   (SITE_MODE ?? 'staging') === 'staging' || ('noindex' in metadata && metadata.noindex);
 ---
@@ -43,8 +48,10 @@ const isStaging =
     {imageUrl && <meta property="og:image" content={imageUrl} />}
     {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
     <title>{title}</title>
+    {showLoader && <script is:inline set:html={LOADER_BOOT} />}
   </head>
   <body class="azul-site">
+    {showLoader && <SiteLoader />}
     <a href="#main-content" id="skip-to-content" class="skip-link">Skip to main content</a>
     <div class:list={['site-plane', { 'site-plane--home': activeRoute === '/' }]}>
       {SITE.scrollFogEnabled && <FogField />}

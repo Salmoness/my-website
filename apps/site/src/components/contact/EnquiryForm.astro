@@ -7,14 +7,18 @@ const endpoint = safeLink(SITE.formEndpoint);
 
 <section class="enquiry" id="contact" aria-labelledby="enquiry-title">
   <div class="enquiry__intro">
-    <h2 id="enquiry-title">Tell me what you’re working through.</h2>
+    <p class="enquiry__eyebrow">Get in touch</p>
+    <h2 id="enquiry-title">Tell me what <br /><span>you’re working through.</span></h2>
     <p>
-      I’ll respond within two business days and, when Azul looks useful, we’ll arrange a free 20–30
-      minute call.
+      I’ll reply within two business days. If I can help, we’ll set up a free 20–30 minute call.
     </p>
     <div class="enquiry__expectation">
       <span>What happens next</span>
-      <p>Useful reply → fit check → manually arranged call</p>
+      <ol class="enquiry__steps">
+        <li><i aria-hidden="true">1</i>You send this form</li>
+        <li><i aria-hidden="true">2</i>I reply within two business days</li>
+        <li><i aria-hidden="true">3</i>We talk for 20–30 minutes, free</li>
+      </ol>
     </div>
     {
       email && (
@@ -69,12 +73,24 @@ const endpoint = safeLink(SITE.formEndpoint);
         <span>Service interest</span>
         <select name="service_interest" data-service-interest required>
           <option value="">Choose one</option>
-          <option value="Online Foundation">Online Foundation</option>
-          <option value="Ongoing Visibility">Ongoing Visibility</option>
-          <option value="Web development">Web development</option>
-          <option value="Google Business Profile">Google Business Profile</option>
-          <option value="Meta Business">Meta Business</option>
-          <option value="Social Content">Social Content</option>
+          <optgroup label="Packages">
+            <option value="Online Foundation">Online Foundation</option>
+            <option value="Ongoing Visibility">Ongoing Visibility</option>
+          </optgroup>
+          <optgroup label="Your website">
+            <option value="Web development">Website — pay once</option>
+            <option value="Monthly website plan">Website — monthly plan</option>
+          </optgroup>
+          <optgroup label="Your systems">
+            <option value="CRM & automations">CRM and automations</option>
+            <option value="Follow-ups">Follow-ups by text, WhatsApp, or email</option>
+          </optgroup>
+          <optgroup label="Your media">
+            <option value="Social Content">Content</option>
+            <option value="Meta Business">Social strategy (Facebook + Instagram)</option>
+            <option value="Google Business Profile">Google Business Profile</option>
+            <option value="Google or Meta ads">Google or Meta ads</option>
+          </optgroup>
           <option value="Not sure yet">Not sure yet</option>
         </select>
       </label>
@@ -86,6 +102,7 @@ const endpoint = safeLink(SITE.formEndpoint);
           <option value="Get discovered">Get discovered</option>
           <option value="Promote services">Promote services</option>
           <option value="Stay active">Stay active</option>
+          <option value="Answer every enquiry">Answer every enquiry</option>
           <option value="Something else">Something else</option>
         </select>
       </label>

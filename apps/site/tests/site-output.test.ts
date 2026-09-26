@@ -37,15 +37,18 @@ describe('generated Azul site', () => {
     const privacy = readPage('/privacy');
 
     expect(home).toContain('Grow your');
-    expect(home).toContain('online identity.');
+    expect(home).toContain('online Identity');
     expect(services).toContain('Online Foundation');
     expect(services).toContain('$1,500–$4,000');
     expect(services).toContain('Ongoing Visibility');
     expect(services).toContain('$600–$1,800');
     expect(services).toContain('id="service-guide"');
     expect(services).toContain('id="contact"');
-    expect(process).toContain('Consultation');
-    expect(process).toContain('Implementation');
+    expect(services).toContain('id="ways-to-pay"');
+    expect(services).toContain('Google Ads + Meta Ads');
+    expect(process).toContain('A free call to understand your business');
+    expect(process).toContain('A plan we both agree on');
+    expect(process).toContain('Built in the open');
     expect(process).toContain('Launch + handoff');
     expect(about).toContain('University of Central Florida');
     expect(about).toContain('Founder of Azul Online Projects');

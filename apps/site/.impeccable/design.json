@@ -82,7 +82,7 @@
     "motion": [
       { "name": "feedback", "value": "150ms", "purpose": "Direct color and border response." },
       { "name": "state", "value": "260ms", "purpose": "Arrow travel and selected states." },
-      { "name": "scene", "value": "700ms", "purpose": "Home Signal Field handoff, not a page-wide reveal." },
+      { "name": "scene", "value": "700ms", "purpose": "Larger state changes, not a page-wide reveal." },
       { "name": "signal-ease", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Responsive motion with a calm settle." }
     ],
     "breakpoints": [
@@ -166,7 +166,7 @@
       "Coral for decisions and live points; electric blue for lines and focus.",
       "Square actions and fields inside generously rounded narrative planes.",
       "Room for section-specific changes in scale, density, alignment, and diagram treatment.",
-      "One thin-line, scroll-responsive Signal Field confined to the Home hero."
+      "One static, low-contrast puzzle cube as the Home hero signature; no scroll-driven motion."
     ],
     "rules": [
       { "name": "The Live Signal Rule", "body": "Coral marks a meaningful next action or one live point; it loses its meaning when used as ambient decoration.", "section": "colors" },
@@ -179,14 +179,14 @@
       "Do try bolder step typography, larger explanatory copy, different pacing, and line-free groupings when they make a section more legible or memorable.",
       "Do let one large statement, one useful diagram, or one editorial image carry a section.",
       "Do keep Coral Signal rare enough to mean action or live status.",
-      "Do preserve readable content, natural scrolling, and a static Signal Field when animation is unavailable.",
+      "Do preserve readable content, natural scrolling, and a hero that looks identical when animation is unavailable.",
       "Do treat conceptual images as illustrative and the real portrait as actual founder evidence."
     ],
     "donts": [
       "Don't copy Mahhou's or Wispr Flow's words, fonts, graphics, or exact compositions.",
       "Don't turn every content block into a rounded card or repeat tiny accent lips at every transition.",
       "Don't treat the current process grid, fine dividers, or compact labels as required Azul motifs.",
-      "Don't re-enable the page-wide fog, add repeated entrance reveals, or hijack scrolling without a new decision.",
+      "Don't re-enable the Signal Field or page-wide fog, add repeated entrance reveals, or hijack scrolling without a new decision.",
       "Don't use pill controls, hard block shadows, emoji interface icons, or decorative monospace.",
       "Don't imply generated scenes show real clients, completed work, results, or Saymon's likeness."
     ]

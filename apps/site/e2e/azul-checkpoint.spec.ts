@@ -43,7 +43,9 @@ test.describe('Azul checkpoint one', () => {
 
   test('Home communicates the proposition and primary paths', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Grow your online identity.');
+    const heroHeading = page.getByRole('heading', { level: 1 });
+    await expect(heroHeading).toHaveText('Grow your online Identity');
+    await expect(heroHeading.locator('span')).toHaveText(['Grow your', 'online Identity']);
     await expect(
       page.getByRole('link', { name: 'Let’s hop on a call', exact: true }).first(),
     ).toHaveAttribute('href', '/services#contact');
@@ -51,11 +53,11 @@ test.describe('Azul checkpoint one', () => {
       'href',
       '/services',
     );
-    await expect(page.getByRole('link', { name: 'See the foundation' })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: 'Foundation details' })).toHaveAttribute(
       'href',
       '/services#online-foundation',
     );
-    await expect(page.getByRole('link', { name: 'See ongoing support' })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: 'Visibility details' })).toHaveAttribute(
       'href',
       '/services#ongoing-visibility',
     );
@@ -112,5 +114,39 @@ test.describe('Azul without JavaScript', () => {
     await page.getByRole('banner').getByRole('link', { name: 'Services', exact: true }).click();
     await expect(page).toHaveURL(/\/services\/?$/);
     await expect(page.locator('#contact')).toBeVisible();
+  });
+});
+
+test.describe('Home loading screen', () => {
+  test('shows on Home for at least one second, then clears', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'commit' });
+    const loader = page.locator('[data-site-loader]');
+    await expect(loader).toBeVisible();
+    const shownAt = Date.now();
+    await expect(loader).toHaveCount(0, { timeout: 7000 });
+    expect(Date.now() - shownAt).toBeGreaterThanOrEqual(900);
+    await expect(page.locator('html')).not.toHaveClass(/is-loading/);
+  });
+
+  test('does not appear on other pages', async ({ page }) => {
+    await page.goto('/services');
+    await expect(page.locator('[data-site-loader]')).toHaveCount(0);
+  });
+});
+
+test.describe('Home problem story', () => {
+  test('plays once when scrolled into view and ends on the finished scene', async ({ page }) => {
+    await page.goto('/');
+    const story = page.locator('[data-search-story]');
+    await expect(story).toHaveAttribute('data-step', '0');
+    await page.locator('.search-story').scrollIntoViewIfNeeded();
+    await expect(story).toHaveAttribute('data-step', 'done', { timeout: 10000 });
+    await expect(page.locator('.search-result__tag')).toBeVisible();
+  });
+
+  test('shows the finished scene immediately with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await expect(page.locator('[data-search-story]')).toHaveAttribute('data-step', 'done');
   });
 });

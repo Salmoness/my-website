@@ -1,263 +1,584 @@
 ---
 import EnquiryForm from '../components/contact/EnquiryForm.astro';
-import EditorialPlate from '../components/media/EditorialPlate.astro';
 import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
 import ServiceGuide from '../components/services/ServiceGuide.astro';
 import RootLayout from '../layouts/RootLayout.astro';
-import { DEFAULT_PAGE_METADATA } from '../config/site';
+import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
 import systemsContentStudio from '../assets/images/azul/systems-content-studio.png';
-import webDevelopment from '../assets/images/azul/web-development.png';
-import localDiscovery from '../assets/images/azul/local-discovery.png';
-import metaBusiness from '../assets/images/azul/meta-business.png';
-import socialContent from '../assets/images/azul/social-content.png';
 
-const capabilities = [
+const planPrice = SITE.monthlyPlanPrice.trim();
+const quoted = 'Quoted after the call';
+
+const jumpLinks = [
+  { href: '#packages', label: 'Packages' },
+  { href: '#ways-to-pay', label: 'Pay once or monthly' },
+  { href: '#services', label: 'Every service' },
+  { href: '#service-guide', label: 'Help me choose' },
+  { href: '#questions', label: 'Questions' },
+] as const;
+
+/** Icon paths share the Home page's systems + media icon set. */
+const icons = {
+  website:
+    '<rect x="3" y="4.5" width="18" height="15" rx="2.5"></rect><path d="M3 9h18M6.5 6.75h.01M9 6.75h.01"></path>',
+  crm: '<circle cx="9" cy="8.5" r="3.25"></circle><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15.5 5.5h5M15.5 9h5M17.5 12.5h3"></path>',
+  automations: '<path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"></path>',
+  followups: '<path d="M4 5.5h16v10H9.5L5 19.5v-4H4zM8 9.5h8M8 12h5"></path>',
+  content:
+    '<rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="m10 9 5 3-5 3z"></path>',
+  social:
+    '<rect x="4" y="4" width="16" height="16" rx="4.5"></rect><circle cx="12" cy="12" r="3.5"></circle><path d="M16.5 7.5h.01"></path>',
+  google:
+    '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path><circle cx="12" cy="10" r="2.4"></circle>',
+  ads: '<path d="M4 10v4h3l6 4V6L7 10zM16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"></path>',
+} as const;
+
+interface Service {
+  id: string;
+  icon: keyof typeof icons;
+  name: string;
+  tagline: string;
+  price: string;
+  priceNote?: string;
+  includes: readonly string[];
+  boundary: string;
+  interest: string;
+}
+
+const systems: readonly Service[] = [
   {
     id: 'web-development',
-    title: 'Web development',
-    outcome: 'Give the business one credible place to be understood and contacted.',
-    range: '$800–$3,500',
+    icon: 'website',
+    name: 'Website',
+    tagline: 'A clear home that explains your offer and asks for the call.',
+    price: '$800–$3,500',
+    priceNote: planPrice
+      ? `one time, or ${planPrice}/mo on the plan`
+      : 'one time, or on the monthly plan',
     includes: [
-      'Focused mobile-friendly website',
-      'Clear offer and enquiry path',
-      'Launch and handoff guidance',
+      'Custom, mobile-friendly design, never a template',
+      'A clear offer and an easy way to get in touch',
+      'Search and social-sharing basics',
+      'Launch, handoff, and a walkthrough',
     ],
-    boundary: 'E-commerce, portals, custom apps, and unusual integrations are scoped separately.',
-    image: webDevelopment,
-    imageAlt: 'Hands refine a responsive website layout across a laptop and tablet.',
-    imageLabel: 'Web development',
-    imageCaption: 'Structure the offer, the proof, and the next action around one dependable home.',
+    boundary: 'Online stores, member portals, and custom apps are scoped separately.',
+    interest: 'Web development',
   },
   {
-    id: 'google-business',
-    title: 'Google Business Profile',
-    outcome: 'Improve the local discovery point people use before they call or visit.',
-    range: '$300–$900',
+    id: 'crm',
+    icon: 'crm',
+    name: 'CRM',
+    tagline: 'Every enquiry in one place, so nothing slips through a notebook.',
+    price: quoted,
     includes: [
-      'Setup, correction, or optimization',
-      'Service and profile clarity',
-      'Practical review-path support',
+      'A CRM set up around how you already work',
+      'Website and social enquiries flow straight in',
+      'Simple stages, so you always know who needs a reply',
+      'A walkthrough for you and your team',
     ],
-    boundary:
-      'Eligibility, verification, ranking, reviews, and platform approval cannot be guaranteed.',
-    image: localDiscovery,
-    imageAlt:
-      'A phone with a local-discovery layout is held in front of a neighborhood storefront.',
-    imageLabel: 'Google Business Profile',
-    imageCaption: 'Strengthen the answer customers see when they compare nearby businesses.',
+    boundary: 'The CRM account is yours. Its subscription is billed by the provider.',
+    interest: 'CRM & automations',
+  },
+  {
+    id: 'automations',
+    icon: 'automations',
+    name: 'Automations',
+    tagline: 'Confirmations, reminders, and hand-offs that run on their own.',
+    price: quoted,
+    includes: [
+      'Instant confirmations when someone reaches out',
+      'Appointment and follow-up reminders',
+      'Hand-offs between your forms, inbox, and CRM',
+      'Written down, so you know what runs and when',
+    ],
+    boundary: 'Built on tools you own. Some tools carry their own subscription.',
+    interest: 'CRM & automations',
+  },
+  {
+    id: 'follow-ups',
+    icon: 'followups',
+    name: 'Follow-ups',
+    tagline: 'Timely replies by text, WhatsApp, or email, so leads don’t go cold.',
+    price: quoted,
+    includes: [
+      'Reply templates written in your voice',
+      'Follow-up sequences by text, WhatsApp, or email',
+      'Nudges for leads that haven’t answered yet',
+      'Connected to your CRM if you have one',
+    ],
+    boundary: 'WhatsApp Business and text messaging can carry their own platform fees.',
+    interest: 'Follow-ups',
+  },
+];
+
+const media: readonly Service[] = [
+  {
+    id: 'social-content',
+    icon: 'content',
+    name: 'Content',
+    tagline: 'Short videos, photos, and posts that show your work.',
+    price: '$400–$1,500',
+    priceNote: 'per project',
+    includes: [
+      'Ideas, hooks, scripts, and captions',
+      'Editing and platform-ready cuts',
+      'Graphics and approved AI-assisted assets',
+    ],
+    boundary: 'On-location filming and unlimited revisions aren’t included by default.',
+    interest: 'Social Content',
   },
   {
     id: 'meta-business',
-    title: 'Meta Business',
-    outcome: 'Create a cleaner operational base for Facebook and Instagram activity.',
-    range: '$300–$900',
+    icon: 'social',
+    name: 'Social strategy',
+    tagline: 'A steady plan for Instagram and Facebook that keeps you visible.',
+    price: '$300–$900',
+    priceNote: 'setup',
     includes: [
       'Account setup or cleanup',
-      'Profile baseline optimization',
-      'Scheduling and management direction',
+      'Profiles that match your brand and offer',
+      'A posting plan and scheduling',
+      'Ongoing management through Ongoing Visibility',
     ],
-    boundary:
-      'Paid campaign management and guaranteed account approval are not included in the MVP offer.',
-    image: metaBusiness,
-    imageAlt: 'A business-profile workflow is arranged across several devices and content cards.',
-    imageLabel: 'Meta Business',
-    imageCaption: 'Organize the profile foundation before asking content to carry the business.',
+    boundary: 'Account approval is up to Meta and can’t be guaranteed.',
+    interest: 'Meta Business',
   },
   {
-    id: 'social-content',
-    title: 'Social Content',
-    outcome: 'Turn business goals and available material into useful, platform-ready content.',
-    range: '$400–$1,500 / project',
+    id: 'google-business',
+    icon: 'google',
+    name: 'Google Business Profile',
+    tagline: 'Show up clearly when people look for you nearby.',
+    price: '$300–$900',
+    priceNote: 'setup',
     includes: [
-      'Ideas, hooks, scripts, or captions',
-      'Editing and platform-ready cuts',
-      'Static graphics or approved generated assets',
+      'Setup, correction, or optimization',
+      'Services, hours, and photos that answer questions',
+      'A simple way to ask happy customers for reviews',
+    ],
+    boundary: 'Verification and ranking are up to Google and can’t be guaranteed.',
+    interest: 'Google Business Profile',
+  },
+  {
+    id: 'paid-ads',
+    icon: 'ads',
+    name: 'Google Ads + Meta Ads',
+    tagline: 'Show up when people search, and reach nearby customers on Facebook and Instagram.',
+    price: quoted,
+    priceNote: 'monthly management',
+    includes: [
+      'Campaigns built around one clear goal',
+      'Ads written and designed for your offer',
+      'Budget and targeting tuned as results come in',
+      'Plain-language reports on what your money did',
     ],
     boundary:
-      'On-location filming, unlimited revisions, and guaranteed reach or sales are not implied.',
-    image: socialContent,
-    imageAlt: 'A compact content shoot uses a phone, small light, storyboard, and editing screen.',
-    imageLabel: 'Social Content',
-    imageCaption: 'Shape useful material with a real destination, not content for its own sake.',
+      'Ad spend is paid to Google or Meta directly and isn’t part of the fee. Results can’t be guaranteed.',
+    interest: 'Google or Meta ads',
+  },
+];
+
+const menus = [
+  {
+    key: 'systems',
+    eyebrow: 'Your systems',
+    title: 'Turn interest into customers.',
+    services: systems,
+  },
+  {
+    key: 'media',
+    eyebrow: 'Your media',
+    title: 'Get found without knocking on doors.',
+    services: media,
   },
 ] as const;
 
 const faqs = [
   [
-    'What changes the final price?',
-    'Scope, existing assets, timeline, source material, access, and unusual integrations. Published ranges are guidance; the written proposal sets the final price.',
+    'How does the monthly website plan work?',
+    `One monthly fee covers building your website, hosting it, keeping it updated, and support${planPrice ? `, and typically runs ${planPrice} a month depending on the site` : ''}. Your domain and your content stay in your name. The exact fee, the minimum length, and the price to buy the site outright are written into your proposal before anything starts.`,
   ],
   [
-    'Who owns the finished work?',
-    'Clients own their domain, hosting, business accounts, website content, and approved final deliverables by default. Exact handoff terms are confirmed in the proposal.',
+    'What happens if I stop the monthly plan?',
+    'You keep your domain and all of your content: text, photos, logos, and videos. Your proposal spells out the buyout option for the website itself, so you know the exit before you begin.',
+  ],
+  [
+    'Should I pay once or monthly?',
+    'Paying once means a bigger upfront cost and full ownership from launch day. The monthly plan spreads the cost and bundles hosting, updates, and support. On the call I’ll lay out both for your situation.',
+  ],
+  [
+    'Is ad spend included in ad management?',
+    'No. What you spend on Google or Meta ads is paid to them directly, and you set the budget. My fee covers setting up, running, and reporting on the campaigns.',
+  ],
+  [
+    'What changes the final price?',
+    'Scope, what already exists, timing, source material, access, and unusual integrations. The ranges here are typical; your written proposal sets the exact price.',
   ],
   [
     'What will you need from me?',
-    'Accurate business information, timely account access, usable source material where relevant, consolidated feedback, and approvals at agreed milestones.',
+    'Accurate business information, timely access to accounts, usable photos or material where relevant, one set of combined feedback, and approvals at each milestone.',
   ],
   [
-    'How long does the work take?',
-    'Focused websites usually take 2–4 weeks, Online Foundation 3–6 weeks, and profile work 1–2 weeks once required inputs are available. Work may finish sooner, but it is not promised.',
+    'Can you improve what I already have?',
+    'Yes. A targeted fix to your website, profile, or content is often more useful than rebuilding something that already works.',
   ],
   [
-    'Can Azul improve what I already have?',
-    'Yes. A targeted website, profile, or content improvement may be more useful than rebuilding a foundation that already works.',
-  ],
-  [
-    'Does Azul guarantee rankings, views, enquiries, or sales?',
-    'No. Azul improves the quality, clarity, and consistency of the presence; platforms, audiences, competition, and the business itself also affect performance.',
+    'Do you guarantee rankings, views, enquiries, or sales?',
+    'No. I improve how clear, consistent, and easy to reach your business is. Platforms, audiences, competition, and the business itself also shape results.',
   ],
   [
     'How is AI used for content?',
-    'As a human-directed production tool for planning, scripting, editing, repurposing, or approved assets. AI is not sold as the outcome, and client approval remains part of delivery.',
-  ],
-  [
-    'What if my project is larger?',
-    'Larger websites and unusual projects are welcome for discussion. They simply sit outside the standard package scope and receive a case-specific proposal.',
+    'As a tool I direct for planning, scripting, editing, and approved assets. AI is never the product, and nothing goes out without your approval.',
   ],
 ] as const;
 ---
 
 <RootLayout metadata={DEFAULT_PAGE_METADATA['/services']} activeRoute="/services">
-  <section class="route-hero route-hero--services route-hero--photo">
+  <section class="route-hero route-hero--photo pg-hero" aria-labelledby="services-title">
     <RouteHeroMedia image={systemsContentStudio} />
-    <div class="site-frame route-hero__layout">
-      <h1>Start where the business changes most.</h1>
-      <div>
-        <p>
-          Build the online foundation, repair one weak point, or create a steadier presence over
-          time. Every service can stand alone; every final scope is case-specific.
+    <div class="site-frame pg-hero__layout">
+      <p class="pg-eyebrow">Services and pricing</p>
+      <h1 id="services-title">
+        Take the whole foundation,<br /><span>or just the piece you’re missing.</span>
+      </h1>
+      <div class="pg-hero__card dot-card">
+        <p class="pg-hero__lede">
+          Two packages cover what most small businesses need, and every service also works on its
+          own. Pay once and own your website outright, or let me run it for a simple monthly fee.
         </p>
-        <a class="signal-link" href="#service-guide">
-          Find a starting point
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5 12l5 5 5-5"></path></svg>
-        </a>
+        <ul class="pg-hero__points">
+          <li>Typical prices on every service</li>
+          <li>No bundle you don’t need</li>
+          <li>Your exact quote after a free call</li>
+        </ul>
+        <div class="pg-hero__actions">
+          <a class="signal-button" href="#contact">
+            <span>Let’s hop on a call</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link" href="#service-guide">
+            Help me choose
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5 12l5 5 5-5"></path></svg
+            >
+          </a>
+        </div>
       </div>
     </div>
-    <div class="site-frame service-spectrum" aria-label="Azul service spectrum">
-      <span>Establish</span><i></i><span>Connect</span><i></i><span>Stay visible</span>
+    <nav class="site-frame pg-jump" aria-label="On this page">
+      <ol>
+        {
+          jumpLinks.map((link, index) => (
+            <li>
+              <a href={link.href}>
+                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+  </section>
+
+  <section
+    id="packages"
+    class="pg-section pg-light svc-packages chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
+    aria-labelledby="packages-title"
+  >
+    <div class="site-frame pg-head">
+      <div>
+        <p class="pg-eyebrow">Packages</p>
+        <h2 id="packages-title">Two packages.<br /><span>Pick one, or pair them.</span></h2>
+      </div>
+      <p>
+        Most businesses start with the Online Foundation, then keep it active with Ongoing
+        Visibility. Prices are typical ranges; your exact quote is written after a free call.
+      </p>
+    </div>
+
+    <div class="site-frame packages svc-packages__grid">
+      <article
+        class="package-card package-card--foundation"
+        id="online-foundation"
+        aria-labelledby="svc-foundation"
+      >
+        <p class="package-card__kicker"><span>1</span> One-time project</p>
+        <h3 id="svc-foundation">Online Foundation</h3>
+        <p class="package-card__fit">
+          A credible place to be found, understood, and contacted, set up across the places people
+          look.
+        </p>
+        <div class="package-card__price">
+          <strong>$1,500–$4,000</strong>
+          <span>one time · typical range</span>
+        </div>
+        <ul class="package-card__list">
+          <li>Custom, mobile-friendly website (up to five pages)</li>
+          <li>A clear enquiry path and contact actions</li>
+          <li>Google Business Profile setup or cleanup</li>
+          <li>Facebook and Instagram business setup</li>
+          <li>Search and social-sharing basics</li>
+          <li>Handoff and training, with everything in your name</li>
+        </ul>
+        <dl class="svc-facts">
+          <div>
+            <dt>Best for</dt>
+            <dd>New or very small businesses without a dependable home online.</dd>
+          </div>
+          <div>
+            <dt>Timing</dt>
+            <dd>Usually 3–6 weeks once content and access are ready.</dd>
+          </div>
+          <div>
+            <dt>Billed separately</dt>
+            <dd>Domain, hosting, and software subscriptions.</dd>
+          </div>
+        </dl>
+        <p class="svc-pay-note">
+          Rather not pay upfront? The website can run on the <a href="#ways-to-pay">monthly plan</a
+          >.
+        </p>
+        <div class="package-card__actions">
+          <a class="signal-button" href="#contact" data-interest="Online Foundation">
+            <span>Start with the foundation</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
+      </article>
+
+      <div class="packages__join" aria-hidden="true">
+        <span class="packages__join-mark"
+          ><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5"></path></svg></span
+        >
+        <span class="packages__join-label">then</span>
+      </div>
+
+      <article
+        class="package-card package-card--visibility"
+        id="ongoing-visibility"
+        aria-labelledby="svc-visibility"
+      >
+        <p class="package-card__kicker"><span>2</span> Monthly support</p>
+        <h3 id="svc-visibility">Ongoing Visibility</h3>
+        <p class="package-card__fit">
+          Keep the business current, active, and easy to find once the foundation exists.
+        </p>
+        <div class="package-card__price">
+          <strong>$600–$1,800</strong>
+          <span>per month · typical range</span>
+        </div>
+        <ul class="package-card__list">
+          <li>Google Business Profile upkeep</li>
+          <li>Facebook and Instagram management</li>
+          <li>Content planning and scheduling</li>
+          <li>Short videos, graphics, and captions made for you</li>
+          <li>A regular review of what’s working and what’s next</li>
+        </ul>
+        <dl class="svc-facts">
+          <div>
+            <dt>Best for</dt>
+            <dd>Operating businesses ready for a steady rhythm of posts and updates.</dd>
+          </div>
+          <div>
+            <dt>Cadence</dt>
+            <dd>Platforms, posting rhythm, and deliverables agreed in your proposal.</dd>
+          </div>
+          <div>
+            <dt>Add when ready</dt>
+            <dd>Google or Meta ads, a CRM, and automatic follow-ups.</dd>
+          </div>
+        </dl>
+        <div class="package-card__actions">
+          <a class="signal-button" href="#contact" data-interest="Ongoing Visibility">
+            <span>Keep it growing</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
+      </article>
     </div>
   </section>
 
   <section
-    class="package-section chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
-    aria-labelledby="packages-title"
+    id="ways-to-pay"
+    class="pg-section pg-dark svc-pay chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    aria-labelledby="pay-title"
   >
-    <div class="site-frame package-intro">
-      <h2 id="packages-title">Two outcomes. No forced bundle.</h2>
+    <div class="site-frame pg-head pg-head--stacked">
+      <p class="pg-eyebrow">Your website, your way</p>
+      <h2 id="pay-title">Pay once and own it.<br /><span>Or let me run it monthly.</span></h2>
       <p>
-        Packages show useful combinations, not a requirement to rebuy work the business already has.
-        Third-party costs stay separate unless a proposal says otherwise.
+        Every website I build is custom, and your domain and content are always in your name. The
+        only choice is how you’d like to pay for it.
       </p>
     </div>
 
-    <div class="site-frame package-ledger">
-      <article id="online-foundation">
-        <header>
-          <h3>Online Foundation</h3>
-          <p>A credible place to be found, understood, and contacted.</p>
-        </header>
-        <div class="package-ledger__fit">
-          <span>Best fit</span>
-          <p>New or very small businesses without a dependable online home.</p>
+    <div class="site-frame svc-pay__grid">
+      <article class="svc-pay__option svc-pay__option--once" aria-labelledby="pay-once">
+        <span class="svc-stamp" aria-hidden="true">Paid in full</span>
+        <p class="svc-pay__kicker"><span>A</span> Pay once</p>
+        <h3 id="pay-once">Own it outright</h3>
+        <div class="svc-pay__price">
+          <strong>$800–$3,500</strong>
+          <span>one time · website on its own</span>
         </div>
-        <div class="package-ledger__scope">
-          <span>Working scope</span>
-          <ul>
-            <li>Focused business website and enquiry path</li>
-            <li>Google profile setup, correction, or optimization where eligible</li>
-            <li>Meta account and profile baseline</li>
-            <li>Launch support, ownership guidance, and basic training</li>
-          </ul>
-        </div>
-        <footer>
-          <div><span>Typical investment</span><strong>$1,500–$4,000 one-time</strong></div>
-          <div><span>Typical timing</span><strong>3–6 weeks after inputs</strong></div>
-        </footer>
+        <ul class="svc-pay__list">
+          <li>The website is yours from launch day</li>
+          <li>Hosting and domain renewals billed by their providers</li>
+          <li>Later changes quoted when you need them, or covered by Ongoing Visibility</li>
+        </ul>
+        <p class="svc-pay__best">Best if you’d rather make one payment and own everything.</p>
+        <a class="signal-button" href="#contact" data-interest="Web development">
+          <span>Pay once</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+        </a>
       </article>
 
-      <article id="ongoing-visibility">
-        <header>
-          <h3>Ongoing Visibility</h3>
-          <p>Keep the business current and recognizable after the foundation exists.</p>
-        </header>
-        <div class="package-ledger__fit">
-          <span>Best fit</span>
-          <p>Operating businesses ready for consistent profile and content activity.</p>
+      <div class="svc-pay__or" aria-hidden="true"><span>or</span></div>
+
+      <article class="svc-pay__option svc-pay__option--monthly" aria-labelledby="pay-monthly">
+        <span class="svc-months" aria-hidden="true">
+          {Array.from({ length: 12 }, () => <i />)}
+        </span>
+        <p class="svc-pay__kicker"><span>B</span> Monthly plan</p>
+        <h3 id="pay-monthly">Let me run it</h3>
+        <div class:list={['svc-pay__price', { 'svc-pay__price--quoted': !planPrice }]}>
+          <strong>{planPrice || quoted}</strong>
+          <span>{planPrice ? 'per month · typical range' : 'one simple monthly fee'}</span>
         </div>
-        <div class="package-ledger__scope">
-          <span>Working scope</span>
-          <ul>
-            <li>Agreed Google and Meta profile upkeep</li>
-            <li>Practical content planning and scheduling</li>
-            <li>Human-directed scripting, editing, and repurposing</li>
-            <li>Periodic review of consistency and next opportunities</li>
-          </ul>
-        </div>
-        <footer>
-          <div><span>Typical investment</span><strong>$600–$1,800 per month</strong></div>
-          <div><span>Cadence</span><strong>Defined per engagement</strong></div>
-        </footer>
+        <ul class="svc-pay__list">
+          <li>One fee covers the build, hosting, updates, and support</li>
+          <li>No big upfront cost</li>
+          <li>Your domain and content stay in your name</li>
+          <li>Terms, minimum length, and buyout price written into your proposal</li>
+        </ul>
+        <p class="svc-pay__best">Best if you’d rather not think about your website at all.</p>
+        <a class="signal-button" href="#contact" data-interest="Monthly website plan">
+          <span>Ask about the monthly plan</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+        </a>
       </article>
     </div>
+
+    <div class="site-frame svc-pay__always">
+      <span>Either way</span>
+      <ul>
+        <li>Custom-built, never a template</li>
+        <li>Your domain in your name</li>
+        <li>Your content stays yours</li>
+        <li>A launch walkthrough</li>
+      </ul>
+    </div>
+  </section>
+
+  <section
+    id="services"
+    class="pg-section pg-light svc-menu chapter-stack chapter-stack--medium chapter-stack--light"
+    aria-labelledby="menu-title"
+  >
+    <div class="site-frame pg-head">
+      <div>
+        <p class="pg-eyebrow">Every service</p>
+        <h2 id="menu-title">Need one piece?<br /><span>Every service works on its own.</span></h2>
+      </div>
+      <p>
+        Your systems turn interest into customers. Your media brings people in. Open any service to
+        see what’s included, what it costs, and what’s up to the platform.
+      </p>
+    </div>
+
+    <div class="site-frame outreach-map svc-menu__map">
+      {
+        menus.map((menu, menuIndex) => (
+          <>
+            {menuIndex === 1 && (
+              <div class="outreach-flow" aria-hidden="true">
+                <span class="outreach-flow__label">People</span>
+                <div class="outreach-flow__track">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+            )}
+            <article
+              class:list={['outreach-panel', `outreach-panel--${menu.key}`, 'svc-menu__panel']}
+              aria-labelledby={`menu-${menu.key}`}
+            >
+              <p class="outreach-panel__eyebrow">{menu.eyebrow}</p>
+              <h3 id={`menu-${menu.key}`}>{menu.title}</h3>
+              <ul class="svc-menu__list">
+                {menu.services.map((service) => (
+                  <li id={service.id}>
+                    <details data-animated-disclosure>
+                      <summary>
+                        <span class="outreach-list__icon" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" set:html={icons[service.icon]} />
+                        </span>
+                        <span class="svc-menu__name">
+                          <strong>{service.name}</strong>
+                          <span>{service.tagline}</span>
+                        </span>
+                        <span class="svc-menu__price">
+                          <strong>{service.price}</strong>
+                          {service.priceNote && <small>{service.priceNote}</small>}
+                        </span>
+                        <span class="svc-menu__toggle" aria-hidden="true" />
+                      </summary>
+                      <div class="svc-menu__detail" data-disclosure-body>
+                        <div class="svc-menu__detail-inner">
+                          <p class="svc-menu__label">What’s included</p>
+                          <ul>
+                            {service.includes.map((item) => (
+                              <li>{item}</li>
+                            ))}
+                          </ul>
+                          <p class="svc-menu__boundary">{service.boundary}</p>
+                          <a class="signal-link" href="#contact" data-interest={service.interest}>
+                            Ask about {service.name}
+                            <svg viewBox="0 0 20 20" aria-hidden="true">
+                              <path d="M4 10h11M11 5l5 5-5 5" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </details>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </>
+        ))
+      }
+    </div>
+
+    <p class="site-frame svc-menu__foot">
+      Not sure which pieces you need? <a href="#service-guide">Answer three quick questions</a>
+    </p>
   </section>
 
   <div
     id="service-guide"
-    class="guide-field chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    class="guide-field svc-guide chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
   >
     <div class="site-frame"><ServiceGuide /></div>
   </div>
 
   <section
-    id="capabilities"
-    class="capability-section chapter-stack chapter-stack--medium chapter-stack--light"
-    aria-labelledby="capabilities-title"
-  >
-    <div class="site-frame capability-intro">
-      <h2 id="capabilities-title">Use only the capability you need.</h2>
-      <p>Each one has a clear job, a typical range, and a boundary that protects the project.</p>
-    </div>
-    <div class="site-frame capability-ledger">
-      {
-        capabilities.map((capability, index) => (
-          <article id={capability.id}>
-            <EditorialPlate
-              image={capability.image}
-              alt={capability.imageAlt}
-              label={capability.imageLabel}
-              caption={capability.imageCaption}
-              code={`0${index + 1} / Standalone`}
-              className="capability-ledger__plate"
-              compact
-            />
-            <div class="capability-ledger__content">
-              <div class="capability-ledger__title">
-                <h3>{capability.title}</h3>
-                <strong>{capability.range}</strong>
-              </div>
-              <p class="capability-ledger__outcome">{capability.outcome}</p>
-              <ul>
-                {capability.includes.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-              <p class="capability-ledger__boundary">{capability.boundary}</p>
-            </div>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section
-    class="faq-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    id="questions"
+    class="pg-section pg-light svc-faq chapter-stack chapter-stack--medium chapter-stack--light"
     aria-labelledby="faq-title"
   >
     <div class="site-frame faq-layout">
       <div>
-        <h2 id="faq-title">The useful questions, answered early.</h2>
-        <p>Clarity before the call makes the call more valuable.</p>
+        <p class="pg-eyebrow">Questions</p>
+        <h2 id="faq-title">Before you<br /><span>get in touch.</span></h2>
+        <p>
+          The questions people ask most before the call. How the work runs, timing, and ownership
+          are covered step by step on <a href="/how-we-work">How We Work</a>.
+        </p>
       </div>
       <div class="faq-list">
         {
@@ -283,3 +604,5 @@ const faqs = [
 </RootLayout>
 
 <script src="../scripts/dropdown-motion.ts"></script>
+<script src="../scripts/dot-spotlight.ts"></script>
+<script src="../scripts/services-menu.ts"></script>

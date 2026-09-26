@@ -17,6 +17,9 @@ export interface SiteConfig {
   readonly founderPortrait: ImageMetadata;
   readonly motionEnabled: boolean;
   readonly scrollFogEnabled: boolean;
+  readonly loaderEnabled: boolean;
+  /** Monthly website plan price shown on Services, e.g. '$150–$400'. Empty = quoted after the call. */
+  readonly monthlyPlanPrice: string;
 }
 
 /** Owner-editable copy and optional destinations. Empty strings mean unavailable. */

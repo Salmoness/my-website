@@ -1,131 +1,225 @@
 ---
+import { Image } from 'astro:assets';
 import SignalMark from '../components/brand/SignalMark.astro';
-import EditorialPlate from '../components/media/EditorialPlate.astro';
 import RouteHeroMedia from '../components/media/RouteHeroMedia.astro';
 import RootLayout from '../layouts/RootLayout.astro';
 import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
 import founderIntersection from '../assets/images/azul/founder-intersection.png';
 
-const principles = [
-  [
-    'Clarity before complexity',
-    'Start with the result the business needs, then choose the smallest useful system.',
-  ],
-  [
-    'Creative with a destination',
-    'Content should point toward a clear offer, profile, website, or next action.',
-  ],
-  [
-    'Ownership without dependency',
-    'Core accounts and approved deliverables stay in the client’s control.',
-  ],
+const facts = [
+  ['Studied', 'Computer science, UCF'],
+  ['Based in', SITE.location],
+  ['Works with', 'Small businesses that are just starting or hard to find online'],
+  ['Available', 'Central Florida in person, and remote across the U.S.'],
+] as const;
+
+const promises = [
+  {
+    title: 'You talk to me.',
+    text: 'The person on your first call is the person who builds your work. No account managers, no hand-offs.',
+  },
+  {
+    title: 'You hear back fast.',
+    text: 'I reply to every enquiry within two business days, and I keep you posted as the work moves.',
+  },
+  {
+    title: 'Plain language, always.',
+    text: 'No jargon. When a decision matters, I explain it in words that make sense for your business.',
+  },
+  {
+    title: 'You see progress.',
+    text: 'Work is shared at each milestone, so what you get at the end is exactly what you’ve already seen.',
+  },
+  {
+    title: 'Only what’s useful.',
+    text: 'I recommend the smallest thing that works, and I’ll tell you when you don’t need something.',
+  },
+  {
+    title: 'It stays in your name.',
+    text: 'Your domain, accounts, and content belong to you, whichever way you pay.',
+  },
 ] as const;
 ---
 
 <RootLayout metadata={DEFAULT_PAGE_METADATA['/about']} activeRoute="/about">
-  <section class="route-hero route-hero--about route-hero--photo">
+  <section class="route-hero route-hero--photo pg-hero" aria-labelledby="about-title">
     <RouteHeroMedia image={founderIntersection} position="55% 48%" />
-    <div class="site-frame route-hero__layout">
-      <h1>Technical enough to work. Creative enough to matter.</h1>
-      <p>
-        Azul exists because a small business should not have to choose between a reliable digital
-        foundation and ideas people actually notice.
-      </p>
+    <div class="site-frame pg-hero__layout">
+      <p class="pg-eyebrow">About Azul</p>
+      <h1 id="about-title">
+        Technical enough to work.<br /><span>Creative enough to matter.</span>
+      </h1>
+      <div class="pg-hero__card dot-card">
+        <p class="pg-hero__lede">
+          Azul exists because a small business shouldn’t have to choose between a website that works
+          and ideas people actually notice. I do both, and you work with me directly.
+        </p>
+        <div class="pg-hero__actions">
+          <a class="signal-button" href={SITE.consultationHref}>
+            <span>Let’s hop on a call</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link" href="#story">
+            Read my story
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5 12l5 5 5-5"></path></svg
+            >
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="site-frame about-equation" aria-label="Code and creative direction meet at Azul">
+    <div class="site-frame about-equation" aria-label="Systems and media come together at Azul">
       <div>
-        <span>Performance systems</span><strong>Make the business feel high quality</strong>
+        <span>Your systems</span><strong>Turn interest into customers</strong>
       </div>
       <i aria-hidden="true"></i>
       <div class="about-equation__core"><SignalMark /><strong>Azul</strong></div>
       <i aria-hidden="true"></i>
-      <div><span>Creative ideas</span><strong>Bring people toward the service</strong></div>
-    </div>
-  </section>
-
-  <section class="about-studio-bridge" aria-label="Meet the founder of Azul Online Projects">
-    <div class="site-frame">
-      <EditorialPlate
-        image={SITE.founderPortrait}
-        alt="Saymon Rivas holding a laptop displaying the Azul Online Projects website."
-        label="Saymon Rivas / Founder"
-        caption="Azul is a founder-led Orlando business built where dependable implementation and creative presentation meet."
-        code="Orlando / Building Azul"
-        className="founder-photo-card about-studio-plate"
-        position="50% 10%"
-      />
+      <div><span>Your media</span><strong>Bring people to your door</strong></div>
     </div>
   </section>
 
   <section
-    class="founder-story chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
-    aria-labelledby="founder-story-title"
+    id="story"
+    class="pg-section pg-light about-story chapter-stack chapter-stack--wide chapter-stack--light chapter-stack--accent"
+    aria-labelledby="story-title"
   >
-    <div class="site-frame founder-story__layout">
-      <div class="founder-story__identity">
-        <span>Saymon Rivas</span>
-        <strong>Founder of Azul Online Projects</strong>
-        <div class="founder-story__location">
-          <span>Based</span><strong>Orlando, Florida</strong>
-          <span>Available</span><strong>Central Florida + remote across the U.S.</strong>
+    <div class="site-frame about-story__layout">
+      <figure class="about-portrait">
+        <div class="about-portrait__arch" aria-hidden="true">
+          <span class="about-portrait__ring"></span>
         </div>
-      </div>
-      <div class="founder-story__copy">
-        <h2 id="founder-story-title">
-          I learned to build systems. Small businesses showed me why the story around them matters.
+        <Image
+          class="about-portrait__image"
+          src={SITE.founderPortrait}
+          alt="Saymon Rivas holding a laptop displaying the Azul Online Projects website."
+          widths={[480, 720, 960, SITE.founderPortrait.width]}
+          sizes="(max-width: 58rem) 80vw, 34vw"
+          format="webp"
+          quality={82}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="about-portrait__plate">
+          <strong>Saymon Rivas</strong>
+          <span>Founder of Azul Online Projects</span>
+        </figcaption>
+      </figure>
+
+      <div class="about-story__copy">
+        <p class="pg-eyebrow">My story</p>
+        <h2 id="story-title">
+          I learned to build systems.<br /><span
+            >Small businesses showed me why the story matters.</span
+          >
         </h2>
-        <p>
-          Studying computer science at the University of Central Florida taught me how to break a
-          problem apart and make the pieces work together. Watching small businesses compete for
-          attention revealed the other half: a sound system can still be invisible without clear,
-          useful creative work around it.
+        <p class="about-story__lead">
+          I’m Saymon. I studied computer science at the University of Central Florida, where I
+          learned to take a problem apart and make every piece work together.
         </p>
         <p>
-          I created Azul to work at that intersection. Websites and profiles establish credibility.
-          Content gives people a reason to notice. The best result is not more digital clutter—it is
-          one online identity that makes the business easier to find, understand, and contact.
+          Watching small businesses compete for attention showed me the other half. A website can
+          work perfectly and still be invisible if nothing brings people to it. And great content
+          goes nowhere when there’s no clear place for people to land.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <section
-    class="principles-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
-    aria-labelledby="principles-title"
-  >
-    <div class="site-frame principles-layout">
-      <h2 id="principles-title">A few rules keep the work useful.</h2>
-      <div class="principles-list">
+        <p>
+          So I started Azul to do both: build the systems that make a business easy to trust and
+          contact, and make the media that gives people a reason to find it. The goal is never more
+          digital clutter. It’s one online identity that makes your business easier to find,
+          understand, and reach.
+        </p>
         {
-          principles.map(([title, text]) => (
-            <article>
-              <>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </>
-            </article>
-          ))
+          /* TODO(Saymon): add a personal paragraph here — why Orlando, what got you into this, or life outside work. */
         }
+        <dl class="about-facts">
+          {
+            facts.map(([term, detail]) => (
+              <div>
+                <dt>{term}</dt>
+                <dd>{detail}</dd>
+              </div>
+            ))
+          }
+        </dl>
       </div>
     </div>
   </section>
 
   <section
-    class="about-close chapter-stack chapter-stack--wide chapter-stack--slate"
-    aria-labelledby="about-close-title"
+    class="pg-section pg-dark about-working chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
+    aria-labelledby="working-title"
+  >
+    <div class="site-frame pg-head">
+      <div>
+        <p class="pg-eyebrow">Working with me</p>
+        <h2 id="working-title">What it’s actually like<br /><span>to work with me.</span></h2>
+      </div>
+      <p>
+        Azul is founder-led, so these aren’t company values on a wall. They’re promises from the
+        person doing the work.
+      </p>
+    </div>
+
+    <ol class="site-frame about-promises">
+      {
+        promises.map((promise, index) => (
+          <li class="about-promise">
+            <span class="about-promise__num" aria-hidden="true">
+              {index + 1}
+            </span>
+            <h3>{promise.title}</h3>
+            <p>{promise.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="site-frame about-signoff">
+      <span aria-hidden="true">—</span> Saymon
+    </p>
+  </section>
+
+  <section
+    class="pg-section pg-slate about-close chapter-stack chapter-stack--wide chapter-stack--slate"
+    aria-labelledby="close-title"
   >
     <div class="site-frame about-close__layout">
-      <h2 id="about-close-title">Bring the business problem. We’ll find the useful first move.</h2>
-      <div>
+      <div class="about-close__avatar" aria-hidden="true">
+        <Image
+          src={SITE.founderPortrait}
+          alt=""
+          widths={[240, 480]}
+          sizes="10rem"
+          format="webp"
+          quality={80}
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="about-close__status"><i></i>Replies within 2 business days</span>
+      </div>
+      <div class="about-close__copy">
+        <h2 id="close-title">
+          Bring me the problem.<br /><span>I’ll find the useful first move.</span>
+        </h2>
         <p>
-          Tell me what feels scattered, what you want to avoid, and what needs to work better. I’ll
-          respond within two business days.
+          Tell me what feels scattered, what you want to avoid, and what needs to work better. The
+          first call is free and takes <span class="pg-nowrap">20–30 minutes</span>.
         </p>
-        <a class="signal-button" href={SITE.consultationHref}>
-          <span>Let’s hop on a call</span>
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
+        <div class="pg-hero__actions">
+          <a class="signal-button" href={SITE.consultationHref}>
+            <span>Let’s hop on a call</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link" href="/how-we-work">
+            See how it works
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
       </div>
     </div>
   </section>
 </RootLayout>
+
+<script src="../scripts/dot-spotlight.ts"></script>

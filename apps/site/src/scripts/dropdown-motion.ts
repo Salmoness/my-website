@@ -4,7 +4,7 @@ const reducedMotion = (): boolean =>
 
 document.querySelectorAll<HTMLDetailsElement>('[data-animated-disclosure]').forEach((details) => {
   const summary = details.querySelector<HTMLElement>('summary');
-  const answer = details.querySelector<HTMLElement>('.faq-answer');
+  const answer = details.querySelector<HTMLElement>('.faq-answer, [data-disclosure-body]');
 
   if (!summary || !answer) return;
 
@@ -13,8 +13,10 @@ document.querySelectorAll<HTMLDetailsElement>('[data-animated-disclosure]').forE
 
   summary.addEventListener('click', (event) => {
     event.preventDefault();
+    // Follow the element's real state when idle (a linked #hash may have opened it).
+    const running = animation !== undefined;
     animation?.cancel();
-    desiredOpen = !desiredOpen;
+    desiredOpen = running ? !desiredOpen : !details.open;
 
     if (reducedMotion()) {
       details.open = desiredOpen;

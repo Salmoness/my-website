@@ -1,53 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import RootLayout from '../layouts/RootLayout.astro';
-import ProcessRoute from '../components/brand/ProcessRoute.astro';
-import SignalMark from '../components/brand/SignalMark.astro';
-import EditorialPlate from '../components/media/EditorialPlate.astro';
+import ProcessJourney from '../components/brand/ProcessJourney.astro';
 import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
-import storefrontVisibility from '../assets/images/azul/storefront-visibility.png';
-import webDevelopment from '../assets/images/azul/web-development.png';
-import localDiscovery from '../assets/images/azul/local-discovery.png';
-import metaBusiness from '../assets/images/azul/meta-business.png';
-import socialContent from '../assets/images/azul/social-content.png';
 import heroCube from '../assets/images/azul/hero-cube.png';
 import heroShadow from '../assets/images/azul/hero-shadow-stage.png';
-
-const capabilities = [
-  {
-    id: 'web-development',
-    title: 'Web development',
-    headline: 'Give people a place to land.',
-    text: 'A focused website makes the offer clear, builds trust, and gives every other channel a useful destination.',
-    image: webDevelopment,
-    imageAlt: 'Hands refine a responsive website layout across a laptop and tablet.',
-  },
-  {
-    id: 'google-business',
-    title: 'Google Business Profile',
-    headline: 'Show up when they look nearby.',
-    text: 'A useful local profile helps people find the business, understand the essentials, and take the next step.',
-    image: localDiscovery,
-    imageAlt:
-      'A phone with a local-discovery layout is held in front of a neighborhood storefront.',
-  },
-  {
-    id: 'meta-business',
-    title: 'Meta Business',
-    headline: 'Connect the places you show up.',
-    text: 'Organized Facebook and Instagram business profiles make the presence feel consistent and easier to manage.',
-    image: metaBusiness,
-    imageAlt: 'A business-profile workflow is arranged across several devices and content cards.',
-  },
-  {
-    id: 'social-content',
-    title: 'Social Content',
-    headline: 'Give people a reason to return.',
-    text: 'Useful ideas become content that shows the business in motion and points people back to its services.',
-    image: socialContent,
-    imageAlt: 'A compact content shoot uses a phone, small light, storyboard, and editing screen.',
-  },
-] as const;
 ---
 
 <RootLayout metadata={DEFAULT_PAGE_METADATA['/']} activeRoute="/">
@@ -60,21 +17,38 @@ const capabilities = [
     </div>
     <div class="site-frame hero-stage">
       <div class="hero-copy">
-        <h1 id="hero-title">Grow your <span>online</span> <span>identity.</span></h1>
-        <p class="hero-lede">{SITE.supportingLine}</p>
-        <div class="hero-actions">
-          <a class="signal-button" href={SITE.consultationHref}>
-            <span>Let’s hop on a call</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
-            >
-          </a>
-          <a class="signal-link" href="/services">
-            Explore services
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
-            >
-          </a>
+        <h1 id="hero-title">
+          <span>Grow your</span>
+          {' '}
+          <span>online Identity</span>
+        </h1>
+        <div class="hero-card">
+          <p class="hero-lede">
+            A premium website, built from scratch for your business. Buy it once and own it
+            outright, or let Azul run it for you on a simple monthly plan. Either way, you look like
+            the big players without the big-agency price tag.
+          </p>
+          <ul class="hero-points">
+            <li>Fully managed and kept online</li>
+            <li>Custom-built, never a template</li>
+            <li>Your domain and data, in your name</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="signal-button" href={SITE.consultationHref}>
+              <span>Let’s hop on a call</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"
+                ><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+              >
+            </a>
+            <a class="signal-link" href="/services">
+              Explore services
+              <svg viewBox="0 0 20 20" aria-hidden="true"
+                ><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+              >
+            </a>
+          </div>
+          <p class="hero-location">Orlando rooted · Central Florida + remote</p>
         </div>
-        <p class="hero-location">Orlando rooted · Central Florida + remote</p>
       </div>
     </div>
   </section>
@@ -86,36 +60,122 @@ const capabilities = [
     <div class="site-frame problem-layout">
       <div class="problem-statement">
         <h2 id="problem-title">Great work can still be easy to miss.</h2>
-        <p>
-          People look online before they call, visit, or buy. A scattered profile—or no useful
-          answer at all—turns that moment of interest into uncertainty.
-        </p>
       </div>
-      <EditorialPlate
-        image={storefrontVisibility}
-        alt="A small-business owner prepares a softly lit neighborhood storefront before opening."
-        label="Visibility starts before the first click"
-        caption="A professional presence carries the care already happening behind the door into the moment a customer starts looking."
-        code="01 / Ready for business"
-        className="problem-plate"
-        position="58% 50%"
-      />
-      <div class="discovery-route" aria-label="A customer's path from search to contact">
-        <div class="discovery-route__track" aria-hidden="true"></div>
-        <div><span>Search</span><strong>Can I find you?</strong></div>
-        <div><span>Understand</span><strong>Is this for me?</strong></div>
-        <div><span>Trust</span><strong>Does this feel ready?</strong></div>
-        <div><span>Contact</span><strong>What do I do next?</strong></div>
-      </div>
-      <div class="problem-resolution">
-        <p>
-          Azul connects those answers into one professional presence: a clear offer, signs of an
-          active business, and a direct path to start the conversation.
-        </p>
-        <a class="signal-link signal-link--dark" href="/how-we-work">
-          See how the work comes together
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
+      <p class="problem-intro">
+        Before anyone calls, books, or buys, they look you up. What they find—or don’t—decides
+        whether they reach out or keep scrolling.
+      </p>
+
+      <div class="problem-story" data-search-story data-step="done">
+        <div class="problem-narrative">
+          <ol class="problem-steps">
+            <li>
+              <span class="problem-steps__num" aria-hidden="true">1</span>
+              <div>
+                <h3>They look you up first.</h3>
+                <p>
+                  Whether they heard your name or just need the service, they search before they
+                  commit—usually with a few options open.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span class="problem-steps__num" aria-hidden="true">2</span>
+              <div>
+                <h3>A thin result reads as a risk.</h3>
+                <p>
+                  No website, no photos, no hours. With nothing to confirm you’re real and active,
+                  their confidence drops.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span class="problem-steps__num" aria-hidden="true">3</span>
+              <div>
+                <h3>They pick someone who looks ready.</h3>
+                <p>
+                  The next result has a clear site and an active profile. It gets the call—even if
+                  your work is better.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <figure class="search-story">
+          <p class="sr-only">
+            Illustration: someone searches for catering in Orlando. Two competitors show complete
+            listings with websites, photos, and reviews. Your business shows no website, photos, or
+            hours, so the searcher chooses a competitor instead.
+          </p>
+          <div class="search-story__panel" aria-hidden="true">
+            <div class="search-story__bar">
+              <svg viewBox="0 0 20 20"
+                ><circle cx="8.5" cy="8.5" r="5.5"></circle><path d="m13 13 4.5 4.5"></path></svg
+              >
+              <span class="search-story__query">catering in Orlando</span>
+              <span class="search-story__caret"></span>
+              <span class="search-story__marker search-story__marker--1">1</span>
+            </div>
+            <ol class="search-story__results">
+              <li class="search-result search-result--you">
+                <div class="search-result__head">
+                  <span class="search-result__avatar">?</span>
+                  <div>
+                    <strong>Your business</strong>
+                    <span class="search-result__meta">No reviews yet · Hours unknown</span>
+                  </div>
+                </div>
+                <div class="search-result__chips">
+                  <span>No website</span><span>No photos</span>
+                </div>
+                <span class="search-result__doubt">Still open?</span>
+                <span class="search-story__marker search-story__marker--2">2</span>
+              </li>
+              <li class="search-result">
+                <div class="search-result__head">
+                  <span class="search-result__avatar">HV</span>
+                  <div>
+                    <strong>Harbor &amp; Vine Events</strong>
+                    <span class="search-result__meta">★ 4.6 · 88 reviews · Open now</span>
+                  </div>
+                </div>
+                <div class="search-result__chips">
+                  <span>Website</span><span>Gallery</span><span>Reviews</span>
+                </div>
+              </li>
+              <li class="search-result search-result--chosen">
+                <div class="search-result__head">
+                  <span class="search-result__avatar">BO</span>
+                  <div>
+                    <strong>Bright Oak Catering</strong>
+                    <span class="search-result__meta">★ 4.8 · 126 reviews · Open until 9 PM</span>
+                  </div>
+                </div>
+                <div class="search-result__chips">
+                  <span>Website</span><span>Menu</span><span>Photos</span><span>Get a quote</span>
+                </div>
+                <span class="search-result__tag">Chosen</span>
+                <span class="search-story__marker search-story__marker--3">3</span>
+              </li>
+            </ol>
+            <svg class="search-story__cursor" viewBox="0 0 24 24"
+              ><path d="M5 3l14 8.2-6.1 1.5 3.6 6.6-2.6 1.4-3.6-6.6L5 18.5z"></path></svg
+            >
+          </div>
+          <figcaption>Illustration · business names are fictional</figcaption>
+        </figure>
+        <div class="problem-resolution">
+          <p>
+            <strong>Azul makes sure the search ends with you:</strong> a website and profiles that are
+            easy to find, clearly current, and ready for that first call.
+          </p>
+          <a class="signal-link signal-link--dark" href="/how-we-work">
+            See how the work comes together
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -125,140 +185,274 @@ const capabilities = [
     aria-labelledby="intersection-title"
   >
     <div class="site-frame intersection-intro">
-      <h2 id="intersection-title">Build the ground.<br /><span>Send the signal.</span></h2>
+      <h2 id="intersection-title">
+        Be ready when they come.<br /><span>Make sure they come.</span>
+      </h2>
       <p>
-        A strong website without attention sits quietly. Content without a dependable destination
-        scatters interest. Each side is more useful when the other has a job.
+        A great website can’t help anyone who never finds it. Your systems make sure no enquiry
+        slips through; your media makes sure people hear about you in the first place—so new
+        customers come to you, not the other way around.
       </p>
     </div>
-    <div class="site-frame intersection-map" aria-label="How Azul connects systems and media">
-      <div class="intersection-lane">
-        <span>Systems sharpen the business</span>
-        <strong>Clear offer</strong><strong>Credible home</strong><strong>Reliable contact</strong>
+
+    <div class="site-frame outreach-map">
+      <article class="outreach-panel outreach-panel--systems" aria-labelledby="outreach-systems">
+        <p class="outreach-panel__eyebrow">Your systems</p>
+        <h3 id="outreach-systems">Turn interest into customers.</h3>
+        <ul class="outreach-list">
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><rect x="3" y="4.5" width="18" height="15" rx="2.5"></rect><path
+                  d="M3 9h18M6.5 6.75h.01M9 6.75h.01"></path></svg
+              ></span
+            >
+            <div>
+              <strong>Website</strong>
+              <span>A clear home that explains your offer and asks for the call.</span>
+            </div>
+          </li>
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><circle cx="9" cy="8.5" r="3.25"></circle><path
+                  d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15.5 5.5h5M15.5 9h5M17.5 12.5h3"
+                ></path></svg
+              ></span
+            >
+            <div>
+              <strong>CRM</strong>
+              <span>Every enquiry in one place, so nothing slips through a notebook.</span>
+            </div>
+          </li>
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"></path></svg
+              ></span
+            >
+            <div>
+              <strong>Automations</strong>
+              <span>Confirmations, reminders, and hand-offs that run on their own.</span>
+            </div>
+          </li>
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><path d="M4 5.5h16v10H9.5L5 19.5v-4H4zM8 9.5h8M8 12h5"></path></svg
+              ></span
+            >
+            <div>
+              <strong>Follow-ups</strong>
+              <span>Timely replies by text, WhatsApp, or email so leads don’t go cold.</span>
+            </div>
+          </li>
+        </ul>
+      </article>
+
+      <div class="outreach-flow" aria-hidden="true">
+        <span class="outreach-flow__label">People</span>
+        <div class="outreach-flow__track"><i></i><i></i><i></i><i></i></div>
       </div>
-      <div class="intersection-core">
-        <SignalMark />
-        <span>One coherent presence</span>
-      </div>
-      <div class="intersection-lane intersection-lane--right">
-        <span>Media brings people toward it</span>
-        <strong>Useful ideas</strong><strong>Active profiles</strong><strong
-          >Recognizable voice</strong
-        >
-      </div>
+
+      <article class="outreach-panel outreach-panel--media" aria-labelledby="outreach-media">
+        <p class="outreach-panel__eyebrow">Your media</p>
+        <h3 id="outreach-media">Get found without knocking on doors.</h3>
+        <ul class="outreach-list">
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="m10 9 5 3-5 3z"
+                ></path></svg
+              ></span
+            >
+            <div>
+              <strong>Content</strong>
+              <span>Short videos, photos, and posts that show your work.</span>
+            </div>
+          </li>
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><rect x="4" y="4" width="16" height="16" rx="4.5"></rect><circle
+                  cx="12"
+                  cy="12"
+                  r="3.5"></circle><path d="M16.5 7.5h.01"></path></svg
+              ></span
+            >
+            <div>
+              <strong>Social strategy</strong>
+              <span>A steady plan for Instagram and Facebook that keeps you visible.</span>
+            </div>
+          </li>
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><circle cx="10.5" cy="10.5" r="6"></circle><path d="m15 15 5 5"></path></svg
+              ></span
+            >
+            <div>
+              <strong>Google Ads</strong>
+              <span>Show up when people search for what you do.</span>
+            </div>
+          </li>
+          <li>
+            <span class="outreach-list__icon" aria-hidden="true"
+              ><svg viewBox="0 0 24 24"
+                ><path d="M4 10v4h3l6 4V6L7 10zM16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"
+                ></path></svg
+              ></span
+            >
+            <div>
+              <strong>Meta Ads</strong>
+              <span>Reach nearby customers on Facebook and Instagram.</span>
+            </div>
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="site-frame outreach-result">
+      <p>
+        <strong>Together, they work while you do:</strong> people hear about you, reach out, and get a
+        fast, professional answer.
+      </p>
+      <a class="signal-link" href="/services">
+        See what’s included
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
+      </a>
     </div>
   </section>
 
   <section
     class="offers-section chapter-stack chapter-stack--medium chapter-stack--light"
-    aria-label="Ways to work with Azul"
+    aria-labelledby="packages-title"
   >
-    <div class="site-frame offers-heading">
+    <div class="site-frame packages-heading">
+      <h2 id="packages-title">Start with a foundation.<br /><span>Keep it growing.</span></h2>
       <p>
-        Choose a connected foundation or focus on the one piece creating the most friction. Every
-        final scope is shaped around the business; every capability can stand on its own.
+        Two packages cover what most small businesses need. Take the one that fits where you are
+        today, or pair them. Prices are typical ranges; your final quote is shaped around your
+        business.
       </p>
     </div>
 
-    <div class="site-frame offer-ledger">
-      <article id="home-foundation">
-        <div class="offer-ledger__title">
-          <h2>Online Foundation</h2>
-          <span>$1,500–$4,000 typical · one time</span>
-        </div>
-        <p>A coordinated starting point that makes a new or tiny business look established.</p>
-        <ul>
-          <li>Focused website</li><li>Business-profile foundation</li><li>Clear enquiry path</li>
-        </ul>
-        <a class="signal-link signal-link--dark" href="/services#online-foundation">
-          See the foundation
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
-      </article>
-      <p class="offer-ledger__choice">or</p>
-      <article id="home-visibility">
-        <div class="offer-ledger__title">
-          <h2>Ongoing Visibility</h2>
-          <span>$600–$1,800 typical · monthly</span>
-        </div>
-        <p>
-          Optional support that keeps useful profiles and content active after the base is sound.
+    <div class="site-frame packages">
+      <article
+        class="package-card package-card--foundation"
+        id="home-foundation"
+        aria-labelledby="package-foundation"
+      >
+        <p class="package-card__kicker"><span>1</span> One-time project</p>
+        <h3 id="package-foundation">Online Foundation</h3>
+        <p class="package-card__fit">
+          For new or very small businesses that need a credible home online.
         </p>
-        <ul><li>Content direction</li><li>Profile upkeep</li><li>Sustainable cadence</li></ul>
-        <a class="signal-link" href="/services#ongoing-visibility">
-          See ongoing support
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
+        <div class="package-card__price">
+          <strong>$1,500–$4,000</strong>
+          <span>one time · typical range</span>
+        </div>
+        <ul class="package-card__list">
+          <li>Custom, mobile-friendly website (up to five pages)</li>
+          <li>A clear enquiry path and contact actions</li>
+          <li>Google Business Profile setup or cleanup</li>
+          <li>Facebook and Instagram business setup</li>
+          <li>Search and social-sharing basics</li>
+          <li>Handoff and training, with everything in your name</li>
+        </ul>
+        <p class="package-card__note">
+          Usually 3–6 weeks once content and access are ready. Domain, hosting, and subscriptions
+          are billed separately.
+        </p>
+        <div class="package-card__actions">
+          <a class="signal-button" href={SITE.consultationHref}>
+            <span>Start with the foundation</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link signal-link--dark" href="/services#online-foundation">
+            Foundation details
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
+      </article>
+
+      <div class="packages__join" aria-hidden="true">
+        <span class="packages__join-mark"
+          ><svg viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5"></path></svg></span
+        >
+        <span class="packages__join-label">then</span>
+      </div>
+
+      <article
+        class="package-card package-card--visibility"
+        id="home-visibility"
+        aria-labelledby="package-visibility"
+      >
+        <p class="package-card__kicker"><span>2</span> Monthly support</p>
+        <h3 id="package-visibility">Ongoing Visibility</h3>
+        <p class="package-card__fit">
+          For businesses with a foundation in place that need to stay active and easy to find.
+        </p>
+        <div class="package-card__price">
+          <strong>$600–$1,800</strong>
+          <span>per month · typical range</span>
+        </div>
+        <ul class="package-card__list">
+          <li>Google Business Profile upkeep</li>
+          <li>Facebook and Instagram management</li>
+          <li>Content planning and scheduling</li>
+          <li>Short videos, graphics, and captions made for you</li>
+          <li>A regular review of what’s working and what’s next</li>
+        </ul>
+        <p class="package-card__note">
+          Platforms, posting cadence, and deliverables are agreed in your proposal before work
+          begins.
+        </p>
+        <div class="package-card__actions">
+          <a class="signal-button" href={SITE.consultationHref}>
+            <span>Keep it growing</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+          <a class="signal-link" href="/services#ongoing-visibility">
+            Visibility details
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg
+            >
+          </a>
+        </div>
       </article>
     </div>
 
-    <div class="site-frame capability-path">
-      <div class="capability-path__intro">
-        <h3 id="capability-path-title">From first look to lasting presence.</h3>
-        <p>
-          This is one useful route to a stronger online presence. Start wherever the gap is; each
-          service works on its own.
-        </p>
-      </div>
-      <ol class="capability-path__steps" aria-labelledby="capability-path-title">
-        {
-          capabilities.map((capability, index) => (
-            <li class="capability-path__step">
-              <span class="capability-path__number" aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <div class="capability-path__copy">
-                <h4>{capability.headline}</h4>
-                <p class="capability-path__service">{capability.title}</p>
-                <p>{capability.text}</p>
-                <a class="signal-link signal-link--dark" href={`/services#${capability.id}`}>
-                  Explore {capability.title}
-                  <svg viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M4 10h11M11 5l5 5-5 5" />
-                  </svg>
-                </a>
-              </div>
-              <figure class="capability-path__media">
-                <Image
-                  src={capability.image}
-                  alt={capability.imageAlt}
-                  widths={[480, 720, 960, capability.image.width]}
-                  sizes="(max-width: 58rem) calc(100vw - 6rem), 42vw"
-                  format="webp"
-                  quality={78}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </figure>
-            </li>
-          ))
-        }
-      </ol>
-      <div class="capability-path__finish">
-        <span>Start with the gap that matters now.</span>
-        <a class="signal-link signal-link--dark" href="/services#service-guide">
-          Find your starting point
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
-        </a>
-      </div>
-    </div>
+    <p class="site-frame packages-footnote">
+      Only need one piece—a website, a Google profile, or content? Every service is also available
+      on its own. <a href="/services#services">See individual services</a>
+    </p>
   </section>
 
   <section
     class="process-section chapter-stack chapter-stack--narrow chapter-stack--dark chapter-stack--foreground"
     aria-labelledby="process-title"
   >
-    <div class="site-frame process-intro">
-      <h2 id="process-title">From first conversation to something you can use.</h2>
+    <div class="site-frame process-intro journey-intro">
       <div>
-        <p>No mystery process. No pressure to buy every service at once.</p>
+        <p class="journey-eyebrow">How working with me goes</p>
+        <h2 id="process-title">
+          From first conversation<br /><span>to something you can use.</span>
+        </h2>
+      </div>
+      <div>
+        <p>
+          Four steps, no mystery, and no pressure to buy every service at once. Open each one to see
+          what happens and what you walk away with.
+        </p>
         <a class="signal-link" href="/how-we-work">
-          Explore the full handoff
+          See the full process
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
         </a>
       </div>
     </div>
-    <div class="site-frame"><ProcessRoute headingId="process-title" /></div>
+    <div class="site-frame"><ProcessJourney /></div>
   </section>
 
   <section
@@ -266,17 +460,27 @@ const capabilities = [
     aria-labelledby="founder-title"
   >
     <div class="site-frame founder-layout">
-      <EditorialPlate
-        image={SITE.founderPortrait}
-        alt="Saymon Rivas holding a laptop displaying the Azul Online Projects website."
-        label="Founder-led in Orlando"
-        caption="The same person shaping the strategy stays close to the build."
-        code="Saymon / Azul"
-        className="founder-photo-card founder-portrait-plate"
-        compact
-      />
+      <figure class="founder-card">
+        <div class="founder-card__stage" aria-hidden="true"><span>Saymon</span></div>
+        <Image
+          class="founder-card__portrait"
+          src={SITE.founderPortrait}
+          alt="Saymon Rivas holding a laptop displaying the Azul Online Projects website."
+          widths={[480, 720, 960, SITE.founderPortrait.width]}
+          sizes="(max-width: 58rem) 90vw, 36vw"
+          format="webp"
+          quality={82}
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="founder-card__plate">
+          <strong>Saymon Rivas</strong>
+          <span>Founder, Azul Online Projects</span>
+        </figcaption>
+      </figure>
       <div class="founder-copy">
-        <h2 id="founder-title">Built at the useful intersection.</h2>
+        <p class="founder-eyebrow">Meet the founder</p>
+        <h2 id="founder-title">Hi, I’m Saymon.<br /><span>Code meets creativity.</span></h2>
         <p class="founder-lead">
           I studied computer science at UCF and saw a practical gap: small businesses need solid
           digital systems, but they also need ideas that make people pay attention.
@@ -286,6 +490,11 @@ const capabilities = [
           to create a presence that feels credible, works reliably, and gives the right people a
           reason to come closer.
         </p>
+        <ul class="founder-facts">
+          <li>Computer science, UCF</li>
+          <li>Based in Orlando, FL</li>
+          <li>You work with me directly</li>
+        </ul>
         <a class="signal-link" href="/about">
           Why Azul exists
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"></path></svg>
@@ -295,5 +504,6 @@ const capabilities = [
   </section>
 </RootLayout>
 
-<script src="../scripts/capability-path.ts"></script>
 <script src="../scripts/signal-field.ts"></script>
+<script src="../scripts/dot-spotlight.ts"></script>
+<script src="../scripts/search-story.ts"></script>

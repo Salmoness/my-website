@@ -1,0 +1,210 @@
+---
+import { SITE } from '../../config/site';
+
+interface Props {
+  label?: string;
+}
+
+const { label = 'Steps of working together' } = Astro.props;
+
+const steps = [
+  {
+    id: 'call',
+    label: 'Call',
+    hint: 'Free · 20–30 min',
+    kicker: 'Free · 20–30 minutes',
+    title: 'The consultation call',
+    lead: 'We talk through your business, what’s getting in the way, and what a good result would look like. No pitch, no pressure.',
+    you: 'Your story: what you offer, who you serve, and what isn’t working yet.',
+    me: 'Listening, asking the right questions, and pointing to the most valuable place to start.',
+    leaves: 'A clear direction',
+    note: 'A focused recommendation, not a full audit.',
+    next: 'Make the plan',
+  },
+  {
+    id: 'plan',
+    label: 'Plan',
+    hint: 'Written proposal',
+    kicker: 'Written proposal',
+    title: 'A plan we both agree on',
+    lead: 'I turn the call into a written plan shaped around what you actually need. Nothing starts until you’ve read it and said yes.',
+    you: 'Your goals, your timing, and the access or material the work will need.',
+    me: 'Scope, what’s in and what’s out, milestones, revision rounds, price, and ownership, all in writing.',
+    leaves: 'An agreed plan',
+    note: '',
+    next: 'Start the build',
+  },
+  {
+    id: 'build',
+    label: 'Build',
+    hint: 'Visible milestones',
+    kicker: 'Visible milestones',
+    title: 'Building it in the open',
+    lead: 'I design and build in stages you can see and react to, so nothing surprises you at the end.',
+    you: 'Content, access, and feedback as each milestone lands.',
+    me: 'Design, build, and plain-language check-ins so every decision makes sense.',
+    leaves: 'Work you approved',
+    note: '',
+    next: 'Go live',
+  },
+  {
+    id: 'launch',
+    label: 'Launch',
+    hint: 'Launch + handoff',
+    kicker: 'Launch + handoff',
+    title: 'You’re live.',
+    lead: 'Your presence goes live, and everything is handed over in your name: the domain, the accounts, the content, and the final files.',
+    you: 'A final look and the go-ahead.',
+    me: 'The launch, a documented handoff, and honest ideas for what’s worth doing next. Ongoing support stays optional.',
+    leaves: 'A presence you own',
+    note: '',
+    next: '',
+  },
+] as const;
+
+const last = steps.length - 1;
+---
+
+<div class="journey" data-journey>
+  <ol class="journey__track" aria-label={label}>
+    {
+      steps.map((step, index) => (
+        <li class="journey__stop">
+          <a
+            class="journey__tab"
+            id={`journey-tab-${step.id}`}
+            href={`#journey-${step.id}`}
+            data-journey-tab={index}
+          >
+            <span class="journey__cue" aria-hidden="true">
+              Next
+            </span>
+            <span class="journey__node" aria-hidden="true">
+              <span class="journey__node-num">{index + 1}</span>
+              <svg class="journey__node-check" viewBox="0 0 20 20">
+                <path d="M4.5 10.5l3.5 3.5 7.5-8" />
+              </svg>
+            </span>
+            <span class="journey__label">
+              {step.label}
+              {index === last && (
+                <svg class="journey__flag" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M5.5 17.5V3M5.5 3.5h9l-2.25 3.5 2.25 3.5h-9" />
+                </svg>
+              )}
+            </span>
+            <span class="journey__hint">{step.hint}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="journey__deck" data-journey-deck>
+    {
+      steps.map((step, index) => (
+        <article
+          class:list={['journey__panel', { 'journey__panel--finale': index === last }]}
+          id={`journey-${step.id}`}
+          data-journey-panel={index}
+          aria-labelledby={`journey-title-${step.id}`}
+        >
+          <span class="journey__num" aria-hidden="true">
+            {index + 1}
+          </span>
+
+          <div class="journey__head">
+            <p class="journey__kicker">
+              <span>{`Step ${index + 1} of ${steps.length}`}</span>
+              {' · '}
+              <span>{step.kicker}</span>
+            </p>
+            <h3 id={`journey-title-${step.id}`}>
+              {index === last ? (
+                <>
+                  You’re <span>live.</span>
+                </>
+              ) : (
+                step.title
+              )}
+            </h3>
+          </div>
+
+          <p class="journey__lead">{step.lead}</p>
+
+          <dl class="journey__roles">
+            <div class="journey__role journey__role--you">
+              <dt>You bring</dt>
+              <dd>{step.you}</dd>
+            </div>
+            <div class="journey__role journey__role--me">
+              <dt>I handle</dt>
+              <dd>{step.me}</dd>
+            </div>
+          </dl>
+
+          {index === last ? (
+            <div class="journey__token journey__token--haul">
+              <span class="journey__token-label">Leaves this project</span>
+              <ul>
+                {steps.map((item, itemIndex) => (
+                  <li style={`--i: ${itemIndex}`}>
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M4.5 10.5l3.5 3.5 7.5-8" />
+                    </svg>
+                    {item.leaves}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div class="journey__token">
+              <span class="journey__token-label">Leaves this phase</span>
+              <strong>{step.leaves}</strong>
+              {step.note && <small>{step.note}</small>}
+            </div>
+          )}
+
+          <div class="journey__foot">
+            {index === last ? (
+              <>
+                <a class="signal-button" href={SITE.consultationHref}>
+                  <span>Let’s hop on a call</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M4 10h11M11 5l5 5-5 5" />
+                  </svg>
+                </a>
+                <a class="journey__replay" href={`#journey-${steps[0].id}`} data-journey-go="0">
+                  See the steps again
+                </a>
+              </>
+            ) : (
+              <a
+                class="journey__next"
+                href={`#journey-${steps[index + 1]?.id}`}
+                data-journey-go={index + 1}
+              >
+                <span>
+                  <small>Next step</small>
+                  {step.next}
+                </span>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M4 10h11M11 5l5 5-5 5" />
+                </svg>
+              </a>
+            )}
+          </div>
+
+          {index === last && (
+            <span class="journey__live" aria-hidden="true">
+              <i />
+              Live
+            </span>
+          )}
+        </article>
+      ))
+    }
+  </div>
+</div>
+
+<script src="../../scripts/process-journey.ts"></script>

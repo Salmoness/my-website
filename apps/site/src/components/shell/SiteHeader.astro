@@ -12,7 +12,7 @@ interface Props {
 const { activeRoute, class: className = '' } = Astro.props;
 ---
 
-<header class:list={['site-header', className]}>
+<header id="top" class:list={['site-header', className]}>
   <div class="site-frame header-row">
     <a href="/" class="brand-link" aria-label={`${SITE.name} home`}>
       <SignalMark />
