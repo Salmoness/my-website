@@ -38,7 +38,7 @@ Astro 7, strict TypeScript 6, Tailwind CSS 4, Vitest, and Playwright, in a pnpm 
 
 ## Prerequisites
 
-- **Node.js** `24.20.0` (pinned in `.node-version`; engines `>=24.20.0 <25.0.0`)
+- **Node.js** `24.20.0` locally (pinned in `.node-version`); engines allow `>=24.6.0 <25.0.0` so the host's Node 24 can build
 - **pnpm** `11.25.0` (pinned via `packageManager`), activated with Corepack:
 
 ```bash
@@ -51,15 +51,22 @@ pnpm install --frozen-lockfile
 
 Run from the repository root:
 
-| Command             | Purpose                                            |
-| :------------------ | :------------------------------------------------- |
-| `pnpm dev:site`     | Local dev server at `http://localhost:4321`        |
-| `pnpm build`        | Static production build to `apps/site/dist/`       |
-| `pnpm typecheck`    | `astro check` across TypeScript and `.astro` files |
-| `pnpm lint`         | ESLint with zero warnings allowed                  |
-| `pnpm format:check` | Prettier check (with the Astro plugin)             |
-| `pnpm test`         | Build, then run Vitest unit tests                  |
-| `pnpm test:e2e`     | Playwright browser tests                           |
+| Command             | Purpose                                                          |
+| :------------------ | :--------------------------------------------------------------- |
+| `pnpm dev:site`     | Local dev server at `http://localhost:4321`                      |
+| `pnpm build`        | Static production build to `apps/site/dist/` (copied to `dist/`) |
+| `pnpm typecheck`    | `astro check` across TypeScript and `.astro` files               |
+| `pnpm lint`         | ESLint with zero warnings allowed                                |
+| `pnpm format:check` | Prettier check (with the Astro plugin)                           |
+| `pnpm test`         | Build, then run Vitest unit tests                                |
+| `pnpm test:e2e`     | Playwright browser tests                                         |
+
+## Deploying (Hostinger or any static host)
+
+- Build command: `pnpm build` (or `npm run build`). It runs the site's `astro build` through `npm --prefix apps/site` rather than calling pnpm a second time, so hosts whose nested `pnpm` points at a missing corepack version still build.
+- Output directory: `dist` (a copy of `apps/site/dist`, made by `scripts/copy-dist.mjs`). `apps/site/dist` works too.
+- Node: any 24.x from 24.6.0 up.
+- Set `SITE_MODE=production` in the host's environment only when the site should be indexed; the default `staging` marks every page no-index.
 
 ## Environment
 

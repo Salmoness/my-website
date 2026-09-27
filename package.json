@@ -3,12 +3,12 @@
   "private": true,
   "packageManager": "pnpm@11.25.0",
   "engines": {
-    "node": ">=24.20.0 <25.0.0",
+    "node": ">=24.6.0 <25.0.0",
     "pnpm": ">=11.25.0 <12.0.0"
   },
   "scripts": {
     "dev:site": "pnpm --filter site dev",
-    "build": "pnpm --filter site build",
+    "build": "npm --prefix apps/site run build && node scripts/copy-dist.mjs",
     "typecheck": "pnpm --filter site typecheck",
     "lint": "eslint . --max-warnings 0",
     "format:check": "prettier --check .",
