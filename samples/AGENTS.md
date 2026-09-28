@@ -12,7 +12,7 @@
 <Language version, naming conventions, language of code and messages.>
 
 ## Rules
-- Read docs/constitution.md and the active spec before modifying code.
+- Read the repository's root `AGENTS.md` and relevant project docs before modifying code.
 - <Boundaries: what not to touch, what not to add without asking.>
 
 ## Upon Completing Any Task

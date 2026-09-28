@@ -44,3 +44,15 @@ apps/site/.impeccable/*
 docs/.obsidian/workspace.json
 docs/.obsidian/workspace-mobile.json
 docs/.obsidian/cache
+
+# Private company vault paths must never enter the website repository.
+docs/company/
+docs/offers/
+docs/decisions/
+docs/specs/
+docs/constitution.md
+docs/Vault Guide.md
+
+# Local working material
+Claude outputs/
+scratch/

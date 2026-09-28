@@ -6,15 +6,14 @@ The site has five routes: `/`, `/services`, `/how-we-work`, `/about`, and `/priv
 
 ## Where to start
 
-The product and company source of truth is the Obsidian vault in [`docs/`](docs/Home.md):
+The website's public-safe Obsidian vault is in [`docs/`](docs/Home.md):
 
 1. [`docs/Home.md`](docs/Home.md): map of the vault and reading recipe.
-2. [`docs/constitution.md`](docs/constitution.md): governing principles.
-3. [`docs/AGENTS.md`](docs/AGENTS.md): working rules for agents and contributors.
-4. [`docs/website/Website Release Plan.md`](docs/website/Website%20Release%20Plan.md): current launch checklist.
-5. [`docs/specs/007-azul-online-projects-mvp/`](docs/specs/007-azul-online-projects-mvp/spec.md): the active specification.
+2. [`docs/AGENTS.md`](docs/AGENTS.md): working rules for agents and contributors.
+3. [`docs/website/Public Content Contract.md`](docs/website/Public%20Content%20Contract.md): approved public facts.
+4. [`docs/website/Release Checklist.md`](docs/website/Release%20Checklist.md): current website launch checks.
 
-Specs 002–006 record an earlier personal-portfolio direction. They are kept for history but do not describe the current product.
+The separate private Azul company vault holds business decisions and historical specifications. This repository must not contain private company notes.
 
 ## Status
 
@@ -30,7 +29,7 @@ Specs 002–006 record an earlier personal-portfolio direction. They are kept fo
 | `apps/site/src/config/site.ts`      | Central identity, contact, form-endpoint, and release values |
 | `apps/site/DESIGN.md`, `PRODUCT.md` | Shipped design system and product brief for the site         |
 | `packages/ui/`                      | Shared design tokens and foundation CSS                      |
-| `docs/`                             | Company vault: decisions, offers, website direction, specs   |
+| `docs/`                             | Public-safe website vault and implementation notes           |
 
 ## Stack
 
