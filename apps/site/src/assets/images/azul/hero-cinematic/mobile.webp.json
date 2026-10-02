@@ -1,0 +1,9 @@
+{
+  "revision": 3,
+  "date": "2026-09-30",
+  "source": "Higgsfield-generated image supplied by Saymon Rivas",
+  "prompt": null,
+  "prompt_note": "The generation prompt was not supplied with the image.",
+  "original": ".impeccable/hero-cinematic/revision-3-user-supplied.png",
+  "derivation": "Crop left 1450, top 425, width 2240, height 1400 from the 3840x2160 source, resized to 960x600, WebP quality 84."
+}

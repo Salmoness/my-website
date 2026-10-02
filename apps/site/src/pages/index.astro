@@ -1,20 +1,17 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import RootLayout from '../layouts/RootLayout.astro';
 import ProcessJourney from '../components/brand/ProcessJourney.astro';
 import { DEFAULT_PAGE_METADATA, SITE } from '../config/site';
-import heroCube from '../assets/images/azul/hero-cube.png';
-import heroShadow from '../assets/images/azul/hero-shadow-stage.png';
+import heroScene from '../assets/images/azul/hero-cinematic/desktop.webp';
+import heroSceneMobile from '../assets/images/azul/hero-cinematic/mobile.webp';
+
+const mobileScene = await getImage({ src: heroSceneMobile, width: 960, format: 'webp' });
+const mobileSceneSmall = await getImage({ src: heroSceneMobile, width: 480, format: 'webp' });
 ---
 
 <RootLayout metadata={DEFAULT_PAGE_METADATA['/']} activeRoute="/">
   <section class="azul-hero" aria-labelledby="hero-title">
-    <div class="hero-shadow" aria-hidden="true">
-      <Image src={heroShadow} alt="" loading="eager" />
-    </div>
-    <div class="hero-sculpture" aria-hidden="true">
-      <Image src={heroCube} alt="" loading="eager" />
-    </div>
     <div class="site-frame hero-stage">
       <div class="hero-copy">
         <h1 id="hero-title">
@@ -22,6 +19,24 @@ import heroShadow from '../assets/images/azul/hero-shadow-stage.png';
           {' '}
           <span>online Identity</span>
         </h1>
+        <picture class="hero-scene" aria-hidden="true">
+          <source
+            media="(max-width: 58rem)"
+            srcset={`${mobileSceneSmall.src} 480w, ${mobileScene.src} 960w`}
+            sizes="100vw"
+            width="960"
+            height="600"
+          />
+          <Image
+            src={heroScene}
+            alt=""
+            widths={[1280, 1920, 2560]}
+            sizes="100vw"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
         <div class="hero-card">
           <p class="hero-lede">
             A website built from scratch for your business. You pay for the build once and own it,

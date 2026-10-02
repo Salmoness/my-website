@@ -1,0 +1,32 @@
+---
+import { LOGO_LAYOUTS, LOGO_MARK, LOGO_WORDS, type LogoLayout } from './logo-paths';
+
+interface Props {
+  /** `horizontal` sets the name beside the mark; `stacked` sets it underneath. */
+  layout?: LogoLayout;
+  class?: string;
+}
+
+const { layout = 'horizontal', class: className = '' } = Astro.props;
+const { viewBox, mark, words } = LOGO_LAYOUTS[layout];
+---
+
+<svg
+  class:list={['azul-logo', `azul-logo--${layout}`, className]}
+  viewBox={viewBox}
+  aria-hidden="true"
+  focusable="false"
+>
+  <g transform={mark}>
+    <g class="azul-logo__mark">
+      <path class="azul-logo__tall" d={LOGO_MARK.tall}></path>
+      <path class="azul-logo__small" d={LOGO_MARK.small}></path>
+      <circle class="azul-logo__dot" cx={LOGO_MARK.dot.cx} cy={LOGO_MARK.dot.cy} r={LOGO_MARK.dot.r}
+      ></circle>
+    </g>
+  </g>
+  <g transform={words}>
+    <path class="azul-logo__name" d={LOGO_WORDS.azul}></path>
+    <path class="azul-logo__descriptor" d={LOGO_WORDS.descriptor}></path>
+  </g>
+</svg>

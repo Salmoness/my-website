@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-23T18:50:55Z",
+  "generatedAt": "2026-09-30T17:36:51.731Z",
   "title": "Design System: Azul Online Projects",
   "extensions": {
     "colorMeta": {
@@ -166,7 +166,7 @@
       "Coral for decisions and live points; electric blue for lines and focus.",
       "Square actions and fields inside generously rounded narrative planes.",
       "Room for section-specific changes in scale, density, alignment, and diagram treatment.",
-      "One static, low-contrast puzzle cube as the Home hero signature; no scroll-driven motion."
+      "A static cinematic Home scene: a smooth satin black/deep-blue block stack, broad right-hand window reflections, and a polished navy tabletop, with a dark left field for live text."
     ],
     "rules": [
       { "name": "The Live Signal Rule", "body": "Coral marks a meaningful next action or one live point; it loses its meaning when used as ambient decoration.", "section": "colors" },
@@ -179,14 +179,14 @@
       "Do try bolder step typography, larger explanatory copy, different pacing, and line-free groupings when they make a section more legible or memorable.",
       "Do let one large statement, one useful diagram, or one editorial image carry a section.",
       "Do keep Coral Signal rare enough to mean action or live status.",
-      "Do preserve readable content, natural scrolling, and a hero that looks identical when animation is unavailable.",
+      "Do preserve readable content and natural scrolling without depending on the decorative scene or animation.",
       "Do treat conceptual images as illustrative and the real portrait as actual founder evidence."
     ],
     "donts": [
       "Don't copy Mahhou's or Wispr Flow's words, fonts, graphics, or exact compositions.",
       "Don't turn every content block into a rounded card or repeat tiny accent lips at every transition.",
       "Don't treat the current process grid, fine dividers, or compact labels as required Azul motifs.",
-      "Don't re-enable the Signal Field or page-wide fog, add repeated entrance reveals, or hijack scrolling without a new decision.",
+      "Don't re-enable the page-wide fog, add repeated entrance reveals, or hijack scrolling without a new decision.",
       "Don't use pill controls, hard block shadows, emoji interface icons, or decorative monospace.",
       "Don't imply generated scenes show real clients, completed work, results, or Saymon's likeness."
     ]

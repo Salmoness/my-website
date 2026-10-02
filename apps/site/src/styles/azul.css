@@ -383,37 +383,51 @@ html {
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  gap: 0.75rem;
-  color: var(--color-cloud-gray);
-  font-family: var(--font-display);
-  font-size: 0.97rem;
-  font-weight: 540;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
 }
 
-.brand-link strong {
-  display: block;
-  color: var(--color-azul-mist);
-  font-weight: 540;
-}
-
+/* The logo (brand kit version 1). `.azul-logo` is the full logo with the name; `.signal-mark` is
+   the mark alone. Size either one by height. Both are drawn for dark surfaces; on a light surface
+   set --logo-main to Azul Ink and --logo-sub to Slate. */
+.azul-logo,
 .signal-mark {
-  width: 2.25rem;
-  height: 2.25rem;
+  display: block;
   flex: none;
+  width: auto;
   overflow: visible;
 }
 
-.signal-mark path {
-  fill: none;
-  stroke: var(--color-azul-electric);
-  stroke-linecap: round;
-  stroke-width: 1.6;
+.azul-logo {
+  height: 3rem;
 }
 
-.signal-mark circle {
+.azul-logo--horizontal {
+  aspect-ratio: 108.508 / 38.2;
+}
+
+.azul-logo--stacked {
+  aspect-ratio: 45.382 / 73.214;
+}
+
+.signal-mark {
+  height: 2.25rem;
+  aspect-ratio: 42.327 / 38.2;
+}
+
+.azul-logo__tall,
+.azul-logo__name {
+  fill: var(--logo-main, var(--color-cloud-white));
+}
+
+.azul-logo__small {
+  fill: var(--color-azul-electric);
+}
+
+.azul-logo__dot {
   fill: var(--color-coral-signal);
+}
+
+.azul-logo__descriptor {
+  fill: var(--logo-sub, var(--color-azul-mist));
 }
 
 .primary-nav {
@@ -684,69 +698,45 @@ a:focus-visible .editorial-plate__frame img {
   isolation: isolate;
 }
 
-.azul-hero::before {
-  content: '';
+.hero-scene {
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: radial-gradient(
-    ellipse 42% 38% at 78% 44%,
-    rgba(84, 167, 216, 0.12),
-    transparent 80%
-  );
-  pointer-events: none;
-}
-
-.azul-hero {
-  /* Darkening mask over the whole background (photo + cube); raise to darken further. */
-  --hero-scrim: 0.5;
-}
-
-.azul-hero::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background: rgba(4, 19, 31, var(--hero-scrim));
-  pointer-events: none;
-}
-
-.azul-hero > .hero-shadow {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  opacity: 0.42;
-}
-
-.hero-shadow img {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center bottom;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 74%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 74%, transparent 100%);
-}
-
-.azul-hero > .hero-sculpture {
-  position: absolute;
-  z-index: 0;
-  top: 48%;
-  right: 5vw;
-  width: min(46vw, 42rem);
-  aspect-ratio: 1;
-  transform: translateY(-50%) rotate(-11deg);
+  overflow: hidden;
   pointer-events: none;
   user-select: none;
 }
 
-.hero-sculpture img {
+.hero-scene img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  /* Keeps the cube clear of the headline card and the window just in frame. */
+  object-position: 40% 70%;
+}
+
+/* Narrower desktops and tablets: slide the scene so the cube stays right of the card. */
+@media (max-width: 76rem) {
+  .hero-scene img {
+    object-position: 22% 70%;
+  }
+}
+
+.hero-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Protect live text while keeping the window and material highlights luminous. */
+  background: linear-gradient(
+    90deg,
+    rgba(4, 19, 31, 0.48) 0%,
+    rgba(4, 19, 31, 0.34) 34%,
+    rgba(4, 19, 31, 0.12) 53%,
+    transparent 68%
+  );
+  pointer-events: none;
 }
 
 .hero-stage {
@@ -927,13 +917,8 @@ a:focus-visible .editorial-plate__frame img {
     padding-inline: clamp(6rem, 7vw, 15rem);
   }
 
-  .site-plane .brand-link {
-    font-size: 1.18rem;
-  }
-
-  .site-plane .brand-link .signal-mark {
-    width: 2.85rem;
-    height: 2.85rem;
+  .site-plane .brand-link .azul-logo {
+    height: 3.6rem;
   }
 
   .site-plane .header-cta {
@@ -981,15 +966,6 @@ a:focus-visible .editorial-plate__frame img {
 
   .hero-location {
     margin-top: 4rem !important;
-  }
-
-  .azul-hero > .hero-sculpture {
-    right: 6vw;
-    width: min(43vw, 75rem);
-  }
-
-  .azul-hero > .hero-shadow {
-    opacity: 0.5;
   }
 }
 
@@ -3324,7 +3300,6 @@ html[data-motion='off'] .journey__live i::after {
 }
 
 .founder-coordinate .signal-mark {
-  width: 4rem;
   height: 4rem;
 }
 
@@ -3955,7 +3930,6 @@ html[data-motion='off'] .journey__live i::after {
 }
 
 .about-equation__core .signal-mark {
-  width: 3.5rem;
   height: 3.5rem;
 }
 
@@ -4329,6 +4303,12 @@ a.footer-base__email:focus-visible,
     grid-column: 1;
     grid-row: 1;
   }
+
+  /* The header stacks into two rows here, so the logo drops to its smallest allowed size
+     (120px wide) and keeps some room above it. */
+  .brand-link .azul-logo {
+    height: 2.65rem;
+  }
 }
 
 @media (max-width: 58rem) {
@@ -4361,20 +4341,33 @@ a.footer-base__email:focus-visible,
   }
 
   .hero-copy {
-    width: min(72%, 38rem);
+    width: 100%;
   }
 
   .hero-copy h1 {
     font-size: clamp(4.2rem, 8vw, 6.4rem);
   }
 
-  .azul-hero > .hero-sculpture {
-    right: -14vw;
-    width: 76vw;
+  .hero-scene {
+    position: relative;
+    z-index: 0;
+    width: calc(100% + 2 * var(--hero-inline));
+    height: clamp(15rem, 42vw, 25rem);
+    margin: 1.5rem calc(-1 * var(--hero-inline)) 2rem;
   }
 
-  .azul-hero > .hero-shadow {
-    opacity: 0.22;
+  .hero-scene img {
+    object-position: center;
+  }
+
+  .hero-scene::after {
+    background: linear-gradient(
+      to bottom,
+      var(--color-night-stage),
+      transparent 15%,
+      transparent 85%,
+      var(--color-night-stage)
+    );
   }
 
   .problem-statement {
@@ -4547,15 +4540,6 @@ a.footer-base__email:focus-visible,
     gap: 0.2rem 0.75rem;
   }
 
-  .brand-link {
-    font-size: 0.82rem;
-  }
-
-  .brand-link .signal-mark {
-    width: 1.85rem;
-    height: 1.85rem;
-  }
-
   .header-cta {
     min-height: 42px;
     padding-left: 0.75rem;
@@ -4603,20 +4587,6 @@ a.footer-base__email:focus-visible,
 
   .hero-copy h1 span {
     white-space: nowrap;
-  }
-
-  .azul-hero > .hero-sculpture {
-    top: 44%;
-    right: -31vw;
-    width: 105vw;
-  }
-
-  .azul-hero {
-    --hero-scrim: 0.62;
-  }
-
-  .azul-hero > .hero-shadow {
-    opacity: 0.16;
   }
 
   .hero-card {

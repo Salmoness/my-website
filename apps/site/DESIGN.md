@@ -119,7 +119,7 @@ Deep-blue fields establish focus; light planes make explanations effortless to r
 - Coral for decisions and live points; electric blue for lines and focus.
 - Square actions and fields inside generously rounded narrative planes.
 - Room for section-specific changes in scale, density, alignment, and diagram treatment.
-- A full-width Night Stage Home hero with one barely visible, dimensional navy cube over a subtle studio shadow plate. Ultrawide screens use the extra space for larger typography, cube, and controls; the former thin-line Signal Field remains in source but is inactive.
+- A static cinematic Home scene: a smooth satin black/deep-blue block stack, broad right-hand window reflections, and a polished navy tabletop, with a dark left field for live text.
 
 ## Colors
 
@@ -168,6 +168,8 @@ At a major color change, an overlapping chapter plane takes the foreground. Alte
 
 On small screens, preserve the chapter rhythm at reduced insets, stack diagrams in reading order, keep navigation discoverable, and allow actions to grow to useful touch widths.
 
+Home's scene fills the hero above `58rem`, with a directional overlay protecting the headline and information card while the right-hand window stays luminous. At `58rem` and below, a focused crop spans the page between the headline and card, with soft top and bottom fades into Night Stage. Keep this composition specific to Home.
+
 Within a chapter, Live variants may change spacing, grouping, alignment, proportion, and density substantially. A process can read as a sequence without four equal columns, a header-to-footer line, or a border between every step.
 
 ## Elevation & Depth
@@ -196,7 +198,9 @@ Full-width chapter planes carry narrative changes; they are not interchangeable 
 
 ### Signature visual and imagery
 
-The Home hero uses one dark, low-contrast, faceted cube as atmospheric imagery behind live text. It is decorative and does not animate or carry meaning required to use the page. The former thin-line Signal Field and procedural fog remain in the codebase but are inactive. Services, How We Work, About, and Privacy each use a distinct subdued hero photograph. The real founder portrait appears inside a rounded Cloud Gray card on Home and About, with a distinct crop for each.
+The Home hero uses one generated tabletop photograph: a grounded stack of smooth satin black/deep-blue blocks with a clear 3×3 front and subtle rear/top offsets, broad silver-blue reflections from the right, blurred foliage and sky outside the window, a polished navy tabletop, and a cropped laptop corner. Desktop and mobile use the same scene with distinct crops. The picture is decorative, static, and hidden from assistive technology; the headline, information card, and actions remain live content. Its optimized WebP assets and exact generation prompts live in `src/assets/images/azul/hero-cinematic/`.
+
+The former separate cube and studio shadow plate are no longer Home imagery; the site loader now shows the stacked logo instead of the cube cutout. The thin-line Signal Field and procedural fog remain inactive. Services, How We Work, About, and Privacy each use a distinct subdued hero photograph. The real founder portrait appears inside a rounded Cloud Gray card on Home and About, with a distinct crop for each.
 
 ## Do's and Don'ts
 
@@ -206,7 +210,7 @@ The Home hero uses one dark, low-contrast, faceted cube as atmospheric imagery b
 - **Do** try bolder step typography, larger explanatory copy, different pacing, and line-free groupings when they make a section more legible or memorable.
 - **Do** let one large statement, one useful diagram, or one editorial image carry a section.
 - **Do** keep Coral Signal rare enough to mean action or live status.
-- **Do** preserve readable content and natural scrolling without depending on the decorative cube or animation.
+- **Do** preserve readable content and natural scrolling without depending on the decorative scene or animation.
 - **Do** treat conceptual images as illustrative and the real portrait as actual founder evidence.
 
 ### Don't:

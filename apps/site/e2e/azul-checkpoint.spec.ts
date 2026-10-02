@@ -63,11 +63,10 @@ test.describe('Azul checkpoint one', () => {
     );
     await expect(page.locator('[data-fog-field]')).toHaveCount(0);
     await expect(page.locator('.azul-hero > [data-signal-field]')).toHaveCount(0);
-    await expect(page.locator('.hero-sculpture img')).toBeVisible();
-    await expect(page.locator('.hero-shadow img')).toBeVisible();
+    await expect(page.locator('.hero-scene img')).toBeVisible();
     expect(
       await page
-        .locator('.hero-shadow img')
+        .locator('.hero-scene img')
         .evaluate((image: HTMLImageElement) => image.naturalWidth),
     ).toBeGreaterThan(0);
   });
@@ -78,25 +77,27 @@ test.describe('Azul checkpoint one', () => {
     const layout = await page.evaluate(() => {
       const stage = document.querySelector('.hero-stage')!.getBoundingClientRect();
       const copy = document.querySelector('.hero-copy')!.getBoundingClientRect();
-      const cube = document.querySelector('.hero-sculpture')!.getBoundingClientRect();
+      const scene = document.querySelector('.hero-scene')!.getBoundingClientRect();
       return {
         viewport: window.innerWidth,
         scrollWidth: document.documentElement.scrollWidth,
         stageWidth: stage.width,
         copyLeft: copy.left,
-        cubeRight: cube.right,
+        sceneWidth: scene.width,
+        sceneRight: scene.right,
       };
     });
     expect(layout.scrollWidth).toBeLessThanOrEqual(layout.viewport);
     expect(layout.stageWidth).toBeGreaterThan(layout.viewport * 0.9);
     expect(layout.copyLeft).toBeLessThan(layout.viewport * 0.15);
-    expect(layout.cubeRight).toBeLessThan(layout.viewport);
+    expect(layout.sceneWidth).toBeGreaterThan(layout.viewport * 0.9);
+    expect(layout.sceneRight).toBeLessThanOrEqual(layout.viewport);
   });
 
   test('keyboard and reduced-motion states keep the page useful', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await expect(page.locator('.hero-sculpture img')).toBeVisible();
+    await expect(page.locator('.hero-scene img')).toBeVisible();
     await page.keyboard.press('Tab');
     await expect(page.locator('#skip-to-content')).toBeFocused();
     await page.keyboard.press('Enter');
@@ -110,7 +111,7 @@ test.describe('Azul without JavaScript', () => {
   test('Home content, navigation, and consultation path remain available', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    await expect(page.locator('.hero-sculpture img')).toBeVisible();
+    await expect(page.locator('.hero-scene img')).toBeVisible();
     await page.getByRole('banner').getByRole('link', { name: 'Services', exact: true }).click();
     await expect(page).toHaveURL(/\/services\/?$/);
     await expect(page.locator('#contact')).toBeVisible();
@@ -122,6 +123,7 @@ test.describe('Home loading screen', () => {
     await page.goto('/', { waitUntil: 'commit' });
     const loader = page.locator('[data-site-loader]');
     await expect(loader).toBeVisible();
+    await expect(loader.locator('.azul-logo--stacked')).toBeVisible();
     const shownAt = Date.now();
     await expect(loader).toHaveCount(0, { timeout: 7000 });
     expect(Date.now() - shownAt).toBeGreaterThanOrEqual(900);

@@ -36,7 +36,9 @@ const isStaging =
     <meta charset={charset} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#071A2B" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="description" content={description} />
     {isStaging && <meta name="robots" content="noindex, nofollow, noarchive" />}
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
@@ -47,6 +49,7 @@ const isStaging =
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     {imageUrl && <meta property="og:image" content={imageUrl} />}
     {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+    {imageUrl && <meta name="twitter:card" content="summary_large_image" />}
     <title>{title}</title>
     {showLoader && <script is:inline set:html={LOADER_BOOT} />}
   </head>

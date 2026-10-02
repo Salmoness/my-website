@@ -80,6 +80,28 @@ describe('generated Azul site', () => {
     }
   });
 
+  it('shows the logo in every header and ships the tab icons and link preview image', () => {
+    for (const [route] of pages) {
+      const html = readPage(route);
+      expect(html, `${route} header logo`).toMatch(
+        /<a href="\/" class="brand-link"[^>]*><svg class="azul-logo azul-logo--horizontal"/,
+      );
+      expect(html).toContain('<link rel="icon" type="image/svg+xml" href="/favicon.svg">');
+      expect(html).toContain('<link rel="apple-touch-icon" href="/apple-touch-icon.png">');
+      expect(html).toContain(
+        '<meta property="og:image" content="https://azulonlineprojects.com/images/azul/azul-social-card.png">',
+      );
+    }
+    for (const file of [
+      'favicon.svg',
+      'favicon.ico',
+      'apple-touch-icon.png',
+      'images/azul/azul-social-card.png',
+    ])
+      expect(fs.existsSync(path.join(distDir, file)), `${file} is published`).toBe(true);
+    expect(readPage('/')).toContain('azul-logo--stacked site-loader__logo');
+  });
+
   it('keeps production pages static without Astro islands', () => {
     for (const [route] of pages) expect(readPage(route)).not.toContain('astro-island');
   });

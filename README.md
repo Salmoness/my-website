@@ -17,7 +17,7 @@ The separate private Azul company vault holds business decisions and historical 
 
 ## Status
 
-- Home, Services, How We Work, About, and Privacy are built with the Azul visual system (Deep Azul, Slate Current, Cloud Gray, and Coral Signal, set in Epilogue and Manrope). The Home hero shows a static puzzle cube.
+- Home, Services, How We Work, About, and Privacy are built with the Azul visual system (Deep Azul, Slate Current, Cloud Gray, and Coral Signal, set in Epilogue and Manrope). The Home hero shows a static, window-lit satin block stack on a polished navy tabletop, with a focused crop below the headline on smaller screens.
 - The owner's final visual review is in progress.
 - Before launch: connect the enquiry form, add the 404 page and sitemap, remove the leftover portfolio route and content, buy the domain, set up email, and deploy. See the release plan for details.
 

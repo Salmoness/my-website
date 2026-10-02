@@ -2,7 +2,7 @@
 type: website-content
 status: approved
 owner: Saymon Rivas
-updated: 2026-09-28
+updated: 2026-10-01
 tags:
   - website
   - public
@@ -15,7 +15,7 @@ This note contains facts approved for use in the public website and its reposito
 ## Identity and audience
 
 - Public name: **Azul Online Projects**; use **Azul** afterward.
-- Founder and operator: **Saymon Rivas**. Do not describe Azul as an LLC or a separate legal entity unless the owner confirms that status.
+- Founder and operator: **Saymon Rivas**, operating individually as Azul Online Projects. Saymon confirmed on 2026-10-01 that no LLC has been formed. Do not describe Azul as an LLC or a separate legal entity unless the owner later confirms that status.
 - Based in Orlando, serving Central Florida and remote clients across the United States.
 - Audience: small businesses that are starting or do not yet have an effective online presence.
 - Headline and supporting copy should follow the current approved page copy in source. The existing hero wording is “Grow your online Identity”.
@@ -24,8 +24,10 @@ This note contains facts approved for use in the public website and its reposito
 
 - Primary action: **Let’s hop on a call**, leading to `/services#contact`.
 - Saymon responds to an enquiry within two business days and manually arranges a free 20–30 minute consultation when appropriate.
-- Public email planned in configuration: `saymon@azulonlineprojects.com`.
-- Production domain planned in configuration: `https://azulonlineprojects.com`.
+- Approved public email: `saymonrivas@azulonlineprojects.com` (owner-confirmed 2026-10-01). Source configuration still needs to be aligned.
+- Production domain: `https://azulonlineprojects.com`, owned by Saymon Rivas.
+- Hosting: Hostinger; Saymon reports the site hosted at the production domain.
+- No form provider is selected. Mailbox delivery and the deployed enquiry flow still need verification.
 
 ## Offers and prices currently shown
 

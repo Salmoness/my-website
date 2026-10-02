@@ -1,6 +1,6 @@
 # Azul editorial image set
 
-Generated for the September 2026 composition pass with Higgsfield's Recraft V4.1 model. Source PNGs stay in this directory; Astro creates responsive WebP variants during the build.
+The original editorial scenes were generated for the September 2026 composition pass with Higgsfield's Recraft V4.1 model. The current Home scene is a Higgsfield image supplied by Saymon (revision 3). Source assets stay in this directory; Astro creates responsive WebP variants during the build.
 
 | Asset                        | Page role                                          | Higgsfield job                      |
 | ---------------------------- | -------------------------------------------------- | ----------------------------------- |
@@ -12,8 +12,9 @@ Generated for the September 2026 composition pass with Higgsfield's Recraft V4.1
 | `meta-business.png`          | Meta presence detail                               | `9b09…`                             |
 | `social-content.png`         | Social-content workflow detail                     | `df36…`                             |
 | `project-handoff.png`        | Privacy hero and project-handoff detail            | `a7fa…`                             |
-| `hero-cube.png`              | Home hero's barely visible dimensional cube        | OpenAI image generation, 2026-09-23 |
-| `hero-shadow-stage.png`      | Home hero's low-contrast cinematic shadow field    | OpenAI image generation, 2026-09-23 |
+| `hero-cinematic/`            | Current Home hero scene and focused mobile crop    | Higgsfield, supplied 2026-09-30     |
+| `hero-cube.png`              | Unused since 2026-10-01; former loader and hero    | OpenAI image generation, 2026-09-23 |
+| `hero-shadow-stage.png`      | Retained former Home shadow plate; no current use  | OpenAI image generation, 2026-09-23 |
 
 ## Founder photography
 
@@ -25,6 +26,8 @@ The set uses cinematic editorial photography, practical work surfaces, Central F
 
 The generated images are conceptual illustrations. They must never be presented as client work, client premises, measured results, or a portrait of Saymon. Replace them with verified founder or client photography later when real evidence adds more value.
 
-The Home cube was generated as a transparent cutout: a dark-navy 3×3 faceted puzzle cube, satin-ceramic and anodized-metal surfaces, subtle electric-blue edge reflections, one tiny coral glint, no logo or text. It is an abstract metaphor for bringing pieces of an online presence together, not a client deliverable. Source: built-in OpenAI image generation; the page dims and positions the PNG in CSS.
+The current Home hero is a generated photograph of a clean 3×3×3 stack of satin black/deep-navy blocks on a polished stone counter, a light beam across a dark navy wall, a laptop corner, and a window with ocean and palm trees. It replaces the separate cutout and shadow plate. Crop and responsive export details are in [`hero-cinematic/README.md`](hero-cinematic/README.md).
 
-The shadow stage is a separate, text-free deep-blue studio environment. It supplies broad diagonal penumbral shadows and grazing light beneath the cube; CSS keeps it subdued so the headline remains dominant. Its generation prompt is preserved in `hero-shadow-stage.prompt.md`.
+The former Home cube was generated as a transparent cutout: a dark-navy 3×3 faceted puzzle cube, satin-ceramic and anodized-metal surfaces, subtle electric-blue edge reflections, one tiny coral glint, no logo or text. `SiteLoader` used it until 2026-10-01, when the logo replaced it; the file is kept but no longer referenced. Its generation prompt is preserved in `hero-cube.prompt.md`.
+
+The former shadow stage is a separate, text-free deep-blue studio environment with diagonal penumbral shadows and grazing light. It is retained in source but is no longer used on Home. Its generation prompt is preserved in `hero-shadow-stage.prompt.md`.

@@ -2,7 +2,7 @@
 type: website-checklist
 status: approved
 owner: Saymon Rivas
-updated: 2026-09-28
+updated: 2026-10-01
 tags:
   - website
   - release
@@ -14,7 +14,7 @@ These are website checks; company account, legal, and operational decisions are 
 
 - [ ] Complete owner review of all five public pages on desktop and mobile.
 - [ ] Connect and test the hosted enquiry form endpoint, including success and failure states.
-- [ ] Confirm the branded email and production domain are live before using production mode.
+- [ ] Align website contact values with the approved `saymonrivas@azulonlineprojects.com`, test mailbox sending/receiving, and verify the deployed domain before marking production checks complete.
 - [ ] Remove the legacy `/work` route, portfolio compatibility data, and unused public assets.
 - [ ] Add and verify the branded 404 page and sitemap.
 - [ ] Check titles, descriptions, canonical URLs, social previews, and robots behavior.
@@ -22,4 +22,4 @@ These are website checks; company account, legal, and operational decisions are 
 - [ ] Run build, type check, lint, format check, unit tests, and browser tests.
 - [ ] Review the generated `dist/` output for private material before deployment.
 
-The form endpoint and release account values are currently incomplete. Do not mark them done until verified in the deployed environment.
+Saymon confirmed domain ownership and Hostinger hosting on 2026-10-01. The form endpoint is incomplete, and website source still needs the approved email correction. Do not mark delivery or deployment checks done until verified in the deployed environment.
