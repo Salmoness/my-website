@@ -16,7 +16,7 @@ The Astro website is in `apps/site/`. The website documentation vault was separa
 
 - Main pages: Home, Services, How We Work, About, and Privacy.
 - The Home hero uses a static Higgsfield tabletop scene supplied by Saymon: a clean satin black/deep-navy 3×3×3 block stack on a polished stone counter, a light beam, a laptop corner, and a window with ocean and palm trees. Above `58rem` it fills the hero behind live content; at `58rem` and below, a focused crop sits between the headline and information card. Approved hero copy and actions are unchanged. The site has interactive service and process elements, with non-JavaScript fallbacks.
-- On 2026-10-01 Saymon confirmed domain ownership and Hostinger hosting at `https://azulonlineprojects.com`. The approved public email is `saymonrivas@azulonlineprojects.com`. `apps/site/src/config/site.ts` still uses the earlier email and needs correction. Test sending/receiving and deployed contact behavior before marking them verified.
+- On 2026-10-01 Saymon confirmed domain ownership and Hostinger hosting at `https://azulonlineprojects.com`. The approved public email is `saymonrivas@azulonlineprojects.com`. `apps/site/src/config/site.ts` and `portfolio.json` were aligned to it on 2026-10-02. Test sending/receiving and deployed contact behavior before marking them verified.
 - The enquiry form endpoint is empty. The legacy `/work` route and portfolio compatibility data remain in source.
 - The repository's default build copies the static site into root `dist/` for hosting.
 

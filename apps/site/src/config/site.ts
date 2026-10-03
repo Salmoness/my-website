@@ -21,7 +21,7 @@ export const SITE: SiteConfig = {
   headline: 'Grow your online identity.',
   supportingLine:
     'Websites and systems that help people trust your business, and content that helps them find it.',
-  email: 'saymon@azulonlineprojects.com',
+  email: 'saymonrivas@azulonlineprojects.com',
   siteUrl: 'https://azulonlineprojects.com',
   location: 'Orlando, Florida',
   serviceArea: 'Central Florida and remote clients across the United States',

@@ -24,7 +24,7 @@ This note contains facts approved for use in the public website and its reposito
 
 - Primary action: **Let’s hop on a call**, leading to `/services#contact`.
 - Saymon responds to an enquiry within two business days and manually arranges a free 20–30 minute consultation when appropriate.
-- Approved public email: `saymonrivas@azulonlineprojects.com` (owner-confirmed 2026-10-01). Source configuration still needs to be aligned.
+- Approved public email: `saymonrivas@azulonlineprojects.com` (owner-confirmed 2026-10-01). Source configuration was aligned on 2026-10-02.
 - Production domain: `https://azulonlineprojects.com`, owned by Saymon Rivas.
 - Hosting: Hostinger; Saymon reports the site hosted at the production domain.
 - No form provider is selected. Mailbox delivery and the deployed enquiry flow still need verification.

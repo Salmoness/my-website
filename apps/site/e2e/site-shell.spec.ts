@@ -84,8 +84,8 @@ test.describe('Azul MVP journeys', () => {
     ).toBeVisible();
     await expect(page.locator('[data-enquiry-form]')).toBeVisible();
     await expect(
-      page.locator('#contact').getByRole('link', { name: 'saymon@azulonlineprojects.com' }),
-    ).toHaveAttribute('href', 'mailto:saymon@azulonlineprojects.com');
+      page.locator('#contact').getByRole('link', { name: 'saymonrivas@azulonlineprojects.com' }),
+    ).toHaveAttribute('href', 'mailto:saymonrivas@azulonlineprojects.com');
 
     await page.goto('/privacy');
     await expect(page.getByRole('heading', { name: 'Privacy, in plain language.' })).toBeVisible();
@@ -104,7 +104,7 @@ test.describe('Azul essentials without JavaScript', () => {
     await expect(page.locator('[data-service-guide]')).toBeVisible();
     await expect(page.locator('[data-enquiry-form]')).toBeVisible();
     await expect(
-      page.locator('#contact').getByRole('link', { name: 'saymon@azulonlineprojects.com' }),
+      page.locator('#contact').getByRole('link', { name: 'saymonrivas@azulonlineprojects.com' }),
     ).toBeVisible();
     await page.goto('/how-we-work');
     await expect(page.locator('.work-steps__list > li')).toHaveCount(4);
